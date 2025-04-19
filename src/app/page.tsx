@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -25,6 +25,99 @@ interface Activity {
     businessException: string;
     assumption: string;
 }
+
+const ConfettiBackground: React.FC = () => {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        let W = window.innerWidth;
+        let H = window.innerHeight;
+        canvas.width = W;
+        canvas.height = H;
+
+        const mp = 150; // max particles
+        const particles: any[] = [];
+        for (let i = 0; i < mp; i++) {
+            particles.push({
+                x: Math.random() * W, // x-coordinate
+                y: Math.random() * H, // y-coordinate
+                r: Math.random() * 4 + 1, // radius
+                d: Math.random() * mp, // density
+                color: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.8)`,
+                tilt: Math.floor(Math.random() * 330) - 30,
+                tiltAngleIncremental: (Math.random() * 0.08) + 0.05,
+                tiltAngle: 0
+            });
+        }
+
+        const draw = () => {
+            ctx.clearRect(0, 0, W, H);
+
+            for (let i = 0; i < mp; i++) {
+                const p = particles[i];
+                ctx.beginPath();
+                ctx.fillStyle = p.color;
+                ctx.ellipse(p.x, p.y, p.r, 2, 10, 20, 30)
+                ctx.fill();
+            }
+
+            update();
+            requestAnimationFrame(draw);
+        };
+
+        // Function to move the snowflakes
+        const update = () => {
+            for (let i = 0; i < mp; i++) {
+                const p = particles[i];
+
+                p.tiltAngle += p.tiltAngleIncremental;
+                p.y += (Math.cos(p.d) + 1 + p.r / 2) * 0.5;
+                p.x += Math.sin(p.tiltAngle - p.r / 2) * 0.5;
+
+                if (p.x > W + 5 || p.x < -5 || p.y > H) {
+                    p.x = Math.random() * W;
+                    p.y = -5;
+                }
+            }
+        };
+
+        draw();
+
+        const handleResize = () => {
+            W = window.innerWidth;
+            H = window.innerHeight;
+            canvas.width = W;
+            canvas.height = H;
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    return (
+        <canvas
+            ref={canvasRef}
+            style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                pointerEvents: 'none',
+                zIndex: 0,
+            }}
+        />
+    );
+};
 
 const Home: React.FC = () => {
     const [activities, setActivities] = useState<Activity[]>([]);
@@ -89,7 +182,7 @@ const Home: React.FC = () => {
 
     return (
         <div className="container mx-auto p-4 dark:bg-black dark:text-white">
-
+            <ConfettiBackground />
             {/* Theme Switcher */}
             <div className="flex justify-end mb-4">
                 <Button variant="outline" size="icon" onClick={toggleTheme}>
@@ -99,7 +192,7 @@ const Home: React.FC = () => {
             </div>
 
             {/* Data Input Form */}
-            <CardNeon className="glassmorphism mb-4">
+            <CardNeon className="glassmorphism mb-4" style={{ position: 'relative', zIndex: 1 }}>
                 <CardHeader>
                     <CardTitle>Activity Input</CardTitle>
                     <CardDescription>Enter the details for the activity.</CardDescription>
