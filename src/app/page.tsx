@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useCallback } from 'react';
@@ -9,7 +8,7 @@ import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, Tabl
 import { useToast } from "@/hooks/use-toast";
 import { Moon, Sun } from 'lucide-react';
 import { Switch } from "@/components/ui/switch";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card as CardNeon, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Icons } from '@/components/icons';
 
@@ -100,7 +99,7 @@ const Home: React.FC = () => {
             </div>
 
             {/* Data Input Form */}
-            <Card className="glassmorphism mb-4">
+            <CardNeon className="glassmorphism mb-4">
                 <CardHeader>
                     <CardTitle>Activity Input</CardTitle>
                     <CardDescription>Enter the details for the activity.</CardDescription>
@@ -152,13 +151,13 @@ const Home: React.FC = () => {
                     </div>
                     <Button onClick={addActivity}>Add Activity</Button>
                 </CardContent>
-            </Card>
+            </CardNeon>
 
             <Separator className="my-4" />
 
             {/* Data Table Display */}
-            <Card className="glassmorphism mb-4">
-                <CardHeader>
+            <CardNeon className="glassmorphism mb-4">
+                <CardHeader >
                     <CardTitle>Activity Overview</CardTitle>
                     <CardDescription>A summary of all activities.</CardDescription>
                 </CardHeader>
@@ -204,18 +203,18 @@ const Home: React.FC = () => {
                         </TableFooter>
                     </Table>
                 </CardContent>
-            </Card>
+            </CardNeon>
 
             {/* Estimate Overview */}
-            <Card className="glassmorphism">
+            <CardNeon className="glassmorphism">
                 <CardHeader>
                     <CardTitle>Estimate Overview</CardTitle>
                     <CardDescription>Summary of the estimation.</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <p>Total Effort: {totalEffort} hours</p>
-                </CardContent>
-            </Card>
+                </CardContent >
+            </CardNeon>
         </div>
     );
 };
