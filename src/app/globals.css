@@ -89,7 +89,7 @@ body {
     @apply bg-background text-foreground;
   }
 }
-/* Glassmorphism effect */
+ /* Glassmorphism effect */
 .glassmorphism {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 16px;
@@ -97,4 +97,23 @@ body {
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.neon-border-glow {
+  box-shadow:
+    0 0 7px #0ff,   /* Cyan glow */
+    0 0 10px #0ff,
+    0 0 15px #f0f,  /* Pink glow */
+    0 0 20px #f0f;
+  transition: box-shadow 0.3s ease-in-out; /* Smooth transition for potential hover effects */
+}
+
+/* Optional: Add a subtle hover effect to make the glow more intense */
+.neon-border-glow:hover {
+  box-shadow:
+    0 0 10px #0ff,
+    0 0 15px #0ff,
+    0 0 25px #f0f,
+    0 0 30px #f0f,
+    0 0 40px #f0f; /* More intense glow on hover */
 }

@@ -18,7 +18,6 @@ interface Activity {
     adapter: string;
     activityName: string;
     activityType: string;
-    quantity: number;
     coreSupervised: string;
     reused: boolean;
     effort: number;
@@ -126,7 +125,6 @@ const Home: React.FC = () => {
         adapter: "",
         activityName: "",
         activityType: "",
-        quantity: 0,
         coreSupervised: "",
         reused: false,
         effort: 0,
@@ -167,7 +165,6 @@ const Home: React.FC = () => {
             adapter: "",
             activityName: "",
             activityType: "",
-            quantity: 0,
             coreSupervised: "",
             reused: false,
             effort: 0,
@@ -192,7 +189,7 @@ const Home: React.FC = () => {
             </div>
 
             {/* Data Input Form */}
-            <CardNeon className="glassmorphism mb-4" style={{ position: 'relative', zIndex: 1 }}>
+            <CardNeon className="glassmorphism neon-border-glow mb-4" style={{ position: 'relative', zIndex: 1 }}>
                 <CardHeader>
                     <CardTitle>Activity Input</CardTitle>
                     <CardDescription>Enter the details for the activity.</CardDescription>
@@ -213,10 +210,6 @@ const Home: React.FC = () => {
                     <div className="grid gap-2">
                         <Label htmlFor="activityType">Activity Type</Label>
                         <Input type="text" id="activityType" name="activityType" value={formData.activityType} onChange={handleInputChange} />
-                    </div>
-                    <div className="grid gap-2">
-                        <Label htmlFor="quantity">Quantity</Label>
-                        <Input type="number" id="quantity" name="quantity" value={formData.quantity} onChange={handleInputChange} />
                     </div>
                     <div className="grid gap-2">
                         <Label htmlFor="coreSupervised">Core/Supervised</Label>
@@ -249,7 +242,7 @@ const Home: React.FC = () => {
             <Separator className="my-4" />
 
             {/* Data Table Display */}
-            <CardNeon className="glassmorphism mb-4">
+            <CardNeon className="glassmorphism neon-border-glow mb-4" style={{ position: 'relative', zIndex: 1 }}>
                 <CardHeader >
                     <CardTitle>Activity Overview</CardTitle>
                     <CardDescription>A summary of all activities.</CardDescription>
@@ -262,7 +255,6 @@ const Home: React.FC = () => {
                                 <TableHead>Adapter</TableHead>
                                 <TableHead>Activity Name</TableHead>
                                 <TableHead>Activity Type</TableHead>
-                                <TableHead>Quantity</TableHead>
                                 <TableHead>Core/Supervised</TableHead>
                                 <TableHead>Reused?</TableHead>
                                 <TableHead>Effort [h]</TableHead>
@@ -277,7 +269,6 @@ const Home: React.FC = () => {
                                     <TableCell>{activity.adapter}</TableCell>
                                     <TableCell>{activity.activityName}</TableCell>
                                     <TableCell>{activity.activityType}</TableCell>
-                                    <TableCell>{activity.quantity}</TableCell>
                                     <TableCell>{activity.coreSupervised}</TableCell>
                                     <TableCell>{activity.reused ? 'Yes' : 'No'}</TableCell>
                                     <TableCell>{activity.effort}</TableCell>
@@ -288,7 +279,7 @@ const Home: React.FC = () => {
                         </TableBody>
                         <TableFooter>
                             <TableRow>
-                                <TableCell colSpan={7}>Total</TableCell>
+                                <TableCell colSpan={6}>Total</TableCell>
                                 <TableCell>{totalEffort}</TableCell>
                                 <TableCell></TableCell>
                                 <TableCell></TableCell>
