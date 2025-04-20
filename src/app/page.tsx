@@ -255,8 +255,8 @@ const Home: React.FC = () => {
             {/* Data Input Form */}
             <CardNeon className="glassmorphism neon-border-glow mb-4" style={{ position: 'relative', zIndex: 1 }}>
                 <CardHeader>
-                    <CardTitle>Activity Input</CardTitle>
-                    <CardDescription>Enter the details for the activity.</CardDescription>
+                    <CardTitle style={{ color: neonTextColors[0] }}>Activity Input</CardTitle>
+                    <CardDescription style={{ color: neonTextColors[1] }}>Enter the details for the activity.</CardDescription>
                 </CardHeader>
                 <CardContent className="grid gap-4">
                     <div className="grid gap-2">
@@ -355,8 +355,8 @@ const Home: React.FC = () => {
             {/* Estimate Overview */}
             <CardNeon className="glassmorphism neon-border-glow mb-4" style={{ position: 'relative', zIndex: 1 }}>
                 <CardHeader>
-                    <CardTitle>Estimate Overview</CardTitle>
-                    <CardDescription>Summary of the estimation.</CardDescription>
+                    <CardTitle style={{ color: neonTextColors[0] }}>Estimate Overview</CardTitle>
+                    <CardDescription style={{ color: neonTextColors[1] }}>Summary of the estimation.</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <p style={{ color: neonTextColors[0] }}><strong>Total Effort:</strong> {totalEffort} hours</p>
@@ -382,3 +382,4 @@ const Home: React.FC = () => {
 };
 
 export default Home;
+
