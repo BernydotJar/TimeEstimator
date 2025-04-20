@@ -374,7 +374,7 @@ const Home: React.FC = () => {
                     <p style={{ color: neonTextColors[1] }}><strong>SDD:</strong> {sddEffort.toFixed(2)} hours</p>
                     <p style={{ color: neonTextColors[0] }}><strong>Release and Configuration Guide:</strong> {releaseConfigEffort.toFixed(2)} hours</p>
                     <p style={{ color: neonTextColors[1] }}><strong>User Manual:</strong> {userManualEffort.toFixed(2)} hours</p>
-                    <p style={{ color: neonTextColors[0], fontSize: '1.2em' }}><strong>Grand Total Effort:</strong> {grandTotalEffort.toFixed(2)} hours</p>
+                    <p style={{ color: neonTextColors[0], fontSize: '1.2em' }}><strong>Grand Total Effort:</strong> {Number(grandTotalEffort).toFixed(2)} hours</p>
                 </CardContent >
             </CardNeon>
         </div>
@@ -382,4 +382,3 @@ const Home: React.FC = () => {
 };
 
 export default Home;
-
