@@ -359,22 +359,22 @@ const Home: React.FC = () => {
                     <CardDescription style={{ color: neonTextColors[1] }}>Summary of the estimation.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <p style={{ color: neonTextColors[0] }}><strong>Total Effort:</strong> {totalEffort} hours</p>
-                    <p style={{ color: neonTextColors[1] }}><strong>Total Core Effort:</strong> {coreEffort} hours</p>
-                    <p style={{ color: neonTextColors[0] }}><strong>Total Supervised Effort:</strong> {supervisedEffort} hours</p>
+                    <p style={{ color: neonTextColors[0] }}><strong>Total Effort:</strong> {totalEffort.toFixed(2)} hours</p>
+                    <p style={{ color: neonTextColors[1] }}><strong>Total Core Effort:</strong> {coreEffort.toFixed(2)} hours</p>
+                    <p style={{ color: neonTextColors[0] }}><strong>Total Supervised Effort:</strong> {supervisedEffort.toFixed(2)} hours</p>
                     <p style={{ color: neonTextColors[1] }}><strong>Effort by Activity Type:</strong></p>
                     <ul>
                         {Object.entries(effortByActivityType).map(([type, effort], index) => (
                             <li key={type} style={{ color: neonTextColors[index % neonTextColors.length] }}>{type}: {effort} hours</li>
                         ))}
                     </ul>
-                    <p style={{ color: neonTextColors[0] }}><strong>Contingency ({contingencyPercentage * 100}%):</strong> {contingencyEffort} hours</p>
-                    <p style={{ color: neonTextColors[1] }}><strong>Project Management:</strong> {pmEffort} hours</p>
-                    <p style={{ color: neonTextColors[0] }}><strong>Solution Architect:</strong> {saEffort} hours</p>
-                    <p style={{ color: neonTextColors[1] }}><strong>SDD:</strong> {sddEffort} hours</p>
-                    <p style={{ color: neonTextColors[0] }}><strong>Release and Configuration Guide:</strong> {releaseConfigEffort} hours</p>
-                    <p style={{ color: neonTextColors[1] }}><strong>User Manual:</strong> {userManualEffort} hours</p>
-                    <p style={{ color: neonTextColors[0], fontSize: '1.2em' }}><strong>Grand Total Effort:</strong> {grandTotalEffort} hours</p>
+                    <p style={{ color: neonTextColors[0] }}><strong>Contingency ({contingencyPercentage * 100}%):</strong> {contingencyEffort.toFixed(2)} hours</p>
+                    <p style={{ color: neonTextColors[1] }}><strong>Project Management:</strong> {pmEffort.toFixed(2)} hours</p>
+                    <p style={{ color: neonTextColors[0] }}><strong>Solution Architect:</strong> {saEffort.toFixed(2)} hours</p>
+                    <p style={{ color: neonTextColors[1] }}><strong>SDD:</strong> {sddEffort.toFixed(2)} hours</p>
+                    <p style={{ color: neonTextColors[0] }}><strong>Release and Configuration Guide:</strong> {releaseConfigEffort.toFixed(2)} hours</p>
+                    <p style={{ color: neonTextColors[1] }}><strong>User Manual:</strong> {userManualEffort.toFixed(2)} hours</p>
+                    <p style={{ color: neonTextColors[0], fontSize: '1.2em' }}><strong>Grand Total Effort:</strong> {grandTotalEffort.toFixed(2)} hours</p>
                 </CardContent >
             </CardNeon>
         </div>
@@ -382,4 +382,3 @@ const Home: React.FC = () => {
 };
 
 export default Home;
-
