@@ -173,7 +173,6 @@ const Home: React.FC = () => {
     // Function to add a new activity
     const addActivity = () => {
         setActivities(prevActivities => [...prevActivities, formData]);
-        setTotalEffort(prevTotal => prevTotal + formData.effort);
         setFormData({
             applicationName: "",
             adapter: "",
@@ -343,7 +342,7 @@ const Home: React.FC = () => {
                         <TableFooter>
                             <TableRow>
                                 <TableCell colSpan={6}>Total</TableCell>
-                                <TableCell>{totalEffort}</TableCell>
+                                <TableCell>{activities.reduce((sum, activity) => sum + activity.effort, 0)}</TableCell>
                                 <TableCell></TableCell>
                                 <TableCell></TableCell>
                             </TableRow>
