@@ -359,7 +359,7 @@ const Home: React.FC = () => {
                     <CardDescription style={{ color: neonTextColors[1] }}>Summary of the estimation.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <p style={{ color: neonTextColors[0] }}><strong>Total Effort:</strong> {totalEffort.toFixed(2)} hours</p>
+                    <p style={{ color: neonTextColors[0] }}><strong>Total Effort:</strong> {Number(totalEffort).toFixed(2)} hours</p>
                     <p style={{ color: neonTextColors[1] }}><strong>Total Core Effort:</strong> {coreEffort.toFixed(2)} hours</p>
                     <p style={{ color: neonTextColors[0] }}><strong>Total Supervised Effort:</strong> {supervisedEffort.toFixed(2)} hours</p>
                     <p style={{ color: neonTextColors[1] }}><strong>Effort by Activity Type:</strong></p>
@@ -382,3 +382,4 @@ const Home: React.FC = () => {
 };
 
 export default Home;
+
