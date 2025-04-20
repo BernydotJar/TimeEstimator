@@ -135,6 +135,20 @@ const Home: React.FC = () => {
     const { toast } = useToast();
     const [theme, setTheme] = React.useState<"light" | "dark">("light");
 
+    // Estimate Overview States
+    const [coreEffort, setCoreEffort] = useState(0);
+    const [supervisedEffort, setSupervisedEffort] = useState(0);
+    const [effortByActivityType, setEffortByActivityType] = useState<{ [key: string]: number }>({});
+    const [contingencyEffort, setContingencyEffort] = useState(0);
+    const [pmEffort, setPmEffort] = useState(0);
+    const [saEffort, setSaEffort] = useState(0);
+    const [sddEffort, setSddEffort] = useState(0);
+    const [releaseConfigEffort, setReleaseConfigEffort] = useState(0);
+    const [userManualEffort, setUserManualEffort] = useState(0);
+    const [grandTotalEffort, setGrandTotalEffort] = useState(0);
+
+    const contingencyPercentage = 0.15; // 15% contingency
+
     // Theme Switcher function with confetti effect (using a simplified visual feedback)
     const toggleTheme = useCallback(() => {
         setTheme(prevTheme => prevTheme === "light" ? "dark" : "light");
@@ -176,6 +190,54 @@ const Home: React.FC = () => {
             description: "New activity has been added to the table.",
         });
     };
+
+    // Calculate Estimate Overview when activities change
+    useEffect(() => {
+        let total = 0;
+        let core = 0;
+        let supervised = 0;
+        const effortByType: { [key: string]: number } = {};
+
+        activities.forEach(activity => {
+            total += activity.effort;
+            if (activity.coreSupervised === 'core') {
+                core += activity.effort;
+            } else if (activity.coreSupervised === 'supervised') {
+                supervised += activity.effort;
+            }
+
+            if (effortByType[activity.activityType]) {
+                effortByType[activity.activityType] += activity.effort;
+            } else {
+                effortByType[activity.activityType] = activity.effort;
+            }
+        });
+
+        setTotalEffort(total);
+        setCoreEffort(core);
+        setSupervisedEffort(supervised);
+        setEffortByActivityType(effortByType);
+
+        // Calculate contingency and other efforts
+        const contEffort = total * contingencyPercentage;
+        const pm = total * 0.05;
+        const sa = total * 0.05;
+        const sdd = total * 0.05;
+        const release = total * 0.025;
+        const userManual = total * 0.025;
+
+        setContingencyEffort(contEffort);
+        setPmEffort(pm);
+        setSaEffort(sa);
+        setSddEffort(sdd);
+        setReleaseConfigEffort(release);
+        setUserManualEffort(userManual);
+
+        // Calculate grand total
+        const grandTotal = total + contEffort + pm + sa + sdd + release + userManual;
+        setGrandTotalEffort(grandTotal);
+
+    }, [activities, contingencyPercentage]);
 
     return (
         <div className="container mx-auto p-4 dark:bg-black dark:text-white">
@@ -242,8 +304,7 @@ const Home: React.FC = () => {
             <Separator className="my-4" />
 
             {/* Data Table Display */}
-            <CardNeon className="glassmorphism neon-border-glow mb-4" style={{ position: 'relative', zIndex: 1 }}>
-                <CardHeader >
+            <CardNeon className="glassmorphism">                <CardHeader >
                     <CardTitle>Activity Overview</CardTitle>
                     <CardDescription>A summary of all activities.</CardDescription>
                 </CardHeader>
@@ -288,15 +349,30 @@ const Home: React.FC = () => {
                     </Table>
                 </CardContent>
             </CardNeon>
-
+            <Separator className="my-4" />
             {/* Estimate Overview */}
-            <CardNeon className="glassmorphism">
+            <CardNeon className="glassmorphism neon-border-glow mb-4" style={{ position: 'relative', zIndex: 1 }}>
                 <CardHeader>
                     <CardTitle>Estimate Overview</CardTitle>
                     <CardDescription>Summary of the estimation.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <p>Total Effort: {totalEffort} hours</p>
+                    <p><strong>Total Effort:</strong> {totalEffort} hours</p>
+                    <p><strong>Total Core Effort:</strong> {coreEffort} hours</p>
+                    <p><strong>Total Supervised Effort:</strong> {supervisedEffort} hours</p>
+                    <p><strong>Effort by Activity Type:</strong></p>
+                    <ul>
+                        {Object.entries(effortByActivityType).map(([type, effort]) => (
+                            <li key={type}>{type}: {effort} hours</li>
+                        ))}
+                    </ul>
+                    <p><strong>Contingency ({contingencyPercentage * 100}%):</strong> {contingencyEffort} hours</p>
+                    <p><strong>Project Management:</strong> {pmEffort} hours</p>
+                    <p><strong>Solution Architect:</strong> {saEffort} hours</p>
+                    <p><strong>SDD:</strong> {sddEffort} hours</p>
+                    <p><strong>Release and Configuration Guide:</strong> {releaseConfigEffort} hours</p>
+                    <p><strong>User Manual:</strong> {userManualEffort} hours</p>
+                    <p><strong>Grand Total Effort:</strong> {grandTotalEffort} hours</p>
                 </CardContent >
             </CardNeon>
         </div>
