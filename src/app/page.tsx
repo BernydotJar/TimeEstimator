@@ -357,22 +357,22 @@ const Home: React.FC = () => {
                     <CardDescription>Summary of the estimation.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <p><strong>Total Effort:</strong> {totalEffort} hours</p>
-                    <p><strong>Total Core Effort:</strong> {coreEffort} hours</p>
-                    <p><strong>Total Supervised Effort:</strong> {supervisedEffort} hours</p>
-                    <p><strong>Effort by Activity Type:</strong></p>
+                    <p style={{ color: '#39FF14' }}><strong>Total Effort:</strong> {totalEffort} hours</p>
+                    <p style={{ color: '#00FFFF' }}><strong>Total Core Effort:</strong> {coreEffort} hours</p>
+                    <p style={{ color: '#FF69B4' }}><strong>Total Supervised Effort:</strong> {supervisedEffort} hours</p>
+                    <p style={{ color: '#39FF14' }}><strong>Effort by Activity Type:</strong></p>
                     <ul>
                         {Object.entries(effortByActivityType).map(([type, effort]) => (
-                            <li key={type}>{type}: {effort} hours</li>
+                            <li key={type} style={{ color: '#00FFFF' }}>{type}: {effort} hours</li>
                         ))}
                     </ul>
-                    <p><strong>Contingency ({contingencyPercentage * 100}%):</strong> {contingencyEffort} hours</p>
-                    <p><strong>Project Management:</strong> {pmEffort} hours</p>
-                    <p><strong>Solution Architect:</strong> {saEffort} hours</p>
-                    <p><strong>SDD:</strong> {sddEffort} hours</p>
-                    <p><strong>Release and Configuration Guide:</strong> {releaseConfigEffort} hours</p>
-                    <p><strong>User Manual:</strong> {userManualEffort} hours</p>
-                    <p><strong>Grand Total Effort:</strong> {grandTotalEffort} hours</p>
+                    <p style={{ color: '#FF69B4' }}><strong>Contingency ({contingencyPercentage * 100}%):</strong> {contingencyEffort} hours</p>
+                    <p style={{ color: '#39FF14' }}><strong>Project Management:</strong> {pmEffort} hours</p>
+                    <p style={{ color: '#00FFFF' }}><strong>Solution Architect:</strong> {saEffort} hours</p>
+                    <p style={{ color: '#FF69B4' }}><strong>SDD:</strong> {sddEffort} hours</p>
+                    <p style={{ color: '#39FF14' }}><strong>Release and Configuration Guide:</strong> {releaseConfigEffort} hours</p>
+                    <p style={{ color: '#00FFFF' }}><strong>User Manual:</strong> {userManualEffort} hours</p>
+                    <p style={{ color: '#FF69B4', fontSize: '1.2em' }}><strong>Grand Total Effort:</strong> {grandTotalEffort} hours</p>
                 </CardContent >
             </CardNeon>
         </div>
