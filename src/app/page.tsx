@@ -1,5 +1,5 @@
 "use client";
-
+import { rpaToolSalaryIndexes, activityEffortMatrix, exceptionHandlingMultipliers } from "./data";
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -46,6 +46,10 @@ interface Activity {
   effort: number;
   businessException: string;
   assumption: string;
+  rpaTool: string;
+  applicationType: string;
+  detailedActivityType: string;
+  exceptionHandlingComplexity: string;
 }
 const ConfettiBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -143,6 +147,10 @@ const Home: React.FC = () => {
     effort: 0,
     businessException: "",
     assumption: "",
+    rpaTool: "",
+    applicationType: "",
+    detailedActivityType: "",
+    exceptionHandlingComplexity: "",
   });
 
   const [totalEffort, setTotalEffort] = useState(0);
@@ -211,6 +219,10 @@ const Home: React.FC = () => {
       effort: 0,
       businessException: "",
       assumption: "",
+      rpaTool: "",
+      applicationType: "",
+      detailedActivityType: "",
+      exceptionHandlingComplexity: "",
     });
 
     toast({
@@ -237,8 +249,27 @@ const Home: React.FC = () => {
     let core = 0;
     let supervised = 0;
     const effortByType: { [key: string]: number } = {};
-    activities.forEach((activity) => {
-      total += activity.effort;
+
+    activities.forEach((activity) => {      
+      const baseEffort = activityEffortMatrix[activity.rpaTool]?.[activity.applicationType]?.[activity.detailedActivityType] ?? 0;
+      const exceptionHandlingMultiplier = exceptionHandlingMultipliers[activity.exceptionHandlingComplexity] || 0;
+      const rpaToolMultiplier = rpaToolSalaryIndexes[activity.rpaTool] || 1;
+      
+      let calculatedEffort = baseEffort * (1 + exceptionHandlingMultiplier) * rpaToolMultiplier;
+      if (isNaN(calculatedEffort)) {
+        console.error("Invalid effort calculation for activity:", activity);
+        calculatedEffort = 0; 
+      }
+
+      
+      if (isNaN(calculatedEffort)) {
+        console.error("Invalid effort calculation for activity:", activity);
+        return; 
+      }
+
+      
+      total += calculatedEffort;
+
       if (activity.coreSupervised === "core") {
         core += activity.effort;
       } else if (activity.coreSupervised === "supervised") {
@@ -248,7 +279,8 @@ const Home: React.FC = () => {
         effortByType[activity.activityType] += activity.effort;
       } else {
         effortByType[activity.activityType] = activity.effort;
-      }
+      }      
+
     });
     setTotalEffort(total);
     setCoreEffort(core);
@@ -425,6 +457,10 @@ const Home: React.FC = () => {
                 <TableHead>Effort [h]</TableHead>
                 <TableHead>Business Exception</TableHead>
                 <TableHead>Assumption</TableHead>
+                <TableHead>RPA Tool</TableHead>
+                <TableHead>Application Type</TableHead>
+                <TableHead>Detailed Activity Type</TableHead>
+                <TableHead>Exception Handling Complexity</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -439,6 +475,10 @@ const Home: React.FC = () => {
                   <TableCell>{activity.effort}</TableCell>
                   <TableCell>{activity.businessException}</TableCell>
                   <TableCell>{activity.assumption}</TableCell>
+                  <TableCell>{activity.rpaTool}</TableCell>
+                  <TableCell>{activity.applicationType}</TableCell>
+                  <TableCell>{activity.detailedActivityType}</TableCell>
+                  <TableCell>{activity.exceptionHandlingComplexity}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

@@ -4,7 +4,7 @@ export const rpaToolSalaryIndexes: { [key: string]: number } = {
   "Automation Anywhere": 1.15,
   "Power APPs": 0.9,
   "Python": 1.0,
-  "Power bi related": 0.8,
+  "Power BI": 0.8,
 };
 
 export const activityEffortMatrix: {
