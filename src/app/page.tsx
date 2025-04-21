@@ -304,13 +304,8 @@ const Home: React.FC = () => {
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="applicationName">Application Name</Label>
+            <Label htmlFor="applicationName" className="neon-label">Application Name</Label>
             <Input
-              style={{
-                border: `1px solid ${neonTextColors[0]}`,
-                boxShadow: `0 0 5px ${neonTextColors[0]}`,
-                color: neonTextColors[0],
-              }}
               className="neon-input"
               type="text"
               id="applicationName"
@@ -320,13 +315,8 @@ const Home: React.FC = () => {
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="adapter">Adapter</Label>
+            <Label htmlFor="adapter" className="neon-label">Adapter</Label>
             <Input
-              style={{
-                border: `1px solid ${neonTextColors[1]}`,
-                boxShadow: `0 0 5px ${neonTextColors[1]}`,
-                color: neonTextColors[1],
-              }}
               className="neon-input"
               type="text"
               id="adapter"
@@ -336,13 +326,8 @@ const Home: React.FC = () => {
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="activityName">Activity Name</Label>
+            <Label htmlFor="activityName" className="neon-label">Activity Name</Label>
             <Input
-              style={{
-                border: `1px solid ${neonTextColors[0]}`,
-                boxShadow: `0 0 5px ${neonTextColors[0]}`,
-                color: neonTextColors[0],
-              }}
               className="neon-input"
               type="text"
               id="activityName"
@@ -352,13 +337,8 @@ const Home: React.FC = () => {
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="activityType">Activity Type</Label>
+            <Label htmlFor="activityType" className="neon-label">Activity Type</Label>
             <Input
-              style={{
-                border: `1px solid ${neonTextColors[1]}`,
-                boxShadow: `0 0 5px ${neonTextColors[1]}`,
-                color: neonTextColors[1],
-              }}
               className="neon-input"
               type="text"
               id="activityType"
@@ -368,7 +348,7 @@ const Home: React.FC = () => {
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="coreSupervised">Core/Supervised</Label>
+            <Label htmlFor="coreSupervised" className="neon-label">Core/Supervised</Label>
             <select
               style={{ color: neonTextColors[0] }}
               className="neon-select rounded-md shadow-sm border-gray-300 dark:bg-dark-gray dark:border-gray-600 dark:text-white"
@@ -384,7 +364,7 @@ const Home: React.FC = () => {
             </select>
           </div>
           <div className="flex items-center space-x-2">
-            <Label htmlFor="reused">Reused?</Label>
+            <Label htmlFor="reused" className="neon-label">Reused?</Label>
             <Switch style={{ color: neonTextColors[1] }}
               id="reused"
               name="reused"
@@ -395,13 +375,8 @@ const Home: React.FC = () => {
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="effort">Effort [h]</Label>
+            <Label htmlFor="effort" className="neon-label">Effort [h]</Label>
             <Input
-              style={{
-                border: `1px solid ${neonTextColors[0]}`,
-                boxShadow: `0 0 5px ${neonTextColors[0]}`,
-                color: neonTextColors[0],
-              }}
               className="neon-input"
               type="number"
               id="effort"
@@ -411,13 +386,8 @@ const Home: React.FC = () => {
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="businessException">Business Exception</Label>
+            <Label htmlFor="businessException" className="neon-label">Business Exception</Label>
             <Input
-              style={{
-                border: `1px solid ${neonTextColors[1]}`,
-                boxShadow: `0 0 5px ${neonTextColors[1]}`,
-                color: neonTextColors[1],
-              }}
               className="neon-input"
               type="text"
               id="businessException"
@@ -427,13 +397,8 @@ const Home: React.FC = () => {
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="assumption">Assumption</Label>
+            <Label htmlFor="assumption" className="neon-label">Assumption</Label>
             <Input
-              style={{
-                border: `1px solid ${neonTextColors[0]}`,
-                boxShadow: `0 0 5px ${neonTextColors[0]}`,
-                color: neonTextColors[0],
-              }}
               className="neon-input"
               type="text"
               id="assumption"

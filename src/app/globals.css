@@ -117,3 +117,14 @@ body {
     0 0 30px #f0f,
     0 0 40px #f0f; /* More intense glow on hover */
 }
+
+.neon-label {
+  color: #00FFFF; /* Electric Blue */
+}
+.dark .neon-label {
+  color: #FFFFFF; /* White in dark mode */
+}
+.neon-input {
+  border: 1px solid #00FFFF;
+  box-shadow: 0 0 5px #00FFFF;
+}
