@@ -24,6 +24,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { Icons } from "@/components/icons";
 // Define the data structure for an activity
@@ -162,7 +170,7 @@ const Home: React.FC = () => {
     releaseConfig: 0.025,
     userManual: 0.025,
   });
-    const [grandTotalEffort, setGrandTotalEffort] = useState(0);
+  const [grandTotalEffort, setGrandTotalEffort] = useState(0);
   // Theme Switcher function with confetti effect (using a simplified visual feedback)
   const toggleTheme = useCallback(() => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
@@ -268,8 +276,8 @@ const Home: React.FC = () => {
   return (
     <div className="container mx-auto p-4 dark:bg-black dark:text-white">
       <ConfettiBackground />
-      {/* Theme Switcher */}
-      <div className="flex justify-end mb-4">
+      <div className="flex justify-end items-center mb-4">
+        {" "}
         <Button variant="outline" size="icon" onClick={toggleTheme}>
           {theme === "light" ? (
             <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
@@ -278,22 +286,19 @@ const Home: React.FC = () => {
           )}
           <span className="sr-only">Toggle theme</span>
         </Button>
-      </div>
+      </div>{" "}
       {/* Data Input Form */}
-
       <CardNeon
-        className="glassmorphism neon-border-glow mb-4"
+        className="glassmorphism neon-border-glow"
         style={{ position: "relative", zIndex: 1 }}
       >
         <CardHeader>
           <CardTitle style={{ color: neonTextColors[0] }}>
             Activity Input
           </CardTitle>
-          <CardDescription style={{ color: neonTextColors[1] }}>
-            Enter the details for the activity.           
-
-
-          </CardDescription>
+          <CardDescription
+            style={{ color: neonTextColors[1] }}
+          ></CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="grid gap-2">
@@ -395,21 +400,86 @@ const Home: React.FC = () => {
         </CardContent>
       </CardNeon>
 
-          {/* Configuration UI */}
-          {showConfig && (
-            <CardNeon
-              className="glassmorphism neon-border-glow mb-4"
-              style={{ position: "relative", zIndex: 1 }}
+      <Separator className="my-4" /> {/* Data Table Display */}
+      <CardNeon className="glassmorphism">
+        <CardHeader>
+          <CardTitle>Activity Overview</CardTitle>
+          <CardDescription>A summary of all activities.</CardDescription>
+        </CardHeader>
+        <CardContent className="overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Application Name</TableHead>
+                <TableHead>Adapter</TableHead>
+                <TableHead>Activity Name</TableHead>
+                <TableHead>Activity Type</TableHead>
+                <TableHead>Core/Supervised</TableHead>
+                <TableHead>Reused?</TableHead>
+                <TableHead>Effort [h]</TableHead>
+                <TableHead>Business Exception</TableHead>
+                <TableHead>Assumption</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {activities.map((activity, index) => (
+                <TableRow key={index}>
+                  <TableCell>{activity.applicationName}</TableCell>
+                  <TableCell>{activity.adapter}</TableCell>
+                  <TableCell>{activity.activityName}</TableCell>
+                  <TableCell>{activity.activityType}</TableCell>
+                  <TableCell>{activity.coreSupervised}</TableCell>
+                  <TableCell>{activity.reused ? "Yes" : "No"}</TableCell>
+                  <TableCell>{activity.effort}</TableCell>
+                  <TableCell>{activity.businessException}</TableCell>
+                  <TableCell>{activity.assumption}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={6}>Total</TableCell>
+                <TableCell>
+                  {activities
+                    .reduce((sum, activity) => sum + Number(activity.effort), 0)
+                    .toFixed(2)}
+                </TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </CardContent>
+      </CardNeon>
+      <Separator className="my-4" /> {/* Estimate Overview */}
+      <CardNeon className="glassmorphism neon-border-glow mb-4">
+        <CardHeader className="flex items-center justify-between">
+          <CardTitle style={{ color: neonTextColors[0] }}>
+            Estimate Overview
+          </CardTitle>
+          <Dialog open={showConfig} onOpenChange={setShowConfig}>
+            <DialogTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="ml-4"
+              >
+                {showConfig ? "Hide Config" : "Show Config"}
+              </Button>
+            </DialogTrigger>
+            <DialogContent
+              className="glassmorphism neon-border-glow w-full sm:max-w-[425px]"
+              onClick={(e) => e.stopPropagation()}
             >
-              <CardHeader>
-                <CardTitle style={{ color: neonTextColors[0] }}>
+              <DialogHeader>
+                <DialogTitle style={{ color: neonTextColors[0] }}>
                   Overhead Configuration
-                </CardTitle>
-                <CardDescription style={{ color: neonTextColors[1] }}>
-                  Configure overhead percentages.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="grid gap-4">
+                </DialogTitle>
+                <DialogDescription>
+                  Configure the overhead percentages for the effort estimation.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4">
                 <div className="grid gap-2">
                   <Label htmlFor="contingency">Contingency (%)</Label>
                   <Input
@@ -472,90 +542,16 @@ const Home: React.FC = () => {
                     onChange={(e) => handleOverheadChange(e, "userManual")}
                   />
                 </div>
-              </CardContent>
-            </CardNeon>
-          )}
-      <Separator className="my-4" />
-      {/* Data Table Display */}
-      <CardNeon className="glassmorphism">
-        {" "}
-        <CardHeader>
-          <CardTitle>Activity Overview</CardTitle>
-          <CardDescription>A summary of all activities.</CardDescription>
+              </div>
+            </DialogContent>
+          </Dialog>
         </CardHeader>
-        <CardContent className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Application Name</TableHead>
-                <TableHead>Adapter</TableHead>
-                <TableHead>Activity Name</TableHead>
-                <TableHead>Activity Type</TableHead>
-                <TableHead>Core/Supervised</TableHead>
-                <TableHead>Reused?</TableHead>
-                <TableHead>Effort [h]</TableHead>
-                <TableHead>Business Exception</TableHead>
-                <TableHead>Assumption</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {activities.map((activity, index) => (
-                <TableRow key={index}>
-                  <TableCell>{activity.applicationName}</TableCell>
-                  <TableCell>{activity.adapter}</TableCell>
-                  <TableCell>{activity.activityName}</TableCell>
-                  <TableCell>{activity.activityType}</TableCell>
-                  <TableCell>{activity.coreSupervised}</TableCell>
-                  <TableCell>{activity.reused ? "Yes" : "No"}</TableCell>
-                  <TableCell>{activity.effort}</TableCell>
-                  <TableCell>{activity.businessException}</TableCell>
-                  <TableCell>{activity.assumption}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TableCell colSpan={6}>Total</TableCell>
-                <TableCell>
-                  {activities
-                    .reduce((sum, activity) => sum + Number(activity.effort), 0)
-                    .toFixed(2)}
-                </TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </CardContent>
-      </CardNeon>
-      <Separator className="my-4" />
-      {/* Estimate Overview */}
-      <CardNeon
-        className="glassmorphism neon-border-glow mb-4"
-        style={{ position: "relative", zIndex: 1 }}>
-                    <div className="flex justify-end mb-4">
-          <Button
-            id="overhead-config-toggle-button"
-            className="rainbow-button"
-            onClick={() => setShowConfig(!showConfig)}
-          >
-            {showConfig ? "Hide Overhead Config" : "Show Overhead Config"}
-          </Button>
-        </div>
-        <CardHeader>
-          <CardTitle style={{ color: neonTextColors[0] }}>
-            Estimate Overview
-          </CardTitle>
+        <CardContent>
           <CardDescription style={{ color: neonTextColors[1] }}>
             Summary of the estimation.
           </CardDescription>
-        </CardHeader>
-
-
-        <CardContent>
           <p style={{ color: neonTextColors[0] }}>
-            <strong>Total Effort:</strong> {Number(totalEffort).toFixed(2)}{" "}
-            hours
+            <strong>Total Effort:</strong> {Number(totalEffort).toFixed(2)} hours
           </p>
           <p style={{ color: neonTextColors[1] }}>
             <strong>Total Core Effort:</strong>{" "}
@@ -566,7 +562,6 @@ const Home: React.FC = () => {
             })()}{" "}
             hours
           </p>
-
           <p style={{ color: neonTextColors[0] }}>
             <strong>Total Supervised Effort:</strong>{" "}
             {supervisedEffort.toFixed(2)} hours
@@ -575,18 +570,16 @@ const Home: React.FC = () => {
             <strong>Effort by Activity Type:</strong>
           </p>
           <ul>
-            {Object.entries(effortByActivityType).map(
-              ([type, effort], index) => (
-                <li
-                  key={type}
-                  style={{
-                    color: neonTextColors[index % neonTextColors.length],
-                  }}
-                >
-                  {type} {effort.toFixed(2)} hours
-                </li>
-              ),
-            )}
+            {Object.entries(effortByActivityType).map(([type, effort], index) => (
+              <li
+                key={type}
+                style={{
+                  color: neonTextColors[index % neonTextColors.length],
+                }}
+              >
+                {type} {effort.toFixed(2)} hours
+              </li>
+            ))}
           </ul>
           <p style={{ color: neonTextColors[0] }}>
             <strong>
