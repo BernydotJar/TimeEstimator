@@ -124,7 +124,14 @@ body {
 .dark .neon-label {
   color: #FFFFFF; /* White in dark mode */
 }
-
+.neon-input1 {
+  border: 1px solid #00FFFF;
+  box-shadow: 0 0 5px #00FFFF;
+}
+.neon-input2 {
+  border: 1px solid hsl(303, 100%, 50%);
+  box-shadow: 0 0 5px #ff00bf;
+}
 .neon-select {
   background-color: transparent;
   border: 1px solid #00FFFF; /* Electric Blue */
@@ -132,7 +139,6 @@ body {
   color: #00FFFF;
   /* Keep other existing styling as needed */
 }
-
 .dark .neon-select {
   border-color: #00FFFF; /* Maintain Electric Blue for border in dark mode */
   box-shadow: 0 0 5px #00FFFF;
