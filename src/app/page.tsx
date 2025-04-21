@@ -532,17 +532,8 @@ const Home: React.FC = () => {
       {/* Estimate Overview */}
       <CardNeon
         className="glassmorphism neon-border-glow mb-4"
-        style={{ position: "relative", zIndex: 1 }}
-      >
-        <CardHeader>
-          <CardTitle style={{ color: neonTextColors[0] }}>
-            Estimate Overview
-          </CardTitle>
-          <CardDescription style={{ color: neonTextColors[1] }}>
-            Summary of the estimation.
-          </CardDescription>
-        </CardHeader>
-        <div className="flex justify-end mb-4">
+        style={{ position: "relative", zIndex: 1 }}>
+                    <div className="flex justify-end mb-4">
           <Button
             id="overhead-config-toggle-button"
             className="rainbow-button"
@@ -551,6 +542,15 @@ const Home: React.FC = () => {
             {showConfig ? "Hide Overhead Config" : "Show Overhead Config"}
           </Button>
         </div>
+        <CardHeader>
+          <CardTitle style={{ color: neonTextColors[0] }}>
+            Estimate Overview
+          </CardTitle>
+          <CardDescription style={{ color: neonTextColors[1] }}>
+            Summary of the estimation.
+          </CardDescription>
+        </CardHeader>
+
 
         <CardContent>
           <p style={{ color: neonTextColors[0] }}>
