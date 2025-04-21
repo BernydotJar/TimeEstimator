@@ -298,12 +298,20 @@ const Home: React.FC = () => {
           </CardTitle>
           <CardDescription
             style={{ color: neonTextColors[1] }}
-          ></CardDescription>
+          >
+            Add a new Activity
+          </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="grid gap-2">
             <Label htmlFor="applicationName">Application Name</Label>
             <Input
+              style={{
+                border: `1px solid ${neonTextColors[0]}`,
+                boxShadow: `0 0 5px ${neonTextColors[0]}`,
+                color: neonTextColors[0],
+              }}
+              className="neon-input"
               type="text"
               id="applicationName"
               name="applicationName"
@@ -314,6 +322,12 @@ const Home: React.FC = () => {
           <div className="grid gap-2">
             <Label htmlFor="adapter">Adapter</Label>
             <Input
+              style={{
+                border: `1px solid ${neonTextColors[1]}`,
+                boxShadow: `0 0 5px ${neonTextColors[1]}`,
+                color: neonTextColors[1],
+              }}
+              className="neon-input"
               type="text"
               id="adapter"
               name="adapter"
@@ -324,6 +338,12 @@ const Home: React.FC = () => {
           <div className="grid gap-2">
             <Label htmlFor="activityName">Activity Name</Label>
             <Input
+              style={{
+                border: `1px solid ${neonTextColors[0]}`,
+                boxShadow: `0 0 5px ${neonTextColors[0]}`,
+                color: neonTextColors[0],
+              }}
+              className="neon-input"
               type="text"
               id="activityName"
               name="activityName"
@@ -334,6 +354,12 @@ const Home: React.FC = () => {
           <div className="grid gap-2">
             <Label htmlFor="activityType">Activity Type</Label>
             <Input
+              style={{
+                border: `1px solid ${neonTextColors[1]}`,
+                boxShadow: `0 0 5px ${neonTextColors[1]}`,
+                color: neonTextColors[1],
+              }}
+              className="neon-input"
               type="text"
               id="activityType"
               name="activityType"
@@ -344,6 +370,8 @@ const Home: React.FC = () => {
           <div className="grid gap-2">
             <Label htmlFor="coreSupervised">Core/Supervised</Label>
             <select
+              style={{ color: neonTextColors[0] }}
+              className="neon-select rounded-md shadow-sm border-gray-300 dark:bg-dark-gray dark:border-gray-600 dark:text-white"
               id="coreSupervised"
               name="coreSupervised"
               value={formData.coreSupervised}
@@ -357,7 +385,7 @@ const Home: React.FC = () => {
           </div>
           <div className="flex items-center space-x-2">
             <Label htmlFor="reused">Reused?</Label>
-            <Switch
+            <Switch style={{ color: neonTextColors[1] }}
               id="reused"
               name="reused"
               checked={formData.reused}
@@ -369,6 +397,12 @@ const Home: React.FC = () => {
           <div className="grid gap-2">
             <Label htmlFor="effort">Effort [h]</Label>
             <Input
+              style={{
+                border: `1px solid ${neonTextColors[0]}`,
+                boxShadow: `0 0 5px ${neonTextColors[0]}`,
+                color: neonTextColors[0],
+              }}
+              className="neon-input"
               type="number"
               id="effort"
               name="effort"
@@ -379,6 +413,12 @@ const Home: React.FC = () => {
           <div className="grid gap-2">
             <Label htmlFor="businessException">Business Exception</Label>
             <Input
+              style={{
+                border: `1px solid ${neonTextColors[1]}`,
+                boxShadow: `0 0 5px ${neonTextColors[1]}`,
+                color: neonTextColors[1],
+              }}
+              className="neon-input"
               type="text"
               id="businessException"
               name="businessException"
@@ -389,6 +429,12 @@ const Home: React.FC = () => {
           <div className="grid gap-2">
             <Label htmlFor="assumption">Assumption</Label>
             <Input
+              style={{
+                border: `1px solid ${neonTextColors[0]}`,
+                boxShadow: `0 0 5px ${neonTextColors[0]}`,
+                color: neonTextColors[0],
+              }}
+              className="neon-input"
               type="text"
               id="assumption"
               name="assumption"
@@ -469,8 +515,7 @@ const Home: React.FC = () => {
             </DialogTrigger>
             <DialogContent
               className="glassmorphism neon-border-glow w-full sm:max-w-[425px]"
-              onClick={(e) => e.stopPropagation()}
-            >
+              onClick={(e) => e.stopPropagation()}>
               <DialogHeader>
                 <DialogTitle style={{ color: neonTextColors[0] }}>
                   Overhead Configuration
