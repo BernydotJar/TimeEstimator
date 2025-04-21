@@ -123,6 +123,7 @@ const ConfettiBackground: React.FC = () => {
 };
 
 const Home: React.FC = () => {
+  const [showConfig, setShowConfig] = useState<boolean>(false);
   const [activities, setActivities] = useState<Activity[]>([]);
   const [formData, setFormData] = useState<Activity>({
     applicationName: "",
@@ -161,7 +162,7 @@ const Home: React.FC = () => {
     releaseConfig: 0.025,
     userManual: 0.025,
   });
-  const [grandTotalEffort, setGrandTotalEffort] = useState(0);
+    const [grandTotalEffort, setGrandTotalEffort] = useState(0);
   // Theme Switcher function with confetti effect (using a simplified visual feedback)
   const toggleTheme = useCallback(() => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
@@ -252,7 +253,6 @@ const Home: React.FC = () => {
     const sdd = total * overheadPercentages.sdd;
     const release = total * overheadPercentages.releaseConfig;
     const userManual = total * overheadPercentages.userManual;
-
     setContingencyEffort(contEffort);
     setPmEffort(pm);
     setSaEffort(sa);
@@ -280,6 +280,15 @@ const Home: React.FC = () => {
         </Button>
       </div>
 
+      <div className="flex justify-end mb-4">
+        <Button
+          id="overhead-config-toggle-button"
+          className="rainbow-button"
+          onClick={() => setShowConfig(!showConfig)}
+        >
+          {showConfig ? "Hide Overhead Config" : "Show Overhead Config"}
+        </Button>
+      </div>
       {/* Data Input Form */}
 
       <CardNeon
@@ -291,7 +300,9 @@ const Home: React.FC = () => {
             Activity Input
           </CardTitle>
           <CardDescription style={{ color: neonTextColors[1] }}>
-            Enter the details for the activity.
+            Enter the details for the activity.           
+
+
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
@@ -393,84 +404,87 @@ const Home: React.FC = () => {
           <Button onClick={addActivity}>Add Activity</Button>
         </CardContent>
       </CardNeon>
-      {/* Configuration UI */}
-      <CardNeon
-        className="glassmorphism neon-border-glow mb-4"
-        style={{ position: "relative", zIndex: 1 }}
-      >
-        <CardHeader>
-          <CardTitle style={{ color: neonTextColors[0] }}>
-            Overhead Configuration
-          </CardTitle>
-          <CardDescription style={{ color: neonTextColors[1] }}>
-            Configure overhead percentages.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="grid gap-4">
-          <div className="grid gap-2">
-            <Label htmlFor="contingency">Contingency (%)</Label>
-            <Input
-              type="number"
-              id="contingency"
-              name="contingency"
-              value={(overheadPercentages.contingency * 100).toFixed(2)}
-              onChange={(e) => handleOverheadChange(e, "contingency")}
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="pm">Project Management (%)</Label>
-            <Input
-              type="number"
-              id="pm"
-              name="pm"
-              value={(overheadPercentages.pm * 100).toFixed(2)}
-              onChange={(e) => handleOverheadChange(e, "pm")}
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="sa">Solution Architect (%)</Label>
-            <Input
-              type="number"
-              id="sa"
-              name="sa"
-              value={(overheadPercentages.sa * 100).toFixed(2)}
-              onChange={(e) => handleOverheadChange(e, "sa")}
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="sdd">SDD (%)</Label>
-            <Input
-              type="number"
-              id="sdd"
-              name="sdd"
-              value={(overheadPercentages.sdd * 100).toFixed(2)}
-              onChange={(e) => handleOverheadChange(e, "sdd")}
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="releaseConfig">
-              Release and Configuration Guide (%)
-            </Label>
-            <Input
-              type="number"
-              id="releaseConfig"
-              name="releaseConfig"
-              value={(overheadPercentages.releaseConfig * 100).toFixed(2)}
-              onChange={(e) => handleOverheadChange(e, "releaseConfig")}
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="userManual">User Manual (%)</Label>
-            <Input
-              type="number"
-              id="userManual"
-              name="userManual"
-              value={(overheadPercentages.userManual * 100).toFixed(2)}
-              onChange={(e) => handleOverheadChange(e, "userManual")}
-            />
-          </div>
-        </CardContent>
-      </CardNeon>
+
+          {/* Configuration UI */}
+          {showConfig && (
+            <CardNeon
+              className="glassmorphism neon-border-glow mb-4"
+              style={{ position: "relative", zIndex: 1 }}
+            >
+              <CardHeader>
+                <CardTitle style={{ color: neonTextColors[0] }}>
+                  Overhead Configuration
+                </CardTitle>
+                <CardDescription style={{ color: neonTextColors[1] }}>
+                  Configure overhead percentages.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="grid gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="contingency">Contingency (%)</Label>
+                  <Input
+                    type="number"
+                    id="contingency"
+                    name="contingency"
+                    value={(overheadPercentages.contingency * 100).toFixed(2)}
+                    onChange={(e) => handleOverheadChange(e, "contingency")}
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="pm">Project Management (%)</Label>
+                  <Input
+                    type="number"
+                    id="pm"
+                    name="pm"
+                    value={(overheadPercentages.pm * 100).toFixed(2)}
+                    onChange={(e) => handleOverheadChange(e, "pm")}
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="sa">Solution Architect (%)</Label>
+                  <Input
+                    type="number"
+                    id="sa"
+                    name="sa"
+                    value={(overheadPercentages.sa * 100).toFixed(2)}
+                    onChange={(e) => handleOverheadChange(e, "sa")}
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="sdd">SDD (%)</Label>
+                  <Input
+                    type="number"
+                    id="sdd"
+                    name="sdd"
+                    value={(overheadPercentages.sdd * 100).toFixed(2)}
+                    onChange={(e) => handleOverheadChange(e, "sdd")}
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="releaseConfig">
+                    Release and Configuration Guide (%)
+                  </Label>
+                  <Input
+                    type="number"
+                    id="releaseConfig"
+                    name="releaseConfig"
+                    value={(overheadPercentages.releaseConfig * 100).toFixed(2)}
+                    onChange={(e) => handleOverheadChange(e, "releaseConfig")}
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="userManual">User Manual (%)</Label>
+                  <Input
+                    type="number"
+                    id="userManual"
+                    name="userManual"
+                    value={(overheadPercentages.userManual * 100).toFixed(2)}
+                    onChange={(e) => handleOverheadChange(e, "userManual")}
+                  />
+                </div>
+              </CardContent>
+            </CardNeon>
+          )}
       <Separator className="my-4" />
       {/* Data Table Display */}
       <CardNeon className="glassmorphism">
