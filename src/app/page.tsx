@@ -346,39 +346,70 @@ const Home: React.FC = () => {
               onChange={handleInputChange}
             />
           </div>
-          <div className="grid gap-2">
+         <div className="grid gap-2">
             <Label htmlFor="adapter" className="neon-label">Adapter</Label>
-            <Input
-              className="neon-input2"
-              type="text"
+            <select
+              className="neon-select"
               id="adapter"
               name="adapter"
               value={formData.adapter}
               onChange={handleInputChange}
-            />
+            >
+              <option value="">Select Adapter</option>
+              <option value="API">API</option>
+              <option value="Database">Database</option>
+              <option value="Email">Email</option>
+              <option value="File System">File System</option>
+              <option value="Web">Web</option>
+              <option value="SAP">SAP</option>
+              <option value="Mainframe">Mainframe</option>
+              <option value="Terminal">Terminal</option>
+              <option value="Citrix">Citrix</option>
+            </select>
           </div>
-          <div className="grid gap-2">
-            <Label htmlFor="activityName" className="neon-label">Activity Name</Label>
-            <Input
-              className="neon-input1"
-              type="text"
-              id="activityName"
-              name="activityName"
-              value={formData.activityName}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="activityType" className="neon-label">Activity Type</Label>
-            <Input
-              className="neon-input2"
-              type="text"
-              id="activityType"
-              name="activityType"
-              value={formData.activityType}
-              onChange={handleInputChange}
-            />
-          </div>
+           <div className="grid gap-2">
+              <Label htmlFor="activityName" className="neon-label">Activity Name</Label>
+              <Input
+                className="neon-input1"
+                type="text"
+                id="activityName"
+                name="activityName"
+                value={formData.activityName}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="activityType" className="neon-label">Activity Type</Label>
+              <select
+                className="neon-select"
+                id="activityType"
+                name="activityType"
+                value={formData.activityType}
+                onChange={handleInputChange}
+              >
+                <option value="">Select Activity Type</option>
+                <option value="Application">Application</option>
+                <option value="Process">Process</option>
+                <option value="Infrastructure">Infrastructure</option>
+              </select>
+            </div>
+             <div className="grid gap-2">
+                <Label htmlFor="businessException" className="neon-label">
+                  Business Exception
+                </Label>
+                <select
+                  className="neon-select"
+                  id="businessException"
+                  name="businessException"
+                  value={formData.businessException}
+                  onChange={handleInputChange}
+                >
+                  <option value="">Select Exception Type</option>
+                  <option value="Business">Business</option>
+                  <option value="Technical">Technical</option>
+                </select>
+              </div>
+         
          <div className="grid gap-2">
             <Label htmlFor="coreSupervised" className="neon-label">Core/Supervised</Label>           
             <select
@@ -412,17 +443,7 @@ const Home: React.FC = () => {
               onChange={handleInputChange}
             />
           </div>
-          <div className="grid gap-2">
-            <Label htmlFor="businessException" className="neon-label">Business Exception</Label>
-            <Input
-              className="neon-input2"
-              type="text"
-              id="businessException"
-              name="businessException"
-              value={formData.businessException}
-              onChange={handleInputChange}
-            />
-          </div>
+          
           <div className="grid gap-2">
             <Label htmlFor="assumption" className="neon-label">Assumption</Label>
             <Input
