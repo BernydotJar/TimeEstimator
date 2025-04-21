@@ -306,7 +306,7 @@ const Home: React.FC = () => {
           <div className="grid gap-2">
             <Label htmlFor="applicationName" className="neon-label">Application Name</Label>
             <Input
-              className="neon-input"
+              className="neon-input1"
               type="text"
               id="applicationName"
               name="applicationName"
@@ -317,7 +317,7 @@ const Home: React.FC = () => {
           <div className="grid gap-2">
             <Label htmlFor="adapter" className="neon-label">Adapter</Label>
             <Input
-              className="neon-input"
+              className="neon-input2"
               type="text"
               id="adapter"
               name="adapter"
@@ -328,7 +328,7 @@ const Home: React.FC = () => {
           <div className="grid gap-2">
             <Label htmlFor="activityName" className="neon-label">Activity Name</Label>
             <Input
-              className="neon-input"
+              className="neon-input1"
               type="text"
               id="activityName"
               name="activityName"
@@ -339,7 +339,7 @@ const Home: React.FC = () => {
           <div className="grid gap-2">
             <Label htmlFor="activityType" className="neon-label">Activity Type</Label>
             <Input
-              className="neon-input"
+              className="neon-input2"
               type="text"
               id="activityType"
               name="activityType"
@@ -377,7 +377,7 @@ const Home: React.FC = () => {
           <div className="grid gap-2">
             <Label htmlFor="effort" className="neon-label">Effort [h]</Label>
             <Input
-              className="neon-input"
+              className="neon-input1"
               type="number"
               id="effort"
               name="effort"
@@ -388,7 +388,7 @@ const Home: React.FC = () => {
           <div className="grid gap-2">
             <Label htmlFor="businessException" className="neon-label">Business Exception</Label>
             <Input
-              className="neon-input"
+              className="neon-input2"
               type="text"
               id="businessException"
               name="businessException"
@@ -399,7 +399,7 @@ const Home: React.FC = () => {
           <div className="grid gap-2">
             <Label htmlFor="assumption" className="neon-label">Assumption</Label>
             <Input
-              className="neon-input"
+              className="neon-input1"
               type="text"
               id="assumption"
               name="assumption"

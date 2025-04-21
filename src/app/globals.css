@@ -103,7 +103,7 @@ body {
   box-shadow:
     0 0 7px #0ff,   /* Cyan glow */
     0 0 10px #0ff,
-    0 0 15px #f0f,  /* Pink glow */
+    0 0 15px hsl(300, 100%, 50%),  /* Pink glow */
     0 0 20px #f0f;
   transition: box-shadow 0.3s ease-in-out; /* Smooth transition for potential hover effects */
 }
@@ -119,12 +119,16 @@ body {
 }
 
 .neon-label {
-  color: #00FFFF; /* Electric Blue */
+  color: #069bff; /* Electric Blue */
 }
 .dark .neon-label {
   color: #FFFFFF; /* White in dark mode */
 }
-.neon-input {
+.neon-input1 {
   border: 1px solid #00FFFF;
   box-shadow: 0 0 5px #00FFFF;
+}
+.neon-input2 {
+  border: 1px solid hsl(303, 100%, 50%);
+  box-shadow: 0 0 5px #ff00bf;
 }
