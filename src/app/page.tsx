@@ -347,16 +347,11 @@ const Home: React.FC = () => {
               onChange={handleInputChange}
             />
           </div>
-          <div className="grid gap-2">
-            <Label htmlFor="coreSupervised" className="neon-label">Core/Supervised</Label>
+         <div className="grid gap-2">
+            <Label htmlFor="coreSupervised" className="neon-label">Core/Supervised</Label>           
             <select
               style={{ color: neonTextColors[0] }}
-              className="neon-select rounded-md shadow-sm border-gray-100 dark:bg-dark-gray dark:border-gray-300 dark:text-white"
-              id="coreSupervised"
-              name="coreSupervised"
-              value={formData.coreSupervised}
-              onChange={handleInputChange}
-              className="rounded-md shadow-sm border-gray-300 dark:bg-dark-gray dark:border-gray-600 dark:text-white"
+              className="neon-select" id="coreSupervised" name="coreSupervised" value={formData.coreSupervised} onChange={handleInputChange}
             >
               <option value="">Select</option>
               <option value="core">Core</option>

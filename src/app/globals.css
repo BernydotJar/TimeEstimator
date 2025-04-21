@@ -124,7 +124,17 @@ body {
 .dark .neon-label {
   color: #FFFFFF; /* White in dark mode */
 }
+
 .neon-select {
-  /* Removed background-color and related properties */
-  /* Keep other existing styling as needed, e.g., border, box-shadow, etc. */
+  background-color: transparent;
+  border: 1px solid #00FFFF; /* Electric Blue */
+  box-shadow: 0 0 5px #00FFFF;
+  color: #00FFFF;
+  /* Keep other existing styling as needed */
+}
+
+.dark .neon-select {
+  border-color: #00FFFF; /* Maintain Electric Blue for border in dark mode */
+  box-shadow: 0 0 5px #00FFFF;
+  color: #FFFFFF; /* White text in dark mode */
 }
