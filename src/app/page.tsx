@@ -279,16 +279,6 @@ const Home: React.FC = () => {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </div>
-
-      <div className="flex justify-end mb-4">
-        <Button
-          id="overhead-config-toggle-button"
-          className="rainbow-button"
-          onClick={() => setShowConfig(!showConfig)}
-        >
-          {showConfig ? "Hide Overhead Config" : "Show Overhead Config"}
-        </Button>
-      </div>
       {/* Data Input Form */}
 
       <CardNeon
@@ -552,6 +542,16 @@ const Home: React.FC = () => {
             Summary of the estimation.
           </CardDescription>
         </CardHeader>
+        <div className="flex justify-end mb-4">
+          <Button
+            id="overhead-config-toggle-button"
+            className="rainbow-button"
+            onClick={() => setShowConfig(!showConfig)}
+          >
+            {showConfig ? "Hide Overhead Config" : "Show Overhead Config"}
+          </Button>
+        </div>
+
         <CardContent>
           <p style={{ color: neonTextColors[0] }}>
             <strong>Total Effort:</strong> {Number(totalEffort).toFixed(2)}{" "}
