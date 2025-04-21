@@ -351,7 +351,7 @@ const Home: React.FC = () => {
             <Label htmlFor="coreSupervised" className="neon-label">Core/Supervised</Label>
             <select
               style={{ color: neonTextColors[0] }}
-              className="neon-select rounded-md shadow-sm border-gray-300 dark:bg-dark-gray dark:border-gray-600 dark:text-white"
+              className="neon-select rounded-md shadow-sm border-gray-100 dark:bg-dark-gray dark:border-gray-300 dark:text-white"
               id="coreSupervised"
               name="coreSupervised"
               value={formData.coreSupervised}
