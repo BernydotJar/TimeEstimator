@@ -18,7 +18,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Moon, Sun } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import {
-  Card as CardNeon,
+  Card,
   CardContent,
   CardDescription,
   CardHeader,
@@ -261,23 +261,18 @@ const Home: React.FC = () => {
         calculatedEffort = 0; 
       }
 
-      if (isNaN(calculatedEffort)) {
-        console.error("Invalid effort calculation for activity:", activity);
-        return; 
-      }
-
-      total += calculatedEffort;
+      total += activity.effort;
 
       if (activity.coreSupervised === "core") {
-        core += calculatedEffort;
+        core += activity.effort;
       } else if (activity.coreSupervised === "supervised") {
-        supervised += calculatedEffort;
+        supervised += activity.effort;
       }
 
       if (effortByType[activity.activityType]) {
-        effortByType[activity.activityType] += calculatedEffort;
+        effortByType[activity.activityType] += activity.effort;
       } else {
-        effortByType[activity.activityType] = calculatedEffort;
+        effortByType[activity.activityType] = activity.effort;
       }
     });
     setTotalEffort(total);
@@ -318,7 +313,7 @@ const Home: React.FC = () => {
         </Button>
       </div>{" "}
       {/* Data Input Form */}
-      <CardNeon
+      <Card
         className="glassmorphism neon-border-glow"
         style={{ position: "relative", zIndex: 1 }}
       >
@@ -453,12 +448,90 @@ const Home: React.FC = () => {
               onChange={handleInputChange}
             />
           </div>
+           <div className="grid gap-2">
+              <Label htmlFor="rpaTool" className="neon-label">
+                RPA Tool
+              </Label>
+              <select
+                className="neon-select"
+                id="rpaTool"
+                name="rpaTool"
+                value={formData.rpaTool}
+                onChange={handleInputChange}
+              >
+                <option value="">Select RPA Tool</option>
+                <option value="Blue Prism">Blue Prism</option>
+                <option value="UiPath">UiPath</option>
+                <option value="Automation Anywhere">Automation Anywhere</option>
+                <option value="Power APPs">Power APPs</option>
+                <option value="Python">Python</option>
+              </select>
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="applicationType" className="neon-label">
+                Application Type
+              </Label>
+              <select
+                className="neon-select"
+                id="applicationType"
+                name="applicationType"
+                value={formData.applicationType}
+                onChange={handleInputChange}
+              >
+                <option value="">Select Application Type</option>
+                <option value="Desktop">Desktop</option>
+                <option value="Web">Web</option>
+                <option value="Terminal">Terminal</option>
+                <option value="SAP">SAP</option>
+                <option value="Power bi related">Power bi related</option>
+              </select>
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="detailedActivityType" className="neon-label">
+                Detailed Activity Type
+              </Label>
+              <select
+                className="neon-select"
+                id="detailedActivityType"
+                name="detailedActivityType"
+                value={formData.detailedActivityType}
+                onChange={handleInputChange}
+              >
+                <option value="">Select Detailed Activity Type</option>
+                <option value="Launch">Launch</option>
+                <option value="Click">Click</option>
+                <option value="Read">Read</option>
+                <option value="Write">Write</option>
+                <option value="Send">Send</option>
+                <option value="Forms">Forms</option>
+                <option value="Connector">Connector</option>
+              </select>
+            </div>
+             <div className="grid gap-2">
+                <Label htmlFor="exceptionHandlingComplexity" className="neon-label">
+                  Exception Handling Complexity
+                </Label>
+                <select
+                  className="neon-select"
+                  id="exceptionHandlingComplexity"
+                  name="exceptionHandlingComplexity"
+                  value={formData.exceptionHandlingComplexity}
+                  onChange={handleInputChange}
+                >
+                  <option value="">Select Complexity</option>
+                  <option value="Basic">Basic</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Complex">Complex</option>
+                </select>
+              </div>
           <Button onClick={addActivity}>Add Activity</Button>
         </CardContent>
-      </CardNeon>
+      </Card>
 
       <Separator className="my-4" /> {/* Data Table Display */}
-      <CardNeon className="glassmorphism">
+      <Card className="glassmorphism">
         <CardHeader>
           <CardTitle>Activity Overview</CardTitle>
           <CardDescription>A summary of all activities.</CardDescription>
@@ -476,10 +549,10 @@ const Home: React.FC = () => {
                 <TableHead>Effort [h]</TableHead>
                 <TableHead>Business Exception</TableHead>
                 <TableHead>Assumption</TableHead>
-                <TableHead>RPA Tool</TableHead>
-                <TableHead>Application Type</TableHead>
-                <TableHead>Detailed Activity Type</TableHead>
-                <TableHead>Exception Handling Complexity</TableHead>
+                  <TableHead>RPA Tool</TableHead>
+                  <TableHead>Application Type</TableHead>
+                  <TableHead>Detailed Activity Type</TableHead>
+                  <TableHead>Exception Handling Complexity</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -494,10 +567,10 @@ const Home: React.FC = () => {
                   <TableCell>{activity.effort}</TableCell>
                   <TableCell>{activity.businessException}</TableCell>
                   <TableCell>{activity.assumption}</TableCell>
-                  <TableCell>{activity.rpaTool}</TableCell>
-                  <TableCell>{activity.applicationType}</TableCell>
-                  <TableCell>{activity.detailedActivityType}</TableCell>
-                  <TableCell>{activity.exceptionHandlingComplexity}</TableCell>
+                    <TableCell>{activity.rpaTool}</TableCell>
+                    <TableCell>{activity.applicationType}</TableCell>
+                    <TableCell>{activity.detailedActivityType}</TableCell>
+                    <TableCell>{activity.exceptionHandlingComplexity}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -515,9 +588,9 @@ const Home: React.FC = () => {
             </TableFooter>
           </Table>
         </CardContent>
-      </CardNeon>
+      </Card>
       <Separator className="my-4" /> {/* Estimate Overview */}
-      <CardNeon className="glassmorphism neon-border-glow mb-4">
+      <Card className="glassmorphism neon-border-glow mb-4">
         <CardHeader className="flex items-center justify-between">
           <CardTitle style={{ color: neonTextColors[0] }}>
             Estimate Overview
@@ -680,7 +753,7 @@ const Home: React.FC = () => {
             {Number(grandTotalEffort).toFixed(2)} hours
           </p>
         </CardContent>
-      </CardNeon>
+      </Card>
     </div>
   );
 };
