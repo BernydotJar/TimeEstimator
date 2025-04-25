@@ -267,7 +267,6 @@ const Home: React.FC = () => {
         return; 
       }
 
-      
       total += calculatedEffort;
 
       if (activity.coreSupervised === "core") {
@@ -692,3 +691,4 @@ const Home: React.FC = () => {
   );
 };
 export default Home;
+
