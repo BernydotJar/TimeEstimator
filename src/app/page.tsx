@@ -261,7 +261,6 @@ const Home: React.FC = () => {
         calculatedEffort = 0; 
       }
 
-      
       if (isNaN(calculatedEffort)) {
         console.error("Invalid effort calculation for activity:", activity);
         return; 
@@ -270,16 +269,16 @@ const Home: React.FC = () => {
       total += calculatedEffort;
 
       if (activity.coreSupervised === "core") {
-        core += activity.effort;
+        core += calculatedEffort;
       } else if (activity.coreSupervised === "supervised") {
-        supervised += activity.effort;
+        supervised += calculatedEffort;
       }
-      if (effortByType[activity.activityType]) {
-        effortByType[activity.activityType] += activity.effort;
-      } else {
-        effortByType[activity.activityType] = activity.effort;
-      }      
 
+      if (effortByType[activity.activityType]) {
+        effortByType[activity.activityType] += calculatedEffort;
+      } else {
+        effortByType[activity.activityType] = calculatedEffort;
+      }
     });
     setTotalEffort(total);
     setCoreEffort(core);
@@ -620,16 +619,11 @@ const Home: React.FC = () => {
           </p>
           <p style={{ color: neonTextColors[1] }}>
             <strong>Total Core Effort:</strong>{" "}
-            {(() => {
-              let effort = coreEffort;
-              if (typeof effort !== "number") effort = 0;
-              return effort.toFixed(2);
-            })()}{" "}
-            hours
+            {Number(coreEffort).toFixed(2)} hours
           </p>
           <p style={{ color: neonTextColors[0] }}>
             <strong>Total Supervised Effort:</strong>{" "}
-            {supervisedEffort.toFixed(2)} hours
+            {Number(supervisedEffort).toFixed(2)} hours
           </p>
           <p style={{ color: neonTextColors[1] }}>
             <strong>Effort by Activity Type:</strong>
@@ -642,7 +636,7 @@ const Home: React.FC = () => {
                   color: neonTextColors[index % neonTextColors.length],
                 }}
               >
-                {type} {effort.toFixed(2)} hours
+                {type} {Number(effort).toFixed(2)} hours
               </li>
             ))}
           </ul>
@@ -691,4 +685,3 @@ const Home: React.FC = () => {
   );
 };
 export default Home;
-
