@@ -35,6 +35,8 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Icons } from "@/components/icons";
 // Define the data structure for an activity
+import { saveAs } from 'file-saver';
+import html2canvas from 'html2canvas';
 
 interface Activity {
   applicationName: string;
@@ -243,6 +245,40 @@ const Home: React.FC = () => {
       [key]: parsedValue / 100, // Convert to decimal
     }));
   };
+
+  // Function to save the estimate overview as an image
+  const handleSaveEstimate = async () => {
+    const estimateOverview = document.getElementById('estimate-overview');
+    if (!estimateOverview) {
+      toast({
+        title: 'Error',
+        description: 'Could not find estimate overview to save.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    try {
+      const canvas = await html2canvas(estimateOverview, {
+        scale: 2, // Increase scale for better resolution
+        useCORS: true, // Enable cross-origin resource sharing
+      });
+      const dataURL = canvas.toDataURL('image/png');
+      saveAs(dataURL, 'estimate_overview.png');
+      toast({
+        title: 'Estimate Saved',
+        description: 'Estimate overview saved as an image.',
+      });
+    } catch (error: any) {
+      console.error('Error saving estimate:', error);
+      toast({
+        title: 'Error',
+        description: `Failed to save estimate: ${error.message}`,
+        variant: 'destructive',
+      });
+    }
+  };
+
   // Calculate Estimate Overview when activities change
   useEffect(() => {
     let total = 0;
@@ -275,10 +311,12 @@ const Home: React.FC = () => {
         effortByType[activity.activityType] = activity.effort;
       }
     });
+
     setTotalEffort(total);
     setCoreEffort(core);
     setSupervisedEffort(supervised);
     setEffortByActivityType(effortByType);
+
     // Calculate contingency and other efforts
     const contEffort = total * overheadPercentages.contingency;
     const pm = total * overheadPercentages.pm;
@@ -286,16 +324,18 @@ const Home: React.FC = () => {
     const sdd = total * overheadPercentages.sdd;
     const release = total * overheadPercentages.releaseConfig;
     const userManual = total * overheadPercentages.userManual;
+
     setContingencyEffort(contEffort);
     setPmEffort(pm);
     setSaEffort(sa);
     setSddEffort(sdd);
     setReleaseConfigEffort(release);
     setUserManualEffort(userManual);
+
     // Calculate grand total
-    let grandTotal = total + contEffort + pm + sa + sdd + release + userManual;
-    if (typeof grandTotal !== "number") grandTotal = 0;
+    const grandTotal = total + contEffort + pm + sa + sdd + release + userManual;
     setGrandTotalEffort(grandTotal);
+
   }, [activities, overheadPercentages]);
 
   return (
@@ -594,6 +634,14 @@ const Home: React.FC = () => {
           <CardTitle style={{ color: neonTextColors[0] }}>
             Estimate Overview
           </CardTitle>
+           <Button
+              variant="outline"
+              size="sm"
+              className="ml-4"
+              onClick={handleSaveEstimate}
+            >
+              Save Estimate
+            </Button>
           <Dialog open={showConfig} onOpenChange={setShowConfig}>
             <DialogTrigger asChild>
               <Button
@@ -682,7 +730,7 @@ const Home: React.FC = () => {
             </DialogContent>
           </Dialog>
         </CardHeader>
-        <CardContent>
+        <CardContent id="estimate-overview">
           <CardDescription style={{ color: neonTextColors[1] }}>
             Summary of the estimation.
           </CardDescription>
@@ -757,4 +805,3 @@ const Home: React.FC = () => {
   );
 };
 export default Home;
-
