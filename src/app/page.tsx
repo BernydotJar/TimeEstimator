@@ -301,8 +301,7 @@ const Home: React.FC = () => {
   return (
     <div className="container mx-auto p-4 dark:bg-black dark:text-white">
       <ConfettiBackground />
-      <div className="flex justify-end items-center mb-4">
-        {" "}
+      <div className="flex justify-end items-center mb-4">{" "}
         <Button variant="outline" size="icon" onClick={toggleTheme}>
           {theme === "light" ? (
             <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
@@ -758,3 +757,4 @@ const Home: React.FC = () => {
   );
 };
 export default Home;
+
