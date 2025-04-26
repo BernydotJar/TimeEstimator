@@ -34,6 +34,8 @@ import {
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { Icons } from "@/components/icons";
+import { saveAs } from 'file-saver';
+import html2canvas from 'html2canvas';
 // Define the data structure for an activity
 import EstimateReport from './components/EstimateReport';
 
@@ -181,6 +183,7 @@ const Home: React.FC = () => {
     userManual: 0.025,
   });
   const [grandTotalEffort, setGrandTotalEffort] = useState(0);
+  const componentRef = useRef<HTMLDivElement>(null);
   // Theme Switcher function with confetti effect (using a simplified visual feedback)
   const toggleTheme = useCallback(() => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
@@ -245,6 +248,36 @@ const Home: React.FC = () => {
       [key]: parsedValue / 100, // Convert to decimal
     }));
   };
+    const handleSaveEstimate = async () => {
+        if (!componentRef.current) {
+            toast({
+                title: 'Error',
+                description: 'Could not find estimate report to save.',
+                variant: 'destructive',
+            });
+            return;
+        }
+
+        try {
+            const canvas = await html2canvas(componentRef.current, {
+                scale: 2, // Increase scale for better resolution
+                useCORS: true, // Enable cross-origin resource sharing
+            });
+            const dataURL = canvas.toDataURL('image/png');
+            saveAs(dataURL, 'estimate_report.png');
+            toast({
+                title: 'Estimate Report Saved',
+                description: 'Estimate report saved as an image.',
+            });
+        } catch (error: any) {
+            console.error('Error saving estimate:', error);
+            toast({
+                title: 'Error',
+                description: `Failed to save estimate report: ${error.message}`,
+                variant: 'destructive',
+            });
+        }
+    };
 
   // Calculate Estimate Overview when activities change
   useEffect(() => {
@@ -706,19 +739,24 @@ const Home: React.FC = () => {
                     A detailed breakdown of the effort estimate for professional reporting.
                   </DialogDescription>
                 </DialogHeader>
-                <EstimateReport
-                  totalEffort={totalEffort}
-                  coreEffort={coreEffort}
-                  supervisedEffort={supervisedEffort}
-                  contingencyEffort={contingencyEffort}
-                  contingencyPercentage={overheadPercentages.contingency}
-                  pmEffort={pmEffort}
-                  saEffort={saEffort}
-                  sddEffort={sddEffort}
-                  releaseConfigEffort={releaseConfigEffort}
-                  userManualEffort={userManualEffort}
-                  grandTotalEffort={grandTotalEffort}
-                />
+                  <div ref={componentRef}>
+                    <EstimateReport
+                      totalEffort={totalEffort}
+                      coreEffort={coreEffort}
+                      supervisedEffort={supervisedEffort}
+                      contingencyEffort={contingencyEffort}
+                      contingencyPercentage={overheadPercentages.contingency}
+                      pmEffort={pmEffort}
+                      saEffort={saEffort}
+                      sddEffort={sddEffort}
+                      releaseConfigEffort={releaseConfigEffort}
+                      userManualEffort={userManualEffort}
+                      grandTotalEffort={grandTotalEffort}
+                    />
+                  </div>
+                  <Button variant="outline" size="sm" onClick={handleSaveEstimate}>
+                      Save Estimate Report
+                  </Button>
               </DialogContent>
             </Dialog>
         </CardHeader>
