@@ -35,8 +35,6 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Icons } from "@/components/icons";
 // Define the data structure for an activity
-import { saveAs } from 'file-saver';
-import html2canvas from 'html2canvas';
 import EstimateReport from './components/EstimateReport';
 
 interface Activity {
@@ -246,39 +244,6 @@ const Home: React.FC = () => {
       ...prev,
       [key]: parsedValue / 100, // Convert to decimal
     }));
-  };
-
-  // Function to save the estimate overview as an image
-  const handleSaveEstimate = async () => {
-    const estimateOverview = document.getElementById('estimate-overview');
-    if (!estimateOverview) {
-      toast({
-        title: 'Error',
-        description: 'Could not find estimate overview to save.',
-        variant: 'destructive',
-      });
-      return;
-    }
-
-    try {
-      const canvas = await html2canvas(estimateOverview, {
-        scale: 2, // Increase scale for better resolution
-        useCORS: true, // Enable cross-origin resource sharing
-      });
-      const dataURL = canvas.toDataURL('image/png');
-      saveAs(dataURL, 'estimate_overview.png');
-      toast({
-        title: 'Estimate Saved',
-        description: 'Estimate overview saved as an image.',
-      });
-    } catch (error: any) {
-      console.error('Error saving estimate:', error);
-      toast({
-        title: 'Error',
-        description: `Failed to save estimate: ${error.message}`,
-        variant: 'destructive',
-      });
-    }
   };
 
   // Calculate Estimate Overview when activities change
@@ -636,14 +601,6 @@ const Home: React.FC = () => {
           <CardTitle style={{ color: neonTextColors[0] }}>
             Estimate Overview
           </CardTitle>
-           <Button
-              variant="outline"
-              size="sm"
-              className="ml-4"
-              onClick={handleSaveEstimate}
-            >
-              Save Estimate
-            </Button>
           <Dialog open={showConfig} onOpenChange={setShowConfig}>
             <DialogTrigger asChild>
               <Button
@@ -769,71 +726,62 @@ const Home: React.FC = () => {
           <CardDescription style={{ color: neonTextColors[1] }}>
             Summary of the estimation.
           </CardDescription>
-          <p style={{ color: neonTextColors[0] }}>
-            <strong>Total Effort:</strong> {Number(totalEffort).toFixed(2)} hours
-          </p>
-          <p style={{ color: neonTextColors[1] }}>
-            <strong>Total Core Effort:</strong>{" "}
-            {Number(coreEffort).toFixed(2)} hours
-          </p>
-          <p style={{ color: neonTextColors[0] }}>
-            <strong>Total Supervised Effort:</strong>{" "}
-            {Number(supervisedEffort).toFixed(2)} hours
-          </p>
-          <p style={{ color: neonTextColors[1] }}>
-            <strong>Effort by Activity Type:</strong>
-          </p>
-          <ul>
-            {Object.entries(effortByActivityType).map(([type, effort], index) => (
-              <li
-                key={type}
-                style={{
-                  color: neonTextColors[index % neonTextColors.length],
-                }}
-              >
-                {type} {Number(effort).toFixed(2)} hours
-              </li>
-            ))}
-          </ul>
-          <p style={{ color: neonTextColors[0] }}>
-            <strong>
-              Contingency ({overheadPercentages.contingency * 100}%):
-            </strong>{" "}
-            {contingencyEffort.toFixed(2)} hours
-          </p>
-          <p style={{ color: neonTextColors[1] }}>
-            <strong>
-              Project Management ({overheadPercentages.pm * 100}%):
-            </strong>{" "}
-            {pmEffort.toFixed(2)} hours
-          </p>
-          <p style={{ color: neonTextColors[0] }}>
-            <strong>
-              Solution Architect ({overheadPercentages.sa * 100}%):
-            </strong>{" "}
-            {saEffort.toFixed(2)} hours
-          </p>
-          <p style={{ color: neonTextColors[1] }}>
-            <strong>SDD ({overheadPercentages.sdd * 100}%):</strong>{" "}
-            {sddEffort.toFixed(2)} hours
-          </p>
-          <p style={{ color: neonTextColors[0] }}>
-            <strong>
-              Release and Configuration Guide (
-              {overheadPercentages.releaseConfig * 100}%):
-            </strong>{" "}
-            {releaseConfigEffort.toFixed(2)} hours
-          </p>
-          <p style={{ color: neonTextColors[1] }}>
-            <strong>
-              User Manual ({overheadPercentages.userManual * 100}%):
-            </strong>{" "}
-            {userManualEffort.toFixed(2)} hours
-          </p>
-          <p style={{ color: neonTextColors[0], fontSize: "1.2em" }}>
-            <strong>Grand Total Effort:</strong>{" "}
-            {Number(grandTotalEffort).toFixed(2)} hours
-          </p>
+           <Table className="min-w-full">
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-left">Category</TableHead>
+                  <TableHead className="text-right">Effort (Hours)</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell className="font-medium">Total Effort</TableCell>
+                  <TableCell className="text-right">{totalEffort.toFixed(2)}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Total Core Effort</TableCell>
+                  <TableCell className="text-right">{coreEffort.toFixed(2)}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Total Supervised Effort</TableCell>
+                  <TableCell className="text-right">{supervisedEffort.toFixed(2)}</TableCell>
+                </TableRow>
+                {Object.entries(effortByActivityType).map(([type, effort]) => (
+                  <TableRow key={type}>
+                    <TableCell className="font-medium">Effort - {type}</TableCell>
+                    <TableCell className="text-right">{effort.toFixed(2)}</TableCell>
+                  </TableRow>
+                ))}
+                <TableRow>
+                  <TableCell className="font-medium">Contingency ({overheadPercentages.contingency * 100}%)</TableCell>
+                  <TableCell className="text-right">{contingencyEffort.toFixed(2)}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Project Management ({overheadPercentages.pm * 100}%)</TableCell>
+                  <TableCell className="text-right">{pmEffort.toFixed(2)}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Solution Architect ({overheadPercentages.sa * 100}%)</TableCell>
+                  <TableCell className="text-right">{saEffort.toFixed(2)}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">SDD ({overheadPercentages.sdd * 100}%)</TableCell>
+                  <TableCell className="text-right">{sddEffort.toFixed(2)}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Release and Configuration Guide ({overheadPercentages.releaseConfig * 100}%)</TableCell>
+                  <TableCell className="text-right">{releaseConfigEffort.toFixed(2)}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">User Manual ({overheadPercentages.userManual * 100}%)</TableCell>
+                  <TableCell className="text-right">{userManualEffort.toFixed(2)}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-bold">Grand Total Effort</TableCell>
+                  <TableCell className="text-right font-bold">{grandTotalEffort.toFixed(2)}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
         </CardContent>
       </Card>
     </div>
