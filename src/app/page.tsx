@@ -37,6 +37,7 @@ import { Icons } from "@/components/icons";
 // Define the data structure for an activity
 import { saveAs } from 'file-saver';
 import html2canvas from 'html2canvas';
+import EstimateReport from './components/EstimateReport';
 
 interface Activity {
   applicationName: string;
@@ -138,6 +139,7 @@ const ConfettiBackground: React.FC = () => {
 
 const Home: React.FC = () => {
   const [showConfig, setShowConfig] = useState<boolean>(false);
+  const [showReport, setShowReport] = useState<boolean>(false);
   const [activities, setActivities] = useState<Activity[]>([]);
   const [formData, setFormData] = useState<Activity>({
     applicationName: "",
@@ -729,6 +731,39 @@ const Home: React.FC = () => {
               </div>
             </DialogContent>
           </Dialog>
+            <Dialog open={showReport} onOpenChange={setShowReport}>
+              <DialogTrigger asChild>
+                <Button variant="outline" size="sm" className="ml-4">
+                  Generate Report
+                </Button>
+              </DialogTrigger>
+              <DialogContent
+                className="glassmorphism neon-border-glow w-full sm:max-w-[800px]"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <DialogHeader>
+                  <DialogTitle style={{ color: neonTextColors[0] }}>
+                    Professional Estimate Summary
+                  </DialogTitle>
+                  <DialogDescription>
+                    A detailed breakdown of the effort estimate for professional reporting.
+                  </DialogDescription>
+                </DialogHeader>
+                <EstimateReport
+                  totalEffort={totalEffort}
+                  coreEffort={coreEffort}
+                  supervisedEffort={supervisedEffort}
+                  contingencyEffort={contingencyEffort}
+                  contingencyPercentage={overheadPercentages.contingency}
+                  pmEffort={pmEffort}
+                  saEffort={saEffort}
+                  sddEffort={sddEffort}
+                  releaseConfigEffort={releaseConfigEffort}
+                  userManualEffort={userManualEffort}
+                  grandTotalEffort={grandTotalEffort}
+                />
+              </DialogContent>
+            </Dialog>
         </CardHeader>
         <CardContent id="estimate-overview">
           <CardDescription style={{ color: neonTextColors[1] }}>
