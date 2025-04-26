@@ -33,7 +33,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
-import { Icons } from "@/components/icons";
 import { saveAs } from 'file-saver';
 import html2canvas from 'html2canvas';
 // Define the data structure for an activity
@@ -248,36 +247,6 @@ const Home: React.FC = () => {
       [key]: parsedValue / 100, // Convert to decimal
     }));
   };
-    const handleSaveEstimate = async () => {
-        if (!componentRef.current) {
-            toast({
-                title: 'Error',
-                description: 'Could not find estimate report to save.',
-                variant: 'destructive',
-            });
-            return;
-        }
-
-        try {
-            const canvas = await html2canvas(componentRef.current, {
-                scale: 2, // Increase scale for better resolution
-                useCORS: true, // Enable cross-origin resource sharing
-            });
-            const dataURL = canvas.toDataURL('image/png');
-            saveAs(dataURL, 'estimate_report.png');
-            toast({
-                title: 'Estimate Report Saved',
-                description: 'Estimate report saved as an image.',
-            });
-        } catch (error: any) {
-            console.error('Error saving estimate:', error);
-            toast({
-                title: 'Error',
-                description: `Failed to save estimate report: ${error.message}`,
-                variant: 'destructive',
-            });
-        }
-    };
 
   // Calculate Estimate Overview when activities change
   useEffect(() => {
@@ -337,6 +306,37 @@ const Home: React.FC = () => {
     setGrandTotalEffort(grandTotal);
 
   }, [activities, overheadPercentages]);
+
+    const handleSaveEstimate = async () => {
+        if (!componentRef.current) {
+            toast({
+                title: 'Error',
+                description: 'Could not find estimate report to save.',
+                variant: 'destructive',
+            });
+            return;
+        }
+
+        try {
+            const canvas = await html2canvas(componentRef.current, {
+                scale: 2, // Increase scale for better resolution
+                useCORS: true, // Enable cross-origin resource sharing
+            });
+            const dataURL = canvas.toDataURL('image/png');
+            saveAs(dataURL, 'estimate_report.png');
+            toast({
+                title: 'Estimate Report Saved',
+                description: 'Estimate report saved as an image.',
+            });
+        } catch (error: any) {
+            console.error('Error saving estimate:', error);
+            toast({
+                title: 'Error',
+                description: `Failed to save estimate report: ${error.message}`,
+                variant: 'destructive',
+            });
+        }
+    };
 
   return (
     <div className="container mx-auto p-4 dark:bg-black dark:text-white">
@@ -565,7 +565,7 @@ const Home: React.FC = () => {
                   <option value="Complex">Complex</option>
                 </select>
               </div>
-          <Button onClick={addActivity}>Add Activity</Button>
+          <Button onClick={addActivity} >Add Activity</Button>
         </CardContent>
       </Card>
 
@@ -615,7 +615,7 @@ const Home: React.FC = () => {
             </TableBody>
             <TableFooter>
               <TableRow>
-                <TableCell colSpan={6}>Total</TableCell>
+                <TableCell colSpan={7}>Total</TableCell>
                 <TableCell>
                   {activities
                     .reduce((sum, activity) => sum + Number(activity.effort), 0)
@@ -740,19 +740,62 @@ const Home: React.FC = () => {
                   </DialogDescription>
                 </DialogHeader>
                   <div ref={componentRef}>
-                    <EstimateReport
-                      totalEffort={totalEffort}
-                      coreEffort={coreEffort}
-                      supervisedEffort={supervisedEffort}
-                      contingencyEffort={contingencyEffort}
-                      contingencyPercentage={overheadPercentages.contingency}
-                      pmEffort={pmEffort}
-                      saEffort={saEffort}
-                      sddEffort={sddEffort}
-                      releaseConfigEffort={releaseConfigEffort}
-                      userManualEffort={userManualEffort}
-                      grandTotalEffort={grandTotalEffort}
-                    />
+                      <Table className="min-w-full">
+                          <TableHeader>
+                              <TableRow>
+                                  <TableHead className="text-left">Category</TableHead>
+                                  <TableHead className="text-right">Effort (Hours)</TableHead>
+                              </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                              <TableRow>
+                                  <TableCell className="font-medium">Total Effort</TableCell>
+                                  <TableCell className="text-right">{totalEffort.toFixed(2)}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                  <TableCell className="font-medium">Core Effort</TableCell>
+                                  <TableCell className="text-right">{coreEffort.toFixed(2)}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                  <TableCell className="font-medium">Supervised Effort</TableCell>
+                                  <TableCell className="text-right">{supervisedEffort.toFixed(2)}</TableCell>
+                              </TableRow>
+                              {Object.entries(effortByActivityType).map(([type, effort]) => (
+                                  <TableRow key={type}>
+                                      <TableCell className="font-medium">{type}</TableCell>
+                                      <TableCell className="text-right">{effort.toFixed(2)}</TableCell>
+                                  </TableRow>
+                              ))}
+                              <TableRow>
+                                  <TableCell className="font-medium">Contingency ({overheadPercentages.contingency * 100}%)</TableCell>
+                                  <TableCell className="text-right">{contingencyEffort.toFixed(2)}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                  <TableCell className="font-medium">Project Management ({overheadPercentages.pm * 100}%)</TableCell>
+                                  <TableCell className="text-right">{pmEffort.toFixed(2)}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                  <TableCell className="font-medium">Solution Architect ({overheadPercentages.sa * 100}%)</TableCell>
+                                  <TableCell className="text-right">{saEffort.toFixed(2)}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                  <TableCell className="font-medium">SDD ({overheadPercentages.sdd * 100}%)</TableCell>
+                                  <TableCell className="text-right">{sddEffort.toFixed(2)}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                  <TableCell className="font-medium">Release and Configuration Guide ({overheadPercentages.releaseConfig * 100}%)</TableCell>
+                                  <TableCell className="text-right">{releaseConfigEffort.toFixed(2)}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                  <TableCell className="font-medium">User Manual ({overheadPercentages.userManual * 100}%)</TableCell>
+                                  <TableCell className="text-right">{userManualEffort.toFixed(2)}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                  <TableCell className="font-bold">Grand Total Effort</TableCell>
+                                  <TableCell className="text-right font-bold">{grandTotalEffort.toFixed(2)}</TableCell>
+                              </TableRow>
+                          </TableBody>
+                      </Table>
                   </div>
                   <Button variant="outline" size="sm" onClick={handleSaveEstimate}>
                       Save Estimate Report
@@ -761,9 +804,6 @@ const Home: React.FC = () => {
             </Dialog>
         </CardHeader>
         <CardContent id="estimate-overview">
-          <CardDescription style={{ color: neonTextColors[1] }}>
-            Summary of the estimation.
-          </CardDescription>
            <Table className="min-w-full">
               <TableHeader>
                 <TableRow>
