@@ -131,6 +131,8 @@ const ConfettiBackground: React.FC = () => {
 
   return (
     <canvas
+      aria-hidden="true"
+      role="presentation"
       ref={canvasRef}
       style={{
         position: "fixed",
@@ -167,6 +169,7 @@ const Home: React.FC = () => {
 
   const [totalEffort, setTotalEffort] = useState(0);
   const { toast } = useToast();
+  const [ariaMessage, setAriaMessage] = useState("");
   const [theme, setTheme] = React.useState<"light" | "dark">("light");
   // Estimate Overview States
   const [coreEffort, setCoreEffort] = useState(0);
@@ -315,22 +318,37 @@ const Home: React.FC = () => {
   }, [activities, overheadPercentages]);
 
     const handleSaveEstimate = async () => {
+      // announce capture start for assistive tech
+      setAriaMessage('Saving estimate report. Please wait.');
         if (!componentRef.current) {
             toast({
                 title: 'Error',
                 description: 'Could not find estimate report to save.',
                 variant: 'destructive',
             });
+        setAriaMessage('Failed to save estimate report.');
             return;
         }
         
-        // Temporarily hide the button before capturing
+        // Temporarily hide the button before capturing and mark busy
         const buttonElement = componentRef.current.querySelector('button');
         if (buttonElement) {
-            buttonElement.style.display = 'none';
+          buttonElement.style.display = 'none';
         }
+        componentRef.current.setAttribute('aria-busy', 'true');
 
         try {
+            // Insert metadata element briefly so it appears in the capture
+            const metadataEl = document.createElement('div');
+            const timestamp = new Date().toISOString();
+            metadataEl.setAttribute('data-qa-metadata', 'true');
+            metadataEl.style.fontSize = '10px';
+            metadataEl.style.color = '#000';
+            metadataEl.style.opacity = '0.8';
+            metadataEl.style.marginTop = '8px';
+            metadataEl.innerText = `Generated: ${timestamp} — Source: TimeEstimator (prototype)`;
+            componentRef.current.appendChild(metadataEl);
+
             const canvas = await html2canvas(componentRef.current, {
                 scale: 2, 
                 useCORS: true, 
@@ -349,6 +367,13 @@ const Home: React.FC = () => {
                 title: 'Estimate Report Saved',
                 description: 'Estimate report saved as an image.',
             });
+            setAriaMessage('Estimate report saved successfully.');
+            // also offer metadata JSON
+            const meta = { generatedAt: timestamp, source: 'TimeEstimator', prototype: true };
+            const blob = new Blob([JSON.stringify(meta, null, 2)], { type: 'application/json' });
+            saveAs(blob, 'estimate_report_metadata.json');
+            // remove metadata element
+            componentRef.current.querySelector('[data-qa-metadata]')?.remove();
         } catch (error: any) {
             console.error('Error saving estimate:', error);
             toast({
@@ -356,10 +381,14 @@ const Home: React.FC = () => {
                 description: `Failed to save estimate report: ${error.message}`,
                 variant: 'destructive',
             });
+            setAriaMessage('Failed to save estimate report.');
         } finally {
              // Restore the button visibility
             if (buttonElement) {
-                buttonElement.style.display = '';
+              buttonElement.style.display = '';
+            }
+            if (componentRef.current) {
+              componentRef.current.removeAttribute('aria-busy');
             }
         }
     };
@@ -368,6 +397,7 @@ const Home: React.FC = () => {
   return (
     <div className="container mx-auto p-4" data-testid="home-page">
       <Toaster />
+      <div aria-live="polite" className="sr-only" role="status">{ariaMessage}</div>
       <ConfettiBackground />
       <div className="flex justify-end items-center mb-4">{" "}
         <Button aria-label="Toggle theme" variant="outline" size="icon" onClick={toggleTheme}>
