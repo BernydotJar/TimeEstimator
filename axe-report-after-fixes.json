@@ -1,0 +1,2234 @@
+[
+  {
+    "testEngine": {
+      "name": "axe-core",
+      "version": "4.11.1"
+    },
+    "testRunner": {
+      "name": "axe"
+    },
+    "testEnvironment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/145.0.0.0 Safari/537.36",
+      "windowWidth": 756,
+      "windowHeight": 417,
+      "orientationAngle": 0,
+      "orientationType": "landscape-primary"
+    },
+    "timestamp": "2026-02-21T05:59:32.588Z",
+    "url": "http://localhost:9002/",
+    "toolOptions": {
+      "runOnly": {
+        "type": "tag",
+        "values": [
+          "wcag2aa"
+        ]
+      },
+      "reporter": "v1"
+    },
+    "inapplicable": [
+      {
+        "id": "valid-lang",
+        "impact": null,
+        "tags": [
+          "cat.language",
+          "wcag2aa",
+          "wcag312",
+          "TTv5",
+          "TT11.b",
+          "EN-301-549",
+          "EN-9.3.1.2",
+          "ACT",
+          "RGAAv4",
+          "RGAA-8.8.1"
+        ],
+        "description": "Ensure lang attributes have valid values",
+        "help": "lang attribute must have a valid value",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/valid-lang?application=webdriverjs",
+        "nodes": []
+      }
+    ],
+    "passes": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ],
+        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=webdriverjs",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00b7b7",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 7,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 7"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<select class=\"neon-select p-2 rounded-md border\" id=\"activityType\" name=\"activityType\" aria-label=\"Activity Type\">",
+            "target": [
+              "#activityType"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00b7b7",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 7,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 7"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<label class=\"text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 neon-label\" for=\"businessException\">Business Exception</label>",
+            "target": [
+              "label[for=\"businessException\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00b7b7",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 7,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 7"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<select class=\"neon-select p-2 rounded-md border\" id=\"businessException\" name=\"businessException\" aria-label=\"Business Exception\"><option value=\"\" selected=\"\">Select Exception Type</option><option value=\"Business\">Business</option><option value=\"Technical\">Technical</option></select>",
+            "target": [
+              "#businessException"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00b7b7",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 7,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 7"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<label class=\"text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 neon-label\" for=\"coreSupervised\">Core/Supervised</label>",
+            "target": [
+              "label[for=\"coreSupervised\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00ffff",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 13.88,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 13.88"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<select style=\"color:#00FFFF\" class=\"neon-select p-2 rounded-md border\" id=\"coreSupervised\" name=\"coreSupervised\" aria-label=\"Core or Supervised\"><option value=\"\" selected=\"\">Select</option><option value=\"core\">Core</option><option value=\"supervised\">Supervised</option></select>",
+            "target": [
+              "#coreSupervised"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00b7b7",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 7,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 7"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<label class=\"text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 neon-label\" for=\"reused\">Reused?</label>",
+            "target": [
+              "label[for=\"reused\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00b7b7",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 7,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 7"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<label class=\"text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 neon-label\" for=\"effort\">Effort [h]</label>",
+            "target": [
+              "label[for=\"effort\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00b7b7",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 7,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 7"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<label class=\"text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 neon-label\" for=\"assumption\">Assumption</label>",
+            "target": [
+              "label[for=\"assumption\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00b7b7",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 7,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 7"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<label class=\"text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 neon-label\" for=\"rpaTool\">RPA Tool</label>",
+            "target": [
+              "label[for=\"rpaTool\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00b7b7",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 7,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 7"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<select class=\"neon-select p-2 rounded-md border\" id=\"rpaTool\" name=\"rpaTool\" aria-label=\"RPA Tool\">",
+            "target": [
+              "#rpaTool"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00b7b7",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 7,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 7"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<label class=\"text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 neon-label\" for=\"applicationType\">Application Type</label>",
+            "target": [
+              "label[for=\"applicationType\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00b7b7",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 7,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 7"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<select class=\"neon-select p-2 rounded-md border\" id=\"applicationType\" name=\"applicationType\" aria-label=\"Application Type\">",
+            "target": [
+              "#applicationType"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00b7b7",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 7,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 7"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<label class=\"text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 neon-label\" for=\"detailedActivityType\">Detailed Activity Type</label>",
+            "target": [
+              "label[for=\"detailedActivityType\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00b7b7",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 7,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 7"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<select class=\"neon-select p-2 rounded-md border\" id=\"detailedActivityType\" name=\"detailedActivityType\" aria-label=\"Detailed Activity Type\">",
+            "target": [
+              "#detailedActivityType"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00b7b7",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 7,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 7"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<label class=\"text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 neon-label\" for=\"exceptionHandlingComplexity\">Exception Handling Complexity</label>",
+            "target": [
+              "label[for=\"exceptionHandlingComplexity\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00b7b7",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 7,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 7"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<select class=\"neon-select p-2 rounded-md border\" id=\"exceptionHandlingComplexity\" name=\"exceptionHandlingComplexity\" aria-label=\"Exception Handling Complexity\">",
+            "target": [
+              "#exceptionHandlingComplexity"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#fafafa",
+                  "bgColor": "#171717",
+                  "contrastRatio": 17.17,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 17.17"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button class=\"inline-flex items-ce...\">",
+            "target": [
+              ".bg-primary"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#0a0a0a",
+                  "bgColor": "#888888",
+                  "contrastRatio": 5.58,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 5.58"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<td class=\"p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right font-bold\" colspan=\"6\">Total</td>",
+            "target": [
+              ".font-bold.text-right[colspan=\"6\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00ffff",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 13.88,
+                  "fontSize": "18.0pt (24px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "3:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 13.88"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div class=\"text-2xl font-semibold leading-none tracking-tight\" style=\"color:#00FFFF\">Estimate Overview</div>",
+            "target": [
+              ".flex-row > .text-2xl.font-semibold.tracking-tight"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#ff69b4",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 6.57,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 6.57"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<th class=\"h-12 px-4 align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 text-left\" style=\"color:#FF69B4\">Category</th>",
+            "target": [
+              ".min-w-full > thead > tr > .text-left"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#ff69b4",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 6.57,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 6.57"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<th class=\"h-12 px-4 align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 text-right\" style=\"color:#FF69B4\">Effort (Hours)</th>",
+            "target": [
+              "thead > tr > .text-right"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00ffff",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 13.88,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 13.88"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<td class=\"p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium\" style=\"color:#00FFFF\">Total Effort</td>",
+            "target": [
+              "tbody > tr:nth-child(1) > td:nth-child(1)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00ffff",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 13.88,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 13.88"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<td class=\"p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right\" style=\"color:#00FFFF\">0.00</td>",
+            "target": [
+              "tbody > tr:nth-child(1) > .text-right"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#ff69b4",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 6.57,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 6.57"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<td class=\"p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium\" style=\"color:#FF69B4\">Total Core Effort</td>",
+            "target": [
+              "tr:nth-child(2) > td:nth-child(1)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#ff69b4",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 6.57,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 6.57"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<td class=\"p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right\" style=\"color:#FF69B4\">0.00</td>",
+            "target": [
+              "tr:nth-child(2) > .text-right"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00ffff",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 13.88,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 13.88"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<td class=\"p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium\" style=\"color:#00FFFF\">Total Supervised Effort</td>",
+            "target": [
+              "tr:nth-child(3) > td:nth-child(1)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00ffff",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 13.88,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 13.88"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<td class=\"p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right\" style=\"color:#00FFFF\">0.00</td>",
+            "target": [
+              "tr:nth-child(3) > .text-right"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00ffff",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 13.88,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 13.88"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<td class=\"p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium\" style=\"color:#00FFFF\">Contingency (<!-- -->15.0<!-- -->%)</td>",
+            "target": [
+              "tr:nth-child(4) > td:nth-child(1)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00ffff",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 13.88,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 13.88"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<td class=\"p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right\" style=\"color:#00FFFF\">0.00</td>",
+            "target": [
+              "tr:nth-child(4) > .text-right"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#ff69b4",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 6.57,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 6.57"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<td class=\"p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium\" style=\"color:#FF69B4\">Project Management (<!-- -->5.0<!-- -->%)</td>",
+            "target": [
+              "tr:nth-child(5) > td:nth-child(1)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#ff69b4",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 6.57,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 6.57"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<td class=\"p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right\" style=\"color:#FF69B4\">0.00</td>",
+            "target": [
+              "tr:nth-child(5) > .text-right"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00ffff",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 13.88,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 13.88"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<td class=\"p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium\" style=\"color:#00FFFF\">Solution Architect (<!-- -->5.0<!-- -->%)</td>",
+            "target": [
+              "tr:nth-child(6) > td:nth-child(1)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00ffff",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 13.88,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 13.88"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<td class=\"p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right\" style=\"color:#00FFFF\">0.00</td>",
+            "target": [
+              "tr:nth-child(6) > .text-right"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#ff69b4",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 6.57,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 6.57"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<td class=\"p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium\" style=\"color:#FF69B4\">SDD (<!-- -->5.0<!-- -->%)</td>",
+            "target": [
+              "tr:nth-child(7) > td:nth-child(1)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#ff69b4",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 6.57,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 6.57"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<td class=\"p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right\" style=\"color:#FF69B4\">0.00</td>",
+            "target": [
+              "tr:nth-child(7) > .text-right"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00ffff",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 13.88,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 13.88"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<td class=\"p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium\" style=\"color:#00FFFF\">Release and Configuration Guide (<!-- -->2.5<!-- -->%)</td>",
+            "target": [
+              "tr:nth-child(8) > td:nth-child(1)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00ffff",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 13.88,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 13.88"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<td class=\"p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right\" style=\"color:#00FFFF\">0.00</td>",
+            "target": [
+              "tr:nth-child(8) > .text-right"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#ff69b4",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 6.57,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 6.57"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<td class=\"p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium\" style=\"color:#FF69B4\">User Manual (<!-- -->2.5<!-- -->%)</td>",
+            "target": [
+              "tr:nth-child(9) > td:nth-child(1)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#ff69b4",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 6.57,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 6.57"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<td class=\"p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right\" style=\"color:#FF69B4\">0.00</td>",
+            "target": [
+              "tr:nth-child(9) > .text-right"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00ffff",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 13.88,
+                  "fontSize": "11.5pt (15.4px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 13.88"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<td class=\"p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-bold\" style=\"color:#00FFFF;font-size:1.1em\">Grand Total Effort</td>",
+            "target": [
+              "tr:nth-child(10) > .font-bold:nth-child(1)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#00ffff",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 13.88,
+                  "fontSize": "11.5pt (15.4px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 13.88"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<td class=\"p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right font-bold\" style=\"color:#00FFFF;font-size:1.1em\">0.00</td>",
+            "target": [
+              "tr:nth-child(10) > .font-bold.text-right"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "meta-viewport",
+        "impact": null,
+        "tags": [
+          "cat.sensory-and-visual-cues",
+          "wcag2aa",
+          "wcag144",
+          "EN-301-549",
+          "EN-9.1.4.4",
+          "ACT",
+          "RGAAv4",
+          "RGAA-10.4.2"
+        ],
+        "description": "Ensure <meta name=\"viewport\"> does not disable text scaling and zooming",
+        "help": "Zooming and scaling must not be disabled",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/meta-viewport?application=webdriverjs",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "meta-viewport",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "<meta> tag does not disable zooming on mobile devices"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">",
+            "target": [
+              "meta[name=\"viewport\"]"
+            ]
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ],
+        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=webdriverjs",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "18.0pt (24px)",
+                  "fontWeight": "normal",
+                  "messageKey": "imgNode",
+                  "expectedContrastRatio": "3:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism neon-border-glow\" style=\"position:relative;z-index:1\">",
+                    "target": [
+                      ".neon-border-glow.rounded-lg.bg-card:nth-child(5)"
+                    ]
+                  },
+                  {
+                    "html": "<canvas aria-hidden=\"true\" role=\"presentation\" style=\"position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0\" width=\"756\" height=\"417\"></canvas>",
+                    "target": [
+                      "canvas"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because element contains an image node"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<div class=\"text-2xl font-semibold leading-none tracking-tight\" style=\"color:#00FFFF\">Activity Input</div>",
+            "target": [
+              ".neon-border-glow.rounded-lg.bg-card:nth-child(5) > .flex-col.space-y-1\\.5.p-6 > .text-2xl.font-semibold.tracking-tight"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "imgNode",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism neon-border-glow\" style=\"position:relative;z-index:1\">",
+                    "target": [
+                      ".neon-border-glow.rounded-lg.bg-card:nth-child(5)"
+                    ]
+                  },
+                  {
+                    "html": "<canvas aria-hidden=\"true\" role=\"presentation\" style=\"position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0\" width=\"756\" height=\"417\"></canvas>",
+                    "target": [
+                      "canvas"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because element contains an image node"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<div class=\"text-sm text-muted-foreground\" style=\"color:#FF69B4\">Add a new Activity</div>",
+            "target": [
+              ".neon-border-glow.rounded-lg.bg-card:nth-child(5) > .flex-col.space-y-1\\.5.p-6 > .text-muted-foreground.text-sm"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "imgNode",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism neon-border-glow\" style=\"position:relative;z-index:1\">",
+                    "target": [
+                      ".neon-border-glow.rounded-lg.bg-card:nth-child(5)"
+                    ]
+                  },
+                  {
+                    "html": "<canvas aria-hidden=\"true\" role=\"presentation\" style=\"position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0\" width=\"756\" height=\"417\"></canvas>",
+                    "target": [
+                      "canvas"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because element contains an image node"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<label class=\"text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 neon-label\" for=\"applicationName\">Application Name</label>",
+            "target": [
+              "label[for=\"applicationName\"]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "imgNode",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism neon-border-glow\" style=\"position:relative;z-index:1\">",
+                    "target": [
+                      ".neon-border-glow.rounded-lg.bg-card:nth-child(5)"
+                    ]
+                  },
+                  {
+                    "html": "<canvas aria-hidden=\"true\" role=\"presentation\" style=\"position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0\" width=\"756\" height=\"417\"></canvas>",
+                    "target": [
+                      "canvas"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because element contains an image node"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<label class=\"text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 neon-label\" for=\"adapter\">Adapter</label>",
+            "target": [
+              "label[for=\"adapter\"]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "messageKey": "imgNode",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism neon-border-glow\" style=\"position:relative;z-index:1\">",
+                    "target": [
+                      ".neon-border-glow.rounded-lg.bg-card:nth-child(5)"
+                    ]
+                  },
+                  {
+                    "html": "<canvas aria-hidden=\"true\" role=\"presentation\" style=\"position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0\" width=\"756\" height=\"417\"></canvas>",
+                    "target": [
+                      "canvas"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because element contains an image node"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<select class=\"neon-select p-2 rounded-md border\" id=\"adapter\" name=\"adapter\" aria-label=\"Adapter\">",
+            "target": [
+              "#adapter"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "imgNode",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism neon-border-glow\" style=\"position:relative;z-index:1\">",
+                    "target": [
+                      ".neon-border-glow.rounded-lg.bg-card:nth-child(5)"
+                    ]
+                  },
+                  {
+                    "html": "<canvas aria-hidden=\"true\" role=\"presentation\" style=\"position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0\" width=\"756\" height=\"417\"></canvas>",
+                    "target": [
+                      "canvas"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because element contains an image node"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<label class=\"text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 neon-label\" for=\"activityName\">Activity Name</label>",
+            "target": [
+              "label[for=\"activityName\"]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "imgNode",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism neon-border-glow\" style=\"position:relative;z-index:1\">",
+                    "target": [
+                      ".neon-border-glow.rounded-lg.bg-card:nth-child(5)"
+                    ]
+                  },
+                  {
+                    "html": "<canvas aria-hidden=\"true\" role=\"presentation\" style=\"position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0\" width=\"756\" height=\"417\"></canvas>",
+                    "target": [
+                      "canvas"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because element contains an image node"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<label class=\"text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 neon-label\" for=\"activityType\">Activity Type</label>",
+            "target": [
+              "label[for=\"activityType\"]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "elmPartiallyObscured",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism\">",
+                    "target": [
+                      ".rounded-lg.bg-card.text-card-foreground:nth-child(7)"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it's partially obscured by another element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<th class=\"h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0\">Effort [h]</th>",
+            "target": [
+              ".text-left:nth-child(7)"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "elmPartiallyObscured",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism\">",
+                    "target": [
+                      ".rounded-lg.bg-card.text-card-foreground:nth-child(7)"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it's partially obscured by another element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<th class=\"h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0\">Business Exception</th>",
+            "target": [
+              ".text-left:nth-child(8)"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "elmPartiallyObscured",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism\">",
+                    "target": [
+                      ".rounded-lg.bg-card.text-card-foreground:nth-child(7)"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it's partially obscured by another element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<th class=\"h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0\">Assumption</th>",
+            "target": [
+              ".text-left:nth-child(9)"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "elmPartiallyObscured",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism\">",
+                    "target": [
+                      ".rounded-lg.bg-card.text-card-foreground:nth-child(7)"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it's partially obscured by another element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<th class=\"h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0\">RPA Tool</th>",
+            "target": [
+              ".text-left:nth-child(10)"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "elmPartiallyObscured",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism\">",
+                    "target": [
+                      ".rounded-lg.bg-card.text-card-foreground:nth-child(7)"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it's partially obscured by another element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<th class=\"h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0\">Application Type</th>",
+            "target": [
+              ".text-left:nth-child(11)"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "elmPartiallyObscured",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism\">",
+                    "target": [
+                      ".rounded-lg.bg-card.text-card-foreground:nth-child(7)"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it's partially obscured by another element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<th class=\"h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0\">Detailed Activity Type</th>",
+            "target": [
+              ".text-left:nth-child(12)"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "elmPartiallyObscured",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism\">",
+                    "target": [
+                      ".rounded-lg.bg-card.text-card-foreground:nth-child(7)"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it's partially obscured by another element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<th class=\"h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0\">Exception Handling Complexity</th>",
+            "target": [
+              ".text-left:nth-child(13)"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "bold",
+                  "messageKey": "elmPartiallyObscured",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<tfoot class=\"border-t bg-muted/50 font-medium [&>tr]:last:border-b-0\">",
+                    "target": [
+                      "tfoot"
+                    ]
+                  },
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism\">",
+                    "target": [
+                      ".rounded-lg.bg-card.text-card-foreground:nth-child(7)"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it's partially obscured by another element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<td class=\"p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-bold\">0.00</td>",
+            "target": [
+              "tfoot > tr > .font-bold:nth-child(2)"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          }
+        ]
+      }
+    ],
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ],
+        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=webdriverjs",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#0a0a0a",
+                  "bgColor": "#000000",
+                  "contrastRatio": 1.06,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "messageKey": null,
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<input type=\"text\" class=\"flex h-10 w-full rou...\" id=\"applicationName\" aria-label=\"Application Name\" name=\"applicationName\" value=\"\">",
+                    "target": [
+                      "#applicationName"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element has insufficient color contrast of 1.06 (foreground color: #0a0a0a, background color: #000000, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<input type=\"text\" class=\"flex h-10 w-full rou...\" id=\"applicationName\" aria-label=\"Application Name\" name=\"applicationName\" value=\"\">",
+            "target": [
+              "#applicationName"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.06 (foreground color: #0a0a0a, background color: #000000, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#0a0a0a",
+                  "bgColor": "#000000",
+                  "contrastRatio": 1.06,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "messageKey": null,
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<input type=\"text\" class=\"flex h-10 w-full rou...\" id=\"activityName\" aria-label=\"Activity Name\" name=\"activityName\" value=\"\">",
+                    "target": [
+                      "#activityName"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element has insufficient color contrast of 1.06 (foreground color: #0a0a0a, background color: #000000, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<input type=\"text\" class=\"flex h-10 w-full rou...\" id=\"activityName\" aria-label=\"Activity Name\" name=\"activityName\" value=\"\">",
+            "target": [
+              "#activityName"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.06 (foreground color: #0a0a0a, background color: #000000, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#0a0a0a",
+                  "bgColor": "#000000",
+                  "contrastRatio": 1.06,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "messageKey": null,
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<input type=\"number\" class=\"flex h-10 w-full rou...\" id=\"effort\" aria-label=\"Effort in hours\" name=\"effort\" value=\"0\">",
+                    "target": [
+                      "#effort"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element has insufficient color contrast of 1.06 (foreground color: #0a0a0a, background color: #000000, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<input type=\"number\" class=\"flex h-10 w-full rou...\" id=\"effort\" aria-label=\"Effort in hours\" name=\"effort\" value=\"0\">",
+            "target": [
+              "#effort"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.06 (foreground color: #0a0a0a, background color: #000000, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#0a0a0a",
+                  "bgColor": "#000000",
+                  "contrastRatio": 1.06,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "messageKey": null,
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<input type=\"text\" class=\"flex h-10 w-full rou...\" id=\"assumption\" aria-label=\"Assumption\" name=\"assumption\" value=\"\">",
+                    "target": [
+                      "#assumption"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element has insufficient color contrast of 1.06 (foreground color: #0a0a0a, background color: #000000, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<input type=\"text\" class=\"flex h-10 w-full rou...\" id=\"assumption\" aria-label=\"Assumption\" name=\"assumption\" value=\"\">",
+            "target": [
+              "#assumption"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.06 (foreground color: #0a0a0a, background color: #000000, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#0a0a0a",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 1.13,
+                  "fontSize": "18.0pt (24px)",
+                  "fontWeight": "normal",
+                  "messageKey": null,
+                  "expectedContrastRatio": "3:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism\">",
+                    "target": [
+                      ".rounded-lg.bg-card.text-card-foreground:nth-child(7)"
+                    ]
+                  },
+                  {
+                    "html": "<body class=\"geist_e531dabc-module__QGiZLq__variable geist_mono_68a01160-module__YLcDdW__variable antialiased\">",
+                    "target": [
+                      "body"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element has insufficient color contrast of 1.13 (foreground color: #0a0a0a, background color: #1a1a1a, font size: 18.0pt (24px), font weight: normal). Expected contrast ratio of 3:1"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<div class=\"text-2xl font-semibold leading-none tracking-tight\">Activity Overview</div>",
+            "target": [
+              ".rounded-lg.bg-card.text-card-foreground:nth-child(7) > .flex-col.space-y-1\\.5.p-6 > .text-2xl.font-semibold.tracking-tight"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.13 (foreground color: #0a0a0a, background color: #1a1a1a, font size: 18.0pt (24px), font weight: normal). Expected contrast ratio of 3:1"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#64748b",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 3.65,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": null,
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism\">",
+                    "target": [
+                      ".rounded-lg.bg-card.text-card-foreground:nth-child(7)"
+                    ]
+                  },
+                  {
+                    "html": "<body class=\"geist_e531dabc-module__QGiZLq__variable geist_mono_68a01160-module__YLcDdW__variable antialiased\">",
+                    "target": [
+                      "body"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element has insufficient color contrast of 3.65 (foreground color: #64748b, background color: #1a1a1a, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<div class=\"text-sm text-muted-foreground\">A summary of all activities.</div>",
+            "target": [
+              ".rounded-lg.bg-card.text-card-foreground:nth-child(7) > .flex-col.space-y-1\\.5.p-6 > .text-muted-foreground.text-sm"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.65 (foreground color: #64748b, background color: #1a1a1a, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#64748b",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 3.65,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": null,
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism\">",
+                    "target": [
+                      ".rounded-lg.bg-card.text-card-foreground:nth-child(7)"
+                    ]
+                  },
+                  {
+                    "html": "<body class=\"geist_e531dabc-module__QGiZLq__variable geist_mono_68a01160-module__YLcDdW__variable antialiased\">",
+                    "target": [
+                      "body"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element has insufficient color contrast of 3.65 (foreground color: #64748b, background color: #1a1a1a, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<th class=\"h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0\">Application Name</th>",
+            "target": [
+              ".overflow-x-auto > .relative.overflow-auto.w-full > table > thead > tr > .text-left:nth-child(1)"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.65 (foreground color: #64748b, background color: #1a1a1a, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#64748b",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 3.65,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": null,
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism\">",
+                    "target": [
+                      ".rounded-lg.bg-card.text-card-foreground:nth-child(7)"
+                    ]
+                  },
+                  {
+                    "html": "<body class=\"geist_e531dabc-module__QGiZLq__variable geist_mono_68a01160-module__YLcDdW__variable antialiased\">",
+                    "target": [
+                      "body"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element has insufficient color contrast of 3.65 (foreground color: #64748b, background color: #1a1a1a, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<th class=\"h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0\">Adapter</th>",
+            "target": [
+              ".text-left:nth-child(2)"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.65 (foreground color: #64748b, background color: #1a1a1a, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#64748b",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 3.65,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": null,
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism\">",
+                    "target": [
+                      ".rounded-lg.bg-card.text-card-foreground:nth-child(7)"
+                    ]
+                  },
+                  {
+                    "html": "<body class=\"geist_e531dabc-module__QGiZLq__variable geist_mono_68a01160-module__YLcDdW__variable antialiased\">",
+                    "target": [
+                      "body"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element has insufficient color contrast of 3.65 (foreground color: #64748b, background color: #1a1a1a, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<th class=\"h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0\">Activity Name</th>",
+            "target": [
+              ".text-left:nth-child(3)"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.65 (foreground color: #64748b, background color: #1a1a1a, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#64748b",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 3.65,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": null,
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism\">",
+                    "target": [
+                      ".rounded-lg.bg-card.text-card-foreground:nth-child(7)"
+                    ]
+                  },
+                  {
+                    "html": "<body class=\"geist_e531dabc-module__QGiZLq__variable geist_mono_68a01160-module__YLcDdW__variable antialiased\">",
+                    "target": [
+                      "body"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element has insufficient color contrast of 3.65 (foreground color: #64748b, background color: #1a1a1a, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<th class=\"h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0\">Activity Type</th>",
+            "target": [
+              ".text-left:nth-child(4)"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.65 (foreground color: #64748b, background color: #1a1a1a, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#64748b",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 3.65,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": null,
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism\">",
+                    "target": [
+                      ".rounded-lg.bg-card.text-card-foreground:nth-child(7)"
+                    ]
+                  },
+                  {
+                    "html": "<body class=\"geist_e531dabc-module__QGiZLq__variable geist_mono_68a01160-module__YLcDdW__variable antialiased\">",
+                    "target": [
+                      "body"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element has insufficient color contrast of 3.65 (foreground color: #64748b, background color: #1a1a1a, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<th class=\"h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0\">Core/Supervised</th>",
+            "target": [
+              ".text-left:nth-child(5)"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.65 (foreground color: #64748b, background color: #1a1a1a, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#64748b",
+                  "bgColor": "#1a1a1a",
+                  "contrastRatio": 3.65,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": null,
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div class=\"rounded-lg border bg-card text-card-foreground shadow-sm border-double border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet) glassmorphism\">",
+                    "target": [
+                      ".rounded-lg.bg-card.text-card-foreground:nth-child(7)"
+                    ]
+                  },
+                  {
+                    "html": "<body class=\"geist_e531dabc-module__QGiZLq__variable geist_mono_68a01160-module__YLcDdW__variable antialiased\">",
+                    "target": [
+                      "body"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element has insufficient color contrast of 3.65 (foreground color: #64748b, background color: #1a1a1a, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<th class=\"h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0\">Reused?</th>",
+            "target": [
+              ".text-left:nth-child(6)"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.65 (foreground color: #64748b, background color: #1a1a1a, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#0a0a0a",
+                  "bgColor": "#000000",
+                  "contrastRatio": 1.06,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": null,
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<button class=\"inline-flex items-ce...\" aria-expanded=\"false\" type=\"button\" aria-haspopup=\"dialog\" aria-controls=\"radix-«Rcr7l7»\" data-state=\"closed\">",
+                    "target": [
+                      "button[aria-controls=\"radix-«Rcr7l7»\"]"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element has insufficient color contrast of 1.06 (foreground color: #0a0a0a, background color: #000000, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<button class=\"inline-flex items-ce...\" aria-expanded=\"false\" type=\"button\" aria-haspopup=\"dialog\" aria-controls=\"radix-«Rcr7l7»\" data-state=\"closed\">",
+            "target": [
+              "button[aria-controls=\"radix-«Rcr7l7»\"]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.06 (foreground color: #0a0a0a, background color: #000000, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#0a0a0a",
+                  "bgColor": "#000000",
+                  "contrastRatio": 1.06,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": null,
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<button class=\"inline-flex items-ce...\" aria-expanded=\"false\" type=\"button\" aria-haspopup=\"dialog\" aria-controls=\"radix-«Rkr7l7»\" data-state=\"closed\">",
+                    "target": [
+                      "button[aria-controls=\"radix-«Rkr7l7»\"]"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element has insufficient color contrast of 1.06 (foreground color: #0a0a0a, background color: #000000, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<button class=\"inline-flex items-ce...\" aria-expanded=\"false\" type=\"button\" aria-haspopup=\"dialog\" aria-controls=\"radix-«Rkr7l7»\" data-state=\"closed\">",
+            "target": [
+              "button[aria-controls=\"radix-«Rkr7l7»\"]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.06 (foreground color: #0a0a0a, background color: #000000, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ]
+  }
+]

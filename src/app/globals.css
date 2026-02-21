@@ -43,6 +43,9 @@ body {
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
     --neon-green: #39FF14;
+    /* Accessible color tokens */
+    --accessible-cyan: #00b7b7; /* higher-contrast cyan */
+    --accessible-magenta: #d0457a; /* higher-contrast magenta */
     --dark-gray: #333333;
   }
   .dark {
@@ -119,29 +122,36 @@ body {
 }
 
 .neon-label {
-  color: #069bff; /* Electric Blue */
+  color: var(--accessible-cyan); /* Electric Blue fallback to accessible cyan */
 }
 .dark .neon-label {
-  color: #FFFFFF; /* White in dark mode */
+  color: var(--accessible-cyan); /* Use accessible cyan in dark mode for contrast */
 }
 .neon-input1 {
-  border: 1px solid #00FFFF;
-  box-shadow: 0 0 5px #00FFFF;
+  border: 1px solid var(--accessible-cyan);
+  box-shadow: 0 0 5px var(--accessible-cyan);
 }
 .neon-input2 {
-  border: 1px solid hsl(303, 100%, 50%);
-  box-shadow: 0 0 5px #ff00bf;
+  border: 1px solid var(--accessible-magenta);
+  box-shadow: 0 0 5px var(--accessible-magenta);
 }
 .neon-select {
   background-color: transparent;
-  border: 1px solid #00FFFF; /* Electric Blue */
-  box-shadow: 0 0 5px #00FFFF;
-  color: #00FFFF;
+  border: 1px solid var(--accessible-cyan);
+  box-shadow: 0 0 5px var(--accessible-cyan);
+  color: var(--accessible-cyan);
   /* Keep other existing styling as needed */
 }
 .dark .neon-select {
-  border-color: #00FFFF; /* Maintain Electric Blue for border in dark mode */
-  box-shadow: 0 0 5px #00FFFF;
-  color: #FFFFFF; /* White text in dark mode */
+  border-color: var(--accessible-cyan); /* Maintain accessible cyan for border in dark mode */
+  box-shadow: 0 0 5px var(--accessible-cyan);
+  color: var(--accessible-cyan); /* Keep cyan for clarity in dark mode */
+}
+
+/* Overlay helper for text readability on decorative backgrounds */
+.text-backplate {
+  background: rgba(255,255,255,0.92);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
 }
 

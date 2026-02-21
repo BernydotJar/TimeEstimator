@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { saveAs } from 'file-saver';
 import html2canvas from 'html2canvas';
 import { useToast } from "@/hooks/use-toast";
+import React, { useState } from 'react';
 
 interface EstimateReportProps {
   totalEffort: number;
@@ -43,18 +44,31 @@ const EstimateReport: React.FC<EstimateReportProps> = ({
 
     const componentRef = useRef<HTMLDivElement>(null);
     const { toast } = useToast();
+    const [ariaMessage, setAriaMessage] = useState('');
 
     const handleSaveEstimate = async () => {
+        setAriaMessage('Saving estimate report.');
         if (!componentRef.current) {
             toast({
                 title: 'Error',
                 description: 'Could not find estimate report to save.',
                 variant: 'destructive',
             });
+            setAriaMessage('Failed to save estimate report.');
             return;
         }
-
         try {
+            componentRef.current.setAttribute('aria-busy', 'true');
+            const metadataEl = document.createElement('div');
+            const timestamp = new Date().toISOString();
+            metadataEl.setAttribute('data-qa-metadata', 'true');
+            metadataEl.style.fontSize = '10px';
+            metadataEl.style.color = '#000';
+            metadataEl.style.opacity = '0.8';
+            metadataEl.style.marginTop = '8px';
+            metadataEl.innerText = `Generated: ${timestamp} — Source: TimeEstimator (prototype)`;
+            componentRef.current.appendChild(metadataEl);
+
             const canvas = await html2canvas(componentRef.current, {
                 scale: 2, // Increase scale for better resolution
                 useCORS: true, // Enable cross-origin resource sharing
@@ -65,6 +79,11 @@ const EstimateReport: React.FC<EstimateReportProps> = ({
                 title: 'Estimate Report Saved',
                 description: 'Estimate report saved as an image.',
             });
+            setAriaMessage('Estimate report saved successfully.');
+            const meta = { generatedAt: timestamp, source: 'TimeEstimator', prototype: true };
+            const blob = new Blob([JSON.stringify(meta, null, 2)], { type: 'application/json' });
+            saveAs(blob, 'estimate_report_metadata.json');
+            componentRef.current.querySelector('[data-qa-metadata]')?.remove();
         } catch (error: any) {
             console.error('Error saving estimate:', error);
             toast({
@@ -72,11 +91,15 @@ const EstimateReport: React.FC<EstimateReportProps> = ({
                 description: `Failed to save estimate report: ${error.message}`,
                 variant: 'destructive',
             });
+            setAriaMessage('Failed to save estimate report.');
+        } finally {
+            if (componentRef.current) componentRef.current.removeAttribute('aria-busy');
         }
     };
 
   return (
     <div className="container mx-auto p-4">
+                <div aria-live="polite" className="sr-only" role="status">{ariaMessage}</div>
         <div ref={componentRef}>
             <div className="flex justify-end mb-4">
                 <Button variant="outline" size="sm" onClick={handleSaveEstimate}>
