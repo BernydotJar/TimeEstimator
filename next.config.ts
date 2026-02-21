@@ -1,12 +1,44 @@
-import type {NextConfig} from 'next';
+import type { NextConfig } from "next";
+import path from "path";
+
+const isGithubActions = process.env.GITHUB_ACTIONS === "true";
+const repositoryName = process.env.GITHUB_REPOSITORY?.split("/")[1] ?? "";
+const basePath = isGithubActions && repositoryName ? `/${repositoryName}` : "";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  typescript: {
-    ignoreBuildErrors: true,
+  output: isGithubActions ? "export" : undefined,
+  images: {
+    unoptimized: true,
   },
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: isGithubActions,
+  },
+  typescript: {
+    ignoreBuildErrors: isGithubActions,
+  },
+  basePath,
+  assetPrefix: basePath ? `${basePath}/` : undefined,
+  trailingSlash: true,
+  webpack: (config) => {
+    if (isGithubActions) {
+      config.resolve.alias = {
+        ...(config.resolve.alias ?? {}),
+        "@/ai/flows/estimate-analysis-flow": path.join(
+          process.cwd(),
+          "src/ai/stubs/estimate-analysis-flow.ts",
+        ),
+        "@/ai/flows/estimate-defaults-flow": path.join(
+          process.cwd(),
+          "src/ai/stubs/estimate-defaults-flow.ts",
+        ),
+        "@/ai/flows/estimate-summary-flow": path.join(
+          process.cwd(),
+          "src/ai/stubs/estimate-summary-flow.ts",
+        ),
+      };
+    }
+
+    return config;
   },
 };
 

@@ -1,5 +1,10 @@
-'use client';
-import React, { useRef } from 'react';
+"use client";
+
+import React, { useRef, useState } from "react";
+import html2canvas from "html2canvas";
+import { saveAs } from "file-saver";
+
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -7,12 +12,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
-import { saveAs } from 'file-saver';
-import html2canvas from 'html2canvas';
+} from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
-import React, { useState } from 'react';
+import { cn } from "@/lib/utils";
 
 interface EstimateReportProps {
   totalEffort: number;
@@ -41,127 +43,96 @@ const EstimateReport: React.FC<EstimateReportProps> = ({
   userManualEffort,
   grandTotalEffort,
 }) => {
+  const componentRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
+  const [ariaMessage, setAriaMessage] = useState("");
 
-    const componentRef = useRef<HTMLDivElement>(null);
-    const { toast } = useToast();
-    const [ariaMessage, setAriaMessage] = useState('');
+  const rows = [
+    { label: "Total Effort", value: totalEffort },
+    { label: "Core Effort", value: coreEffort },
+    { label: "Supervised Effort", value: supervisedEffort },
+    { label: `Contingency (${(contingencyPercentage * 100).toFixed(1)}%)`, value: contingencyEffort },
+    { label: "Project Management (5%)", value: pmEffort },
+    { label: "Solution Architect (5%)", value: saEffort },
+    { label: "SDD (5%)", value: sddEffort },
+    { label: "Config & Release (2.5%)", value: releaseConfigEffort },
+    { label: "User Manual (2.5%)", value: userManualEffort },
+    { label: "Grand Total Effort", value: grandTotalEffort },
+  ];
 
-    const handleSaveEstimate = async () => {
-        setAriaMessage('Saving estimate report.');
-        if (!componentRef.current) {
-            toast({
-                title: 'Error',
-                description: 'Could not find estimate report to save.',
-                variant: 'destructive',
-            });
-            setAriaMessage('Failed to save estimate report.');
-            return;
-        }
-        try {
-            componentRef.current.setAttribute('aria-busy', 'true');
-            const metadataEl = document.createElement('div');
-            const timestamp = new Date().toISOString();
-            metadataEl.setAttribute('data-qa-metadata', 'true');
-            metadataEl.style.fontSize = '10px';
-            metadataEl.style.color = '#000';
-            metadataEl.style.opacity = '0.8';
-            metadataEl.style.marginTop = '8px';
-            metadataEl.innerText = `Generated: ${timestamp} — Source: TimeEstimator (prototype)`;
-            componentRef.current.appendChild(metadataEl);
+  const handleSaveEstimate = async () => {
+    setAriaMessage("Saving estimate report.");
+    if (!componentRef.current) {
+      toast({
+        title: "Error",
+        description: "Could not find estimate report to save.",
+        variant: "destructive",
+      });
+      setAriaMessage("Failed to save estimate report.");
+      return;
+    }
 
-            const canvas = await html2canvas(componentRef.current, {
-                scale: 2, // Increase scale for better resolution
-                useCORS: true, // Enable cross-origin resource sharing
-            });
-            const dataURL = canvas.toDataURL('image/png');
-            saveAs(dataURL, 'estimate_report.png');
-            toast({
-                title: 'Estimate Report Saved',
-                description: 'Estimate report saved as an image.',
-            });
-            setAriaMessage('Estimate report saved successfully.');
-            const meta = { generatedAt: timestamp, source: 'TimeEstimator', prototype: true };
-            const blob = new Blob([JSON.stringify(meta, null, 2)], { type: 'application/json' });
-            saveAs(blob, 'estimate_report_metadata.json');
-            componentRef.current.querySelector('[data-qa-metadata]')?.remove();
-        } catch (error: any) {
-            console.error('Error saving estimate:', error);
-            toast({
-                title: 'Error',
-                description: `Failed to save estimate report: ${error.message}`,
-                variant: 'destructive',
-            });
-            setAriaMessage('Failed to save estimate report.');
-        } finally {
-            if (componentRef.current) componentRef.current.removeAttribute('aria-busy');
-        }
-    };
+    try {
+      componentRef.current.setAttribute("aria-busy", "true");
+      const canvas = await html2canvas(componentRef.current, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: "#ffffff",
+      });
+      saveAs(canvas.toDataURL("image/png"), "estimate_report.png");
+      toast({
+        title: "Estimate report saved",
+        description: "Estimate report saved as an image.",
+      });
+      setAriaMessage("Estimate report saved successfully.");
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: `Failed to save estimate report: ${error.message}`,
+        variant: "destructive",
+      });
+      setAriaMessage("Failed to save estimate report.");
+    } finally {
+      componentRef.current.removeAttribute("aria-busy");
+    }
+  };
 
   return (
     <div className="container mx-auto p-4">
-                <div aria-live="polite" className="sr-only" role="status">{ariaMessage}</div>
-        <div ref={componentRef}>
-            <div className="flex justify-end mb-4">
-                <Button variant="outline" size="sm" onClick={handleSaveEstimate}>
-                    Save Estimate Report
-                </Button>
-            </div>
-            <h2 className="text-2xl font-bold mb-4 text-blue-800">Effort Estimate Summary</h2>
-            <Table className="min-w-full border border-blue-200 shadow-md rounded-lg">
-                <TableHeader className="bg-blue-500 text-white">
-                    <TableRow>
-                        <TableHead className="text-left font-semibold text-sm uppercase tracking-wider p-3 border-b border-blue-300">
-                            Category
-                        </TableHead>
-                        <TableHead className="text-right font-semibold text-sm uppercase tracking-wider p-3 border-b border-blue-300">
-                            Effort (Hours)
-                        </TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    <TableRow>
-                        <TableCell className="p-3 border-b">Total Effort</TableCell>
-                        <TableCell className="p-3 border-b text-right">{totalEffort.toFixed(2)}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell className="p-3 border-b">Core Effort</TableCell>
-                        <TableCell className="p-3 border-b text-right">{coreEffort.toFixed(2)}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell className="p-3 border-b">Supervised Effort</TableCell>
-                        <TableCell className="p-3 border-b text-right">{supervisedEffort.toFixed(2)}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell className="p-3 border-b">Contingency ({contingencyPercentage * 100}%)</TableCell>
-                        <TableCell className="p-3 border-b text-right">{contingencyEffort.toFixed(2)}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell className="p-3 border-b">Project Management (5%)</TableCell>
-                        <TableCell className="p-3 border-b text-right">{pmEffort.toFixed(2)}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell className="p-3 border-b">Solution Architect (5%)</TableCell>
-                        <TableCell className="p-3 border-b text-right">{saEffort.toFixed(2)}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell className="p-3 border-b">SDD (5%)</TableCell>
-                        <TableCell className="p-3 border-b text-right">{sddEffort.toFixed(2)}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell className="p-3 border-b">Release and Configuration Guide (2.5%)</TableCell>
-                        <TableCell className="p-3 border-b text-right">{releaseConfigEffort.toFixed(2)}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell className="p-3 border-b">User Manual (2.5%)</TableCell>
-                        <TableCell className="p-3 border-b text-right">{userManualEffort.toFixed(2)}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell className="p-3 font-bold text-blue-700">Grand Total Effort</TableCell>
-                        <TableCell className="p-3 font-bold text-blue-700 text-right">{grandTotalEffort.toFixed(2)}</TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
+      <div aria-live="polite" className="sr-only" role="status">
+        {ariaMessage}
+      </div>
+      <div ref={componentRef} className="rounded-md border bg-background p-4">
+        <div className="mb-4 flex justify-end">
+          <Button variant="outline" size="sm" onClick={handleSaveEstimate}>
+            Save Estimate Report
+          </Button>
         </div>
+
+        <h2 className="mb-3 text-xl font-semibold">Effort Estimate Summary</h2>
+        <Table className="rounded-md border">
+          <TableHeader>
+            <TableRow>
+              <TableHead>Category</TableHead>
+              <TableHead className="text-right">Effort (hours)</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {rows.map((row, index) => (
+              <TableRow
+                key={`${row.label}-${index}`}
+                className={cn(
+                  "odd:bg-background even:bg-muted/20",
+                  row.label === "Grand Total Effort" && "bg-muted/40 font-semibold",
+                )}
+              >
+                <TableCell>{row.label}</TableCell>
+                <TableCell className="text-right">{row.value.toFixed(2)}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 };

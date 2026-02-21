@@ -10,7 +10,7 @@ const CardNeon = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-lg border bg-card text-card-foreground shadow-sm border-double border-width-2 border-image-slice-1 border-image-source:linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet)",
+      "rounded-lg border border-accessible-cyan/40 bg-card/95 text-card-foreground shadow-sm",
       className
     )}
     {...props}
@@ -46,13 +46,13 @@ const CardHeader = React.forwardRef<
 CardHeader.displayName = "CardHeader"
 
 const CardTitle = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
+  HTMLHeadingElement,
+  React.HTMLAttributes<HTMLHeadingElement>
 >(({ className, ...props }, ref) => (
-  <div
+  <h2
     ref={ref}
     className={cn(
-      "text-2xl font-semibold leading-none tracking-tight",
+      "text-xl font-semibold leading-tight tracking-tight",
       className
     )}
     {...props}
@@ -61,10 +61,10 @@ const CardTitle = React.forwardRef<
 CardTitle.displayName = "CardTitle"
 
 const CardDescription = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...props }, ref) => (
-  <div
+  <p
     ref={ref}
     className={cn("text-sm text-muted-foreground", className)}
     {...props}
@@ -92,7 +92,7 @@ const CardFooter = React.forwardRef<
 ))
 CardFooter.displayName = "CardFooter"
 
-export { CardNeon as Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
+export { Card, CardNeon, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
 
 
     
