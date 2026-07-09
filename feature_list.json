@@ -15,14 +15,14 @@
       "id": "001-connect-harness-sdlc",
       "title": "Connect harness-sdlc operating model",
       "mode": "MVP",
-      "status": "review",
+      "status": "done",
       "summary": "Add repo instructions, feature registry, specs, progress files, and command prompts so TimeEstimator can be improved through controlled agentic SDLC workflows. No app code changes are included."
     },
     {
       "id": "002-cinematic-frontend-command-center",
       "title": "Cinematic frontend command center",
       "mode": "SHIP",
-      "status": "spec_ready",
+      "status": "in_progress",
       "summary": "Rebuild the main UX into a cinematic RPA estimation command center with executive totals, guided activity capture, risk/assumption panels, export-ready summaries, accessibility, and responsive behavior."
     },
     {
