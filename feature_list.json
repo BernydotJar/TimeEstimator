@@ -22,7 +22,7 @@
       "id": "002-cinematic-frontend-command-center",
       "title": "Cinematic frontend command center",
       "mode": "SHIP",
-      "status": "in_progress",
+      "status": "review",
       "summary": "Rebuild the main UX into a cinematic RPA estimation command center with executive totals, guided activity capture, risk/assumption panels, export-ready summaries, accessibility, and responsive behavior."
     },
     {
