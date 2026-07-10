@@ -22,12 +22,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
           cache-dependency-path: package-lock.json
 
@@ -59,11 +59,8 @@ jobs:
           NEXT_PUBLIC_N8N_SUMMARIZE_ACTIVITIES_URL: ${{ vars.NEXT_PUBLIC_N8N_SUMMARIZE_ACTIVITIES_URL }}
           NEXT_PUBLIC_N8N_PARSE_STEPS_URL: ${{ vars.NEXT_PUBLIC_N8N_PARSE_STEPS_URL }}
 
-      - name: Disable Jekyll
-        run: touch ./out/.nojekyll
-
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./out
 
