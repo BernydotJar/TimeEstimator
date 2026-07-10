@@ -35,9 +35,12 @@ jobs:
       - name: Install dependencies
         run: npm ci --prefer-offline
 
+      - name: Typecheck
+        run: npm run typecheck
+
       - name: Replace AI flows with static stubs
-        # Next.js detects 'use server' before webpack aliases run, so we physically
-        # replace the flow files with stub implementations for the static export.
+        # Next.js detects 'use server' before webpack aliases run, so the Pages
+        # build replaces server-only flows with browser-compatible adapters.
         run: |
           cp src/ai/stubs/estimate-analysis-flow.ts src/ai/flows/estimate-analysis-flow.ts
           cp src/ai/stubs/estimate-defaults-flow.ts src/ai/flows/estimate-defaults-flow.ts
