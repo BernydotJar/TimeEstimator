@@ -66,9 +66,7 @@ export function AiIntegrationDialog() {
   const connectedCount = resolvedEndpoints.filter((item) => item.url).length;
 
   const handleOpenChange = (next: boolean) => {
-    if (next) {
-      setDraft(storedConfig);
-    }
+    if (next) setDraft(storedConfig);
     setOpen(next);
   };
 
@@ -100,7 +98,7 @@ export function AiIntegrationDialog() {
         <DialogHeader>
           <DialogTitle>n8n AI Integration</DialogTitle>
           <DialogDescription>
-            Configure webhook URLs for GitHub Pages-friendly AI features.
+            Configure public webhook endpoints for GitHub Pages-compatible AI features.
           </DialogDescription>
         </DialogHeader>
 
@@ -110,8 +108,8 @@ export function AiIntegrationDialog() {
               Status: {connectedCount}/4 AI endpoints configured
             </p>
             <p className="mt-1 text-xs text-muted-foreground">
-              Configure one base URL or explicit per-operation URLs. Local
-              values override build-time environment values.
+              Configure one base URL or explicit per-operation URLs. Local values
+              override build-time environment values.
             </p>
           </div>
 
@@ -175,30 +173,6 @@ export function AiIntegrationDialog() {
                 }
               />
             </div>
-
-            <div className="grid gap-1.5">
-              <Label htmlFor="n8n-bearer-token">Bearer token (optional)</Label>
-              <Input
-                id="n8n-bearer-token"
-                type="password"
-                placeholder="Optional"
-                value={toInputValue(draft.bearerToken)}
-                onChange={(event) =>
-                  updateField("bearerToken", event.target.value)
-                }
-              />
-            </div>
-
-            <div className="grid gap-1.5">
-              <Label htmlFor="n8n-api-key">x-api-key (optional)</Label>
-              <Input
-                id="n8n-api-key"
-                type="password"
-                placeholder="Optional"
-                value={toInputValue(draft.apiKey)}
-                onChange={(event) => updateField("apiKey", event.target.value)}
-              />
-            </div>
           </div>
 
           <div className="space-y-2 rounded-md border p-3">
@@ -222,10 +196,12 @@ export function AiIntegrationDialog() {
             </div>
           </div>
 
-          <p className="text-xs text-muted-foreground">
-            Note: GitHub Pages is a static frontend. Any token configured here
-            is visible to end users. Use only low-risk webhook credentials.
-          </p>
+          <div className="rounded-md border border-amber-500/30 bg-amber-500/5 p-3 text-xs text-muted-foreground">
+            GitHub Pages runs entirely in the browser. Do not place bearer tokens,
+            API keys, provider credentials, or privileged webhook secrets in this
+            configuration. Protect sensitive n8n workflows behind a server-side
+            gateway and apply rate limits and schema validation to public endpoints.
+          </div>
         </div>
 
         <DialogFooter className="gap-2 sm:justify-between">
