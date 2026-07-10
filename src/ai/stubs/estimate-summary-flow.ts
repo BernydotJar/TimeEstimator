@@ -6,6 +6,7 @@ export interface SummarizeActivitiesInput {
 
 export interface SummarizeActivitiesOutput {
   summary: string;
+  source: "n8n" | "heuristic";
 }
 
 function summarizeFromCount(activities: string): string {
@@ -34,7 +35,7 @@ export async function summarizeActivities(
     );
 
     if (typeof result.summary === "string" && result.summary.trim().length > 0) {
-      return { summary: result.summary.trim() };
+      return { summary: result.summary.trim(), source: "n8n" };
     }
   } catch (error) {
     if (process.env.NODE_ENV !== "production") {
@@ -42,5 +43,8 @@ export async function summarizeActivities(
     }
   }
 
-  return { summary: summarizeFromCount(input.activities) };
+  return {
+    summary: summarizeFromCount(input.activities),
+    source: "heuristic",
+  };
 }

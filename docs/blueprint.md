@@ -1,25 +1,33 @@
-# **App Name**: EstimateVerse
+# TimeEstimator product blueprint
 
-## Core Features:
+> Status note: this file began as the original Firebase Studio concept. The
+> implemented product is now a browser-local Next.js application deployed as a
+> static export to GitHub Pages. Optional AI enhancement uses public n8n
+> webhooks with deterministic local fallbacks; Firebase is not part of the
+> current runtime.
 
-- Data Input: Input form for application and process activities: Capture Application Name, Adapter, Activity Name, Activity Type, Quantity, Core/Supervised, Reused?, Effort [h], Business Exception, and Assumption.
-- Data Table Display: Display a table showing Application Activities and Process Activities including the data entered.
-- Estimate Overview: Generate and display estimate overviews based on the input data, including total effort calculation.
-- Theme Switcher: Implement a theme switching button with visual press/release feedback and confetti effect. Switch between a light and dark theme.
+## Current core features
 
-## Style Guidelines:
+- Browser-local project creation, rename, deletion, and persistence.
+- Guided manual activity entry for application, adapter, type, delivery model,
+  reuse, effort, exception handling, assumptions, and RPA tooling.
+- Process-step import through public n8n webhooks with a deterministic local
+  parser when n8n is not configured or unavailable.
+- Configurable overhead percentages and automatic effort calculations.
+- Responsive activity ledger, estimate overview, charts, stakeholder report,
+  PNG export, and print/PDF support.
+- Light and dark theme switching.
+- Static GitHub Pages deployment with manifest, sitemap, robots, and metadata.
 
-- Primary color: Black (#000000) for a futuristic base.
-- Secondary color: Dark Gray (#333333) for contrast and depth.
-- Accent: Neon Green (#39FF14) for highlights and interactive elements.
-- Glassmorphism effect: Use frosted glass-like backgrounds with subtle transparency and blur effects on panels and cards.
-- Clean, modern fonts for readability.
-- Use futuristic, minimalist icons for actions and categories.
-- Use a modular layout with clear sections for data input, table display, and estimate overview.
-- Implement subtle animations for button presses and data updates.
-- Confetti effect when switching themes.
+## Current style guidelines
 
-## Original User Request:
+- Accessible cyan and magenta accents over neutral light and dark surfaces.
+- Clear card hierarchy with restrained translucency and shadows.
+- Responsive controls and mobile activity cards at narrow viewports.
+- Visible keyboard focus, semantic labels, and reduced decorative motion.
+- Modular sections for input, ledger, calculations, configuration, and reports.
+
+## Original user request (historical)
 Our old Excel estimation process needs a modern web-based solution.
 
 **Objective:** Build a web app on Firebase to replace our Excel estimator, incorporating a new user interface and enhanced functionality.
@@ -34,5 +42,6 @@ Our old Excel estimation process needs a modern web-based solution.
 
 **Team Roles:** Senior Developer, UX Designer, QA Engineer, Project Manager, CI/CD Agent.
 
-Suggest a plan for the team to build and deploy this application on Firebase, emphasizing the modern design and user experience.
-  
+The current delivery architecture supersedes the original Firebase deployment
+request with GitHub Pages so the estimator can operate without a server-side
+runtime. Project data remains in the user's browser through local storage.

@@ -71,6 +71,7 @@ export function StepsImportTab({ onAddAll }: StepsImportTabProps) {
   const [applicationContext, setApplicationContext] = useState("");
   const [parsing, setParsing] = useState(false);
   const [summary, setSummary] = useState("");
+  const [summarySource, setSummarySource] = useState<"n8n" | "heuristic" | null>(null);
   const [suggestions, setSuggestions] = useState<SuggestedActivity[]>([]);
 
   const hasSuggestions = suggestions.length > 0;
@@ -124,10 +125,11 @@ export function StepsImportTab({ onAddAll }: StepsImportTabProps) {
 
       setSuggestions(mapped);
       setSummary(result.summary);
+      setSummarySource(result.source);
     } catch {
       toast({
         title: "AI parsing failed",
-        description: "Configure n8n webhooks in AI Integrations or set GOOGLE_GENAI_API_KEY for local Genkit mode.",
+        description: "The local parser could not extract activities. Review the steps or configure a public n8n endpoint in AI Integrations.",
         variant: "destructive",
       });
     } finally {
@@ -158,13 +160,19 @@ export function StepsImportTab({ onAddAll }: StepsImportTabProps) {
       return;
     }
     // Strip the `selected` flag before passing up
-    const toAdd: Activity[] = selected.map(({ selected: _s, ...rest }) => ({
-      ...rest,
-      id: crypto.randomUUID(), // fresh ID
-    }));
+    const toAdd: Activity[] = selected.map(
+      ({ selected: wasSelected, ...rest }) => {
+        void wasSelected;
+        return {
+          ...rest,
+          id: crypto.randomUUID(), // fresh ID
+        };
+      },
+    );
     onAddAll(toAdd);
     setSuggestions([]);
     setSummary("");
+    setSummarySource(null);
     setSteps("");
   };
 
@@ -177,20 +185,22 @@ export function StepsImportTab({ onAddAll }: StepsImportTabProps) {
       {/* Context row */}
       <div className="grid gap-3 md:grid-cols-2">
         <div className="grid gap-1.5">
-          <Label className="text-xs font-medium text-muted-foreground">
+          <Label htmlFor="steps-application-context" className="text-xs font-medium text-muted-foreground">
             Application / System (optional)
           </Label>
           <Input
+            id="steps-application-context"
             placeholder="e.g., SAP ERP, Salesforce CRM"
             value={applicationContext}
             onChange={(e) => setApplicationContext(e.target.value)}
           />
         </div>
         <div className="grid gap-1.5">
-          <Label className="text-xs font-medium text-muted-foreground">
+          <Label htmlFor="steps-rpa-tool" className="text-xs font-medium text-muted-foreground">
             RPA Tool (optional)
           </Label>
           <select
+            id="steps-rpa-tool"
             className={SEL}
             value={rpaTool}
             onChange={(e) => setRpaTool(e.target.value)}
@@ -207,10 +217,11 @@ export function StepsImportTab({ onAddAll }: StepsImportTabProps) {
 
       {/* Steps textarea */}
       <div className="grid gap-1.5">
-        <Label className="text-xs font-medium text-muted-foreground">
+        <Label htmlFor="process-steps" className="text-xs font-medium text-muted-foreground">
           Process Steps
         </Label>
         <Textarea
+          id="process-steps"
           placeholder={`Paste steps in any format — numbered list, bullets, or plain description:\n\n1. Login to SAP ERP\n2. Navigate to the invoice module\n3. Search for all pending invoices by date range\n4. For each invoice, extract header and line items\n5. Validate totals against GL codes\n6. Export validated invoices to Excel`}
           value={steps}
           onChange={(e) => setSteps(e.target.value)}
@@ -231,7 +242,7 @@ export function StepsImportTab({ onAddAll }: StepsImportTabProps) {
           ) : (
             <Sparkles className="h-4 w-4" />
           )}
-          {parsing ? "Parsing…" : "Parse with AI"}
+          {parsing ? "Parsing…" : "Parse Steps"}
         </Button>
         {hasSuggestions && (
           <Button
@@ -252,7 +263,12 @@ export function StepsImportTab({ onAddAll }: StepsImportTabProps) {
         <div className="rounded-lg border border-accessible-cyan/30 bg-accessible-cyan/5 px-4 py-3">
           <p className="flex items-start gap-2 text-sm">
             <Sparkles className="mt-0.5 h-4 w-4 flex-shrink-0 text-accessible-cyan" />
-            <span>{summary}</span>
+            <span>
+              <strong className="mr-1">
+                {summarySource === "n8n" ? "n8n AI:" : "Local parser:"}
+              </strong>
+              {summary}
+            </span>
           </p>
         </div>
       )}

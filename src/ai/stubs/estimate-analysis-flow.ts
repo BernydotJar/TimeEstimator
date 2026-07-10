@@ -7,6 +7,7 @@ export interface AnalyzeEstimateInput {
 export interface AnalyzeEstimateOutput {
   suggestedEffort: number;
   reasoning: string;
+  source: "n8n" | "heuristic";
 }
 
 function heuristicEffort(activityDescription: string): number {
@@ -42,6 +43,7 @@ export async function analyzeEstimate(
       return {
         suggestedEffort: Math.max(0.5, Math.round(suggestedEffort * 2) / 2),
         reasoning,
+        source: "n8n",
       };
     }
   } catch (error) {
@@ -55,5 +57,6 @@ export async function analyzeEstimate(
     suggestedEffort: base,
     reasoning:
       "Using local heuristic estimate because no n8n AI response was available.",
+    source: "heuristic",
   };
 }

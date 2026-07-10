@@ -38,14 +38,14 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
-      - name: Replace AI flows with static stubs
-        # Next.js detects 'use server' before webpack aliases run, so the Pages
-        # build replaces server-only flows with browser-compatible adapters.
-        run: |
-          cp src/ai/stubs/estimate-analysis-flow.ts src/ai/flows/estimate-analysis-flow.ts
-          cp src/ai/stubs/estimate-defaults-flow.ts src/ai/flows/estimate-defaults-flow.ts
-          cp src/ai/stubs/estimate-summary-flow.ts src/ai/flows/estimate-summary-flow.ts
-          cp src/ai/stubs/parse-steps-flow.ts src/ai/flows/parse-steps-flow.ts
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
 
       - name: Build static export
         run: npm run build

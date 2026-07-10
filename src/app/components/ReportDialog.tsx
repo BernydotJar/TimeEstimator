@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { format } from "date-fns";
 import html2canvas from "html2canvas";
 import { saveAs } from "file-saver";
-import { FileDown, Loader2, Printer, Sparkles } from "lucide-react";
+import { FileDown, FileText, Loader2, Printer, Sparkles } from "lucide-react";
 import {
   Bar,
   BarChart,
@@ -69,6 +69,7 @@ export function ReportDialog({
   const reportRef = useRef<HTMLDivElement>(null);
   const [saving, setSaving] = useState(false);
   const [aiSummary, setAiSummary] = useState("");
+  const [summarySource, setSummarySource] = useState<"n8n" | "heuristic" | null>(null);
   const [aiLoading, setAiLoading] = useState(false);
 
   const {
@@ -159,10 +160,11 @@ export function ReportDialog({
         ),
       });
       setAiSummary(result.summary);
+      setSummarySource(result.source);
     } catch {
       toast({
         title: "AI summary unavailable",
-        description: "Configure n8n webhooks in AI Integrations or set GOOGLE_GENAI_API_KEY for local Genkit mode.",
+        description: "A local summary was generated. Configure a public n8n endpoint in AI Integrations for an AI-written summary.",
         variant: "destructive",
       });
     } finally {
@@ -198,11 +200,13 @@ export function ReportDialog({
         <Button
           size="sm"
           disabled={activities.length === 0}
+          aria-label="Generate report"
           title={
             activities.length === 0 ? "Add activities to generate a report" : undefined
           }
         >
-          Generate Report
+          <FileText className="h-3.5 w-3.5 sm:mr-1.5" />
+          <span className="hidden sm:inline">Generate Report</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[92vh] w-full max-w-4xl overflow-y-auto">
@@ -275,6 +279,9 @@ export function ReportDialog({
                 Executive Summary
               </h3>
               <p className="whitespace-pre-wrap text-sm text-muted-foreground">
+                <span className="mb-1 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  {summarySource === "n8n" ? "n8n AI summary" : "Local summary"}
+                </span>
                 {aiSummary}
               </p>
             </div>

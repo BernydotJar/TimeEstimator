@@ -22,6 +22,7 @@ interface ActivitySuggestion {
 export interface ParseStepsOutput {
   activities: ActivitySuggestion[];
   summary: string;
+  source: "n8n" | "heuristic";
 }
 
 const VALID_ACTIVITY_TYPES = ["Application", "Process", "Infrastructure"];
@@ -221,7 +222,7 @@ async function parseWithN8n(
         ? result.summary.trim()
         : `Parsed ${activities.length} steps using n8n AI workflow.`;
 
-    return { activities, summary };
+    return { activities, summary, source: "n8n" };
   } catch (error) {
     if (process.env.NODE_ENV !== "production") {
       console.warn("parseSteps fallback activated:", error);
@@ -270,6 +271,7 @@ function parseWithHeuristics(input: ParseStepsInput): ParseStepsOutput {
             .reduce((sum, activity) => sum + activity.effort, 0)
             .toFixed(1)}h.`
         : "No steps could be parsed. Paste a numbered list or process description.",
+    source: "heuristic",
   };
 }
 

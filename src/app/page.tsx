@@ -154,9 +154,13 @@ export default function Dashboard() {
                 <Moon className="h-4 w-4" />
               )}
             </Button>
-            <Button onClick={() => setShowCreate(true)}>
-              <Plus className="mr-2 h-4 w-4" />
-              New Project
+            <Button
+              onClick={() => setShowCreate(true)}
+              aria-label="New Project"
+              className="px-3 sm:px-4"
+            >
+              <Plus className="h-4 w-4 sm:mr-2" />
+              <span className="hidden sm:inline">New Project</span>
             </Button>
           </div>
         </div>

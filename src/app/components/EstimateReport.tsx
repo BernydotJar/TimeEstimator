@@ -85,10 +85,11 @@ const EstimateReport: React.FC<EstimateReportProps> = ({
         description: "Estimate report saved as an image.",
       });
       setAriaMessage("Estimate report saved successfully.");
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Unknown error";
       toast({
         title: "Error",
-        description: `Failed to save estimate report: ${error.message}`,
+        description: `Failed to save estimate report: ${message}`,
         variant: "destructive",
       });
       setAriaMessage("Failed to save estimate report.");

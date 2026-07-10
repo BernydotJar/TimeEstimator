@@ -22,6 +22,7 @@ import {
   N8nConfig,
   N8N_CONFIG_STORAGE_KEY,
   N8nOperation,
+  normalizeN8nConfig,
   readEnvN8nConfig,
   resolveN8nWebhookUrl,
 } from "@/lib/n8n-config";
@@ -75,7 +76,22 @@ export function AiIntegrationDialog() {
   };
 
   const saveConfig = () => {
-    setStoredConfig(draft);
+    const providedValues = Object.values(draft).filter(
+      (value) => typeof value === "string" && value.trim().length > 0,
+    );
+    const normalized = normalizeN8nConfig(draft);
+
+    if (Object.keys(normalized).length !== providedValues.length) {
+      toast({
+        title: "Invalid webhook URL",
+        description:
+          "Use HTTPS endpoints. HTTP is accepted only for localhost development.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setStoredConfig(normalized);
     setOpen(false);
     toast({ title: "AI integration settings saved" });
   };
@@ -89,9 +105,9 @@ export function AiIntegrationDialog() {
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
-          <PlugZap className="mr-1.5 h-3.5 w-3.5" />
-          AI Integrations
+        <Button variant="outline" size="sm" aria-label="AI Integrations">
+          <PlugZap className="h-3.5 w-3.5 sm:mr-1.5" />
+          <span className="hidden sm:inline">AI Integrations</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[88vh] overflow-y-auto sm:max-w-[760px]">

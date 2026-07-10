@@ -22,9 +22,7 @@ RPA estimation is often handled in disconnected spreadsheets, which creates dela
 - **Framework:** Next.js App Router (TypeScript)
 - **UI:** Tailwind CSS + Radix UI + custom component system
 - **State/Data:** local persistence hooks + typed models
-- **AI runtime modes:**
-  - Genkit server flows for local/full runtime
-  - n8n webhooks for static GitHub Pages mode (with heuristic fallback)
+- **AI runtime:** public n8n webhooks with deterministic local fallbacks
 - **Deployment:** static export to GitHub Pages via GitHub Actions
 
 ## Local development
@@ -49,8 +47,13 @@ npm run dev
 
 ```bash
 npm run typecheck
+npm run lint
+npm test
 npm run build
+npm audit
 ```
+
+The Pages workflow runs these gates from the lockfile before deployment.
 
 ## n8n integration
 
@@ -150,6 +153,8 @@ This repository includes a workflow at `.github/workflows/nextjs.yml` to:
 
 - install locked dependencies,
 - run TypeScript validation,
+- run ESLint and the test suite,
+- audit production dependencies,
 - build the static export,
 - upload the Pages artifact,
 - deploy on pushes to `main`.
@@ -167,8 +172,8 @@ Prerequisites:
 - `src/app/project/ProjectPageClient.tsx`: estimator workspace.
 - `src/app/components/*`: estimation, reports, and AI integration dialogs.
 - `src/hooks/*`: local storage and project state management.
-- `src/ai/flows/*`: Genkit server flows.
-- `src/ai/stubs/*`: static mode n8n adapters with explicit heuristic fallbacks.
+- `src/ai/client/*`: stable imports consumed by the UI.
+- `src/ai/stubs/*`: n8n adapters with deterministic heuristic fallbacks.
 - `src/lib/n8n-config.ts`: public n8n endpoint resolution and config merge.
 - `src/lib/n8n-client.ts`: single n8n webhook transport.
 

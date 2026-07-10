@@ -11,9 +11,10 @@ export interface EstimateDefaultsOutput {
   sdd: number;
   releaseConfig: number;
   userManual: number;
+  source: "n8n" | "heuristic";
 }
 
-const FALLBACK_DEFAULTS: EstimateDefaultsOutput = {
+const FALLBACK_DEFAULTS: Omit<EstimateDefaultsOutput, "source"> = {
   contingency: 0.15,
   pm: 0.05,
   sa: 0.05,
@@ -54,11 +55,12 @@ export async function getEstimateDefaults(
         result.userManual,
         FALLBACK_DEFAULTS.userManual,
       ),
+      source: "n8n",
     };
   } catch (error) {
     if (process.env.NODE_ENV !== "production") {
       console.warn("getEstimateDefaults fallback activated:", error);
     }
-    return FALLBACK_DEFAULTS;
+    return { ...FALLBACK_DEFAULTS, source: "heuristic" };
   }
 }

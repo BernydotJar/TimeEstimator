@@ -90,15 +90,22 @@ export function OverheadConfigDialog({
       const result = await getEstimateDefaults({
         projectType: projectName || "RPA Automation Project",
       });
-      setLocal(result as Record<OverheadKey, number>);
+      const { source, ...overhead } = result;
+      setLocal(overhead);
       toast({
-        title: "Smart defaults applied",
-        description: `AI suggested overhead for "${projectName || "this project"}".`,
+        title:
+          source === "n8n"
+            ? "AI defaults applied"
+            : "Local defaults applied",
+        description:
+          source === "n8n"
+            ? `n8n suggested overhead for "${projectName || "this project"}".`
+            : "Using the built-in RPA baseline; review before saving.",
       });
     } catch {
       toast({
         title: "AI suggestion unavailable",
-        description: "Configure n8n webhooks in AI Integrations or set GOOGLE_GENAI_API_KEY for local Genkit mode.",
+        description: "The local defaults were used. Configure a public n8n endpoint in AI Integrations for tailored suggestions.",
         variant: "destructive",
       });
     } finally {
@@ -117,9 +124,9 @@ export function OverheadConfigDialog({
   return (
     <Dialog open={open} onOpenChange={handleOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
-          <Settings className="mr-1.5 h-3.5 w-3.5" />
-          Overhead
+        <Button variant="outline" size="sm" aria-label="Overhead configuration">
+          <Settings className="h-3.5 w-3.5 sm:mr-1.5" />
+          <span className="hidden sm:inline">Overhead</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[520px]">

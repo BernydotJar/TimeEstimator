@@ -50,8 +50,20 @@ function cleanValue(value: string | undefined): string | undefined {
   return normalized.length > 0 ? normalized : undefined;
 }
 
-function trimTrailingSlash(url: string): string {
-  return url.replace(/\/+$/, "");
+function normalizeWebhookUrl(value: string): string | undefined {
+  try {
+    const url = new URL(value);
+    const isLocalHttp =
+      url.protocol === "http:" &&
+      ["localhost", "127.0.0.1", "::1"].includes(url.hostname);
+
+    if (url.protocol !== "https:" && !isLocalHttp) return undefined;
+
+    url.hash = "";
+    return url.toString().replace(/\/+$/, "");
+  } catch {
+    return undefined;
+  }
 }
 
 export function normalizeN8nConfig(config: N8nConfig): N8nConfig {
@@ -60,7 +72,8 @@ export function normalizeN8nConfig(config: N8nConfig): N8nConfig {
   for (const key of CONFIG_KEYS) {
     const value = cleanValue(config[key]);
     if (!value) continue;
-    normalized[key] = trimTrailingSlash(value);
+    const url = normalizeWebhookUrl(value);
+    if (url) normalized[key] = url;
   }
 
   return normalized;
@@ -106,12 +119,15 @@ export function resolveN8nWebhookUrl(
 ): string | null {
   const directKey = DIRECT_URL_KEYS[operation];
   const directUrl = cleanValue(config[directKey]);
-  if (directUrl) return trimTrailingSlash(directUrl);
+  if (directUrl) return normalizeWebhookUrl(directUrl) ?? null;
 
   const baseUrl = cleanValue(config.webhookBaseUrl);
   if (!baseUrl) return null;
 
-  return `${trimTrailingSlash(baseUrl)}/${OPERATION_PATHS[operation]}`;
+  const normalizedBase = normalizeWebhookUrl(baseUrl);
+  if (!normalizedBase) return null;
+
+  return `${normalizedBase}/${OPERATION_PATHS[operation]}`;
 }
 
 export function isN8nConfigured(config: N8nConfig = getMergedN8nConfig()): boolean {

@@ -153,15 +153,16 @@ export default function ProjectPageClient() {
       <Toaster />
 
       <header className="sticky top-0 z-10 border-b bg-card/80 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 md:px-6">
+        <div className="mx-auto flex max-w-7xl items-center gap-2 px-3 py-3 sm:gap-3 sm:px-4 md:px-6">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => router.push("/")}
-            className="flex-shrink-0"
+            className="flex-shrink-0 px-2 sm:px-3"
+            aria-label="Back to projects"
           >
-            <ArrowLeft className="mr-1.5 h-4 w-4" />
-            Projects
+            <ArrowLeft className="h-4 w-4 sm:mr-1.5" />
+            <span className="hidden sm:inline">Projects</span>
           </Button>
           <Separator orientation="vertical" className="h-5" />
           <h1 className="flex-1 truncate text-sm font-semibold">{project.name}</h1>

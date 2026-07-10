@@ -107,7 +107,10 @@ export function ActivityForm({ onAdd }: ActivityFormProps) {
       setForm((prev) => ({ ...prev, effort: result.suggestedEffort }));
       const shortReason = result.reasoning.slice(0, 140);
       toast({
-        title: `AI suggests ${result.suggestedEffort}h`,
+        title:
+          result.source === "n8n"
+            ? `AI suggests ${result.suggestedEffort}h`
+            : `Local estimate: ${result.suggestedEffort}h`,
         description:
           shortReason +
           (result.reasoning.length > 140 ? "…" : ""),
@@ -115,7 +118,7 @@ export function ActivityForm({ onAdd }: ActivityFormProps) {
     } catch {
       toast({
         title: "AI suggestion unavailable",
-        description: "Configure n8n webhooks in AI Integrations or set GOOGLE_GENAI_API_KEY for local Genkit mode.",
+        description: "The local heuristic was used. Configure a public n8n endpoint in AI Integrations for enhanced suggestions.",
         variant: "destructive",
       });
     } finally {
