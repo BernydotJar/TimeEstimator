@@ -6,11 +6,14 @@ import { format } from "date-fns";
 import {
   BarChart2,
   Clock,
+  Cpu,
   Edit2,
   FolderOpen,
   Layers,
   Moon,
   Plus,
+  RefreshCcw,
+  Sparkles,
   Sun,
   Trash2,
 } from "lucide-react";
@@ -51,6 +54,12 @@ import { useToast } from "@/hooks/use-toast";
 import { useProjects } from "@/hooks/use-projects";
 import { Project } from "@/app/types";
 
+const architecturePrinciples = [
+  "Model estimation rules as reusable parameters, not one-off formulas.",
+  "Keep assumptions explicit so every total is explainable in stakeholder reviews.",
+  "Design reports for decisions, not just data dumps.",
+];
+
 export default function Dashboard() {
   const router = useRouter();
   const { toast } = useToast();
@@ -64,6 +73,7 @@ export default function Dashboard() {
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [editName, setEditName] = useState("");
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [principleIndex, setPrincipleIndex] = useState(0);
 
   const toggleTheme = useCallback(() => {
     setTheme((prev) => {
@@ -80,7 +90,7 @@ export default function Dashboard() {
     setShowCreate(false);
     setCreateName("");
     setCreateDesc("");
-    router.push(`/project/${project.id}`);
+    router.push(`/project?id=${project.id}`);
   };
 
   const handleEdit = () => {
@@ -153,6 +163,50 @@ export default function Dashboard() {
       </header>
 
       <main className="mx-auto max-w-7xl px-4 py-8 md:px-6">
+        <Card className="mb-8 overflow-hidden border-transparent bg-gradient-to-r from-slate-950 via-cyan-950 to-slate-900 text-slate-100 shadow-lg">
+          <CardContent className="grid gap-6 p-6 md:grid-cols-[1.4fr_1fr] md:items-center">
+            <div className="space-y-3">
+              <Badge className="border-cyan-300/20 bg-cyan-300/10 text-cyan-100 hover:bg-cyan-300/20">
+                Developer Spotlight
+              </Badge>
+              <h2 className="text-2xl font-bold tracking-tight">
+                Eduardo Sacahuí
+              </h2>
+              <p className="text-sm text-cyan-100/90">
+                Platform Architect building practical tools that accelerate RPA
+                delivery planning from discovery to estimate sign-off.
+              </p>
+              <div className="flex items-center gap-2 text-xs text-slate-200/90">
+                <Cpu className="h-3.5 w-3.5" />
+                <span>Estimation framework author</span>
+              </div>
+            </div>
+            <div className="rounded-xl border border-white/15 bg-white/5 p-4 backdrop-blur">
+              <p className="mb-1 flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-cyan-100">
+                <Sparkles className="h-3.5 w-3.5" />
+                Architecture Principle
+              </p>
+              <p className="min-h-14 text-sm text-slate-100">
+                {architecturePrinciples[principleIndex]}
+              </p>
+              <Button
+                type="button"
+                variant="secondary"
+                size="sm"
+                className="mt-3 bg-white/15 text-slate-100 hover:bg-white/25"
+                onClick={() =>
+                  setPrincipleIndex(
+                    (prev) => (prev + 1) % architecturePrinciples.length,
+                  )
+                }
+              >
+                <RefreshCcw className="mr-2 h-3.5 w-3.5" />
+                Next Principle
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
         {projects.length === 0 ? (
           /* Empty state */
           <div className="flex flex-col items-center justify-center py-24 text-center">
@@ -256,7 +310,7 @@ export default function Dashboard() {
                         size="sm"
                         variant="outline"
                         onClick={() =>
-                          router.push(`/project/${project.id}`)
+                          router.push(`/project?id=${project.id}`)
                         }
                       >
                         <FolderOpen className="mr-1.5 h-3.5 w-3.5" />

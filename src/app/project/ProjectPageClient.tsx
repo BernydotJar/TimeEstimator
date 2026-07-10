@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowLeft, Moon, Sun } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -12,12 +12,15 @@ import { useProjects } from "@/hooks/use-projects";
 import { Activity, EstimateMetrics, OverheadKey } from "@/app/types";
 import { ActivityForm } from "@/app/components/ActivityForm";
 import { ActivityTable } from "@/app/components/ActivityTable";
+import { AiIntegrationDialog } from "@/app/components/AiIntegrationDialog";
 import { EstimateOverview } from "@/app/components/EstimateOverview";
 import { OverheadConfigDialog } from "@/app/components/OverheadConfigDialog";
 import { ReportDialog } from "@/app/components/ReportDialog";
 
-export default function ProjectPageClient({ id }: { id: string }) {
+export default function ProjectPageClient() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id") ?? "";
   const { toast } = useToast();
   const {
     getProject,
@@ -32,6 +35,10 @@ export default function ProjectPageClient({ id }: { id: string }) {
   const project = getProject(id);
 
   useEffect(() => {
+    if (!id) {
+      router.push("/");
+      return;
+    }
     if (project === undefined) {
       const t = setTimeout(() => {
         if (!getProject(id)) router.push("/");
@@ -159,6 +166,7 @@ export default function ProjectPageClient({ id }: { id: string }) {
           <Separator orientation="vertical" className="h-5" />
           <h1 className="flex-1 truncate text-sm font-semibold">{project.name}</h1>
           <div className="flex flex-shrink-0 items-center gap-2">
+            <AiIntegrationDialog />
             <OverheadConfigDialog
               overheadPercentages={project.overheadPercentages}
               onSave={handleOverheadChange}

@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { DEFAULT_OVERHEAD, OverheadKey, OVERHEAD_LABELS } from "@/app/types";
-import { getEstimateDefaults } from "@/ai/flows/estimate-defaults-flow";
+import { getEstimateDefaults } from "@/ai/client/estimate-defaults";
 
 const PRESETS: Record<string, Record<OverheadKey, number>> = {
   "Standard RPA": {
@@ -98,7 +98,7 @@ export function OverheadConfigDialog({
     } catch {
       toast({
         title: "AI suggestion unavailable",
-        description: "Check GOOGLE_GENAI_API_KEY in your .env file.",
+        description: "Configure n8n webhooks in AI Integrations or set GOOGLE_GENAI_API_KEY for local Genkit mode.",
         variant: "destructive",
       });
     } finally {

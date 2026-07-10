@@ -14,9 +14,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Activity, DEFAULT_FORM_DATA } from "@/app/types";
-import { analyzeEstimate } from "@/ai/flows/estimate-analysis-flow";
+import { analyzeEstimate } from "@/ai/client/estimate-analysis";
+import { StepsImportTab } from "@/app/components/StepsImportTab";
 
 const SEL =
   "h-10 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground shadow-sm transition-colors hover:border-accessible-cyan/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
@@ -108,7 +115,7 @@ export function ActivityForm({ onAdd }: ActivityFormProps) {
     } catch {
       toast({
         title: "AI suggestion unavailable",
-        description: "Check GOOGLE_GENAI_API_KEY in your .env file.",
+        description: "Configure n8n webhooks in AI Integrations or set GOOGLE_GENAI_API_KEY for local Genkit mode.",
         variant: "destructive",
       });
     } finally {
@@ -116,17 +123,36 @@ export function ActivityForm({ onAdd }: ActivityFormProps) {
     }
   };
 
+  const handleAddAll = (activities: Activity[]) => {
+    activities.forEach(onAdd);
+  };
+
   return (
     <Card className="bg-card/90 shadow-sm backdrop-blur-sm">
-      <CardHeader className="pb-4 pt-6">
-        <CardTitle className="text-accessible-cyan">Add Activity</CardTitle>
-        <CardDescription>
-          Fill in the details and press{" "}
-          <kbd className="rounded border px-1 text-xs">Enter</kbd> or click Add
-          Activity.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-5" onKeyDown={handleKeyDown}>
+      <Tabs defaultValue="manual">
+        <CardHeader className="pb-4 pt-6">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <CardTitle className="text-accessible-cyan">
+                Add Activity
+              </CardTitle>
+              <CardDescription className="mt-1">
+                Add manually or paste process steps for AI to parse.
+              </CardDescription>
+            </div>
+            <TabsList className="w-full sm:w-auto">
+              <TabsTrigger value="manual" className="flex-1 sm:flex-none">
+                Manual Entry
+              </TabsTrigger>
+              <TabsTrigger value="import" className="flex-1 sm:flex-none">
+                ✨ Import from Steps
+              </TabsTrigger>
+            </TabsList>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <TabsContent value="manual" className="mt-0">
+            <div className="space-y-5" onKeyDown={handleKeyDown}>
         {/* Section 1: Core identity */}
         <div className="space-y-3">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -382,10 +408,17 @@ export function ActivityForm({ onAdd }: ActivityFormProps) {
           </div>
         </div>
 
-        <Button onClick={handleAdd} className="w-full sm:w-auto">
-          Add Activity
-        </Button>
-      </CardContent>
+            <Button onClick={handleAdd} className="w-full sm:w-auto">
+              Add Activity
+            </Button>
+          </div>
+          </TabsContent>
+
+          <TabsContent value="import" className="mt-0">
+            <StepsImportTab onAddAll={handleAddAll} />
+          </TabsContent>
+        </CardContent>
+      </Tabs>
     </Card>
   );
 }

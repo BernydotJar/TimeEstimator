@@ -35,6 +35,10 @@ const nextConfig: NextConfig = {
           process.cwd(),
           "src/ai/stubs/estimate-summary-flow.ts",
         ),
+        "@/ai/flows/parse-steps-flow": path.join(
+          process.cwd(),
+          "src/ai/stubs/parse-steps-flow.ts",
+        ),
       };
     }
 

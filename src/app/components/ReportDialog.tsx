@@ -40,7 +40,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { Activity, EstimateMetrics, OverheadKey } from "@/app/types";
-import { summarizeActivities } from "@/ai/flows/estimate-summary-flow";
+import { summarizeActivities } from "@/ai/client/estimate-summary";
 
 const CHART_COLORS = [
   "#00b7b7",
@@ -162,7 +162,7 @@ export function ReportDialog({
     } catch {
       toast({
         title: "AI summary unavailable",
-        description: "Check GOOGLE_GENAI_API_KEY in your .env file.",
+        description: "Configure n8n webhooks in AI Integrations or set GOOGLE_GENAI_API_KEY for local Genkit mode.",
         variant: "destructive",
       });
     } finally {

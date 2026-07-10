@@ -1,40 +1,156 @@
 # TimeEstimator
 
-Built by Eduardo Sacahui — Platform Architect.
+TimeEstimator is a Next.js application that helps teams automate and accelerate effort estimation for RPA initiatives.
 
-## Overview
+Developed by **Eduardo Sacahuí** - **Platform Architect**.
 
-TimeEstimator accelerates and standardizes effort estimation for Robotic Process Automation (RPA) initiatives. It brings together activity capture, parameterized overhead calculations, and vivid reporting views so delivery teams can move from discovery to sizing in minutes instead of days.
+## Why this app exists
 
-## Why It Helps
+RPA estimation is often handled in disconnected spreadsheets, which creates delays and inconsistent totals. TimeEstimator centralizes activity inputs, applies consistent formulas, and generates stakeholder-ready estimates in minutes.
 
-- Streamlines RPA assessment workshops by capturing inputs in a guided Activity Input workspace.
-- Applies configurable formulas to calculate core vs. supervised effort, contingencies, and supporting deliverables with consistent two-decimal precision.
-- Surfaces glassmorphism-inspired dashboards that highlight totals, category breakdowns, and professional summaries ready for stakeholders.
-- Cuts manual spreadsheet work, reducing the risk of copy-paste mistakes and total misalignments.
+## What you can do
 
-## Core Features
+- Create and manage estimation projects.
+- Capture activity-level inputs with configurable overhead percentages.
+- Calculate totals with two-decimal precision.
+- Generate polished estimate summaries and reports.
+- Toggle themes for workshop and presentation contexts.
+- Configure AI integrations from the UI via **AI Integrations**.
 
-- **Activity Modeling:** Neon card interface for entering tasks, ownership, tools, and complexity indicators.
-- **Dynamic Calculations:** Automatic totals across categories, contingency, and documentation based on Eduardo’s curated estimation model.
-- **Report Generation:** Professional narrative summary plus overview cards suitable for exec reviews or delivery handoffs.
-- **Theme Controls:** Toggleable UI states to adapt to stakeholder sessions (dark, neon, and glassmorphism layouts).
+## Architecture at a glance
 
-## Getting Started
+- **Framework:** Next.js App Router (TypeScript)
+- **UI:** Tailwind CSS + Radix UI + custom component system
+- **State/Data:** local persistence hooks + typed models
+- **AI runtime modes:**
+  - Genkit server flows for local/full runtime
+  - n8n webhooks for static GitHub Pages mode (with heuristic fallback)
+- **Deployment:** static export to GitHub Pages via GitHub Actions
+
+## Local development
+
+1. Install dependencies:
 
 ```bash
 npm install
+```
+
+2. Start the app:
+
+```bash
 npm run dev
 ```
 
-Open `http://localhost:3000` to explore the estimation console. Core logic, UI components, and calculation rules live in `src/app/page.tsx`.
+3. Open:
 
-## Roadmap Ideas
+`http://localhost:9002`
 
-- Export to Excel or CSV for audit packs.
-- Persist scenarios with a database backend for historical comparisons.
-- Embed RPA maturity scoring and risk heuristics to prioritize automation candidates.
+## Build
+
+```bash
+npm run build
+```
+
+## n8n integration
+
+TimeEstimator can call n8n webhooks for AI features directly from the browser (GitHub Pages-compatible).
+
+### Supported operations
+
+- `analyzeEstimate`
+- `estimateDefaults`
+- `summarizeActivities`
+- `parseSteps`
+
+### Request payload shape
+
+Each call sends JSON with both `operation` and the input fields, for example:
+
+```json
+{
+  "operation": "analyzeEstimate",
+  "input": {
+    "activityDescription": "Login to SAP and validate invoices"
+  },
+  "activityDescription": "Login to SAP and validate invoices",
+  "_source": "time-estimator",
+  "_timestamp": "2026-02-21T00:00:00.000Z"
+}
+```
+
+### Response shape
+
+Return either a direct object or wrapped object (`data`, `result`, or `output`).
+
+Examples:
+
+```json
+{ "suggestedEffort": 3.5, "reasoning": "..." }
+```
+
+```json
+{ "data": { "summary": "..." } }
+```
+
+### Configuration options
+
+You can configure endpoints in two ways:
+
+1. **In-app** (recommended for quick testing)
+- Open a project.
+- Click **AI Integrations** in the top bar.
+- Save base URL and/or per-operation URLs.
+
+2. **Build-time environment variables**
+- `NEXT_PUBLIC_N8N_WEBHOOK_BASE_URL`
+- `NEXT_PUBLIC_N8N_ANALYZE_ESTIMATE_URL`
+- `NEXT_PUBLIC_N8N_ESTIMATE_DEFAULTS_URL`
+- `NEXT_PUBLIC_N8N_SUMMARIZE_ACTIVITIES_URL`
+- `NEXT_PUBLIC_N8N_PARSE_STEPS_URL`
+- `NEXT_PUBLIC_N8N_BEARER_TOKEN` (optional)
+- `NEXT_PUBLIC_N8N_API_KEY` (optional)
+
+Security note: this is a static frontend, so any `NEXT_PUBLIC_*` value is exposed to users.
+
+## Deploy to GitHub Pages
+
+This repository includes a workflow at `.github/workflows/nextjs.yml` to:
+
+- build static export,
+- upload Pages artifact,
+- deploy on pushes to `main`.
+
+Prerequisites:
+
+- Public repository.
+- GitHub Pages enabled in repository settings.
+- Source set to **GitHub Actions**.
+- Optional repository variables for `NEXT_PUBLIC_N8N_*` values.
+
+## Project structure
+
+- `src/app/page.tsx`: dashboard and project launcher.
+- `src/app/project/ProjectPageClient.tsx`: estimator workspace.
+- `src/app/components/*`: estimation, reports, and AI integration dialogs.
+- `src/hooks/*`: local storage and project state management.
+- `src/ai/flows/*`: Genkit server flows.
+- `src/ai/stubs/*`: static mode AI adapters with n8n + fallback heuristics.
+- `src/lib/n8n-config.ts`: n8n endpoint resolution and config merge.
+- `src/lib/n8n-client.ts`: n8n webhook client.
+
+## SEO and discoverability
+
+The app includes:
+
+- Open Graph and Twitter metadata,
+- JSON-LD for `Person` and `SoftwareApplication`,
+- `robots.ts`, `sitemap.ts`, and `manifest.ts`.
+
+## Maintainer
+
+**Eduardo Sacahuí**
+Platform Architect
 
 ---
 
-Designed to help automation architects like Eduardo forecast with confidence and keep RPA delivery humming.
+TimeEstimator is designed to make RPA estimation faster, cleaner, and easier to defend with stakeholders.
