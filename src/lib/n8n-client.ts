@@ -22,8 +22,30 @@ export class N8nClientError extends Error {
   }
 }
 
+interface N8nRequestEnvelope {
+  version: "1.0";
+  operation: N8nOperation;
+  requestId: string;
+  input: unknown;
+  meta: {
+    source: "time-estimator";
+    timestamp: string;
+  };
+}
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function readErrorMessage(payload: Record<string, unknown>): string {
+  if (typeof payload.message === "string") return payload.message;
+  if (typeof payload.error === "string") return payload.error;
+
+  if (isRecord(payload.error) && typeof payload.error.message === "string") {
+    return payload.error.message;
+  }
+
+  return "n8n returned an explicit failure response.";
 }
 
 function unwrapN8nPayload<T>(payload: unknown): T {
@@ -32,14 +54,12 @@ function unwrapN8nPayload<T>(payload: unknown): T {
   }
 
   if (isRecord(payload)) {
-    if (payload.success === false) {
-      const detail =
-        typeof payload.error === "string"
-          ? payload.error
-          : typeof payload.message === "string"
-            ? payload.message
-            : "n8n returned an explicit failure response.";
-      throw new N8nClientError(detail, "INVALID_RESPONSE");
+    if (payload.ok === false || payload.success === false) {
+      throw new N8nClientError(readErrorMessage(payload), "INVALID_RESPONSE");
+    }
+
+    if (payload.ok === true && payload.data !== undefined) {
+      return unwrapN8nPayload<T>(payload.data);
     }
 
     for (const key of ["data", "result", "output"]) {
@@ -49,6 +69,22 @@ function unwrapN8nPayload<T>(payload: unknown): T {
   }
 
   return payload as T;
+}
+
+function createRequestEnvelope(
+  operation: N8nOperation,
+  input: unknown,
+): N8nRequestEnvelope {
+  return {
+    version: "1.0",
+    operation,
+    requestId: crypto.randomUUID(),
+    input,
+    meta: {
+      source: "time-estimator",
+      timestamp: new Date().toISOString(),
+    },
+  };
 }
 
 export async function invokeN8n<T>(
@@ -66,35 +102,18 @@ export async function invokeN8n<T>(
     );
   }
 
-  const payload = isRecord(input) ? input : { input };
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
-    const headers: Record<string, string> = {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      "x-time-estimator-operation": operation,
-    };
-
-    if (config.bearerToken) {
-      headers.Authorization = `Bearer ${config.bearerToken}`;
-    }
-
-    if (config.apiKey) {
-      headers["x-api-key"] = config.apiKey;
-    }
-
     const response = await fetch(endpoint, {
       method: "POST",
-      headers,
-      body: JSON.stringify({
-        operation,
-        input,
-        ...payload,
-        _source: "time-estimator",
-        _timestamp: new Date().toISOString(),
-      }),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "x-time-estimator-operation": operation,
+      },
+      body: JSON.stringify(createRequestEnvelope(operation, input)),
       signal: controller.signal,
     });
 
