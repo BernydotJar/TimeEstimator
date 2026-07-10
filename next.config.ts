@@ -10,12 +10,6 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  eslint: {
-    ignoreDuringBuilds: isGithubActions,
-  },
-  typescript: {
-    ignoreBuildErrors: isGithubActions,
-  },
   basePath,
   assetPrefix: basePath ? `${basePath}/` : undefined,
   trailingSlash: true,
