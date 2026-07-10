@@ -10,8 +10,6 @@ export interface N8nConfig {
   estimateDefaultsUrl?: string;
   summarizeActivitiesUrl?: string;
   parseStepsUrl?: string;
-  bearerToken?: string;
-  apiKey?: string;
 }
 
 export const N8N_CONFIG_STORAGE_KEY = "te_n8n_config";
@@ -36,8 +34,6 @@ const CONFIG_KEYS: Array<keyof N8nConfig> = [
   "estimateDefaultsUrl",
   "summarizeActivitiesUrl",
   "parseStepsUrl",
-  "bearerToken",
-  "apiKey",
 ];
 
 const ENV_CONFIG: N8nConfig = {
@@ -46,8 +42,6 @@ const ENV_CONFIG: N8nConfig = {
   estimateDefaultsUrl: process.env.NEXT_PUBLIC_N8N_ESTIMATE_DEFAULTS_URL,
   summarizeActivitiesUrl: process.env.NEXT_PUBLIC_N8N_SUMMARIZE_ACTIVITIES_URL,
   parseStepsUrl: process.env.NEXT_PUBLIC_N8N_PARSE_STEPS_URL,
-  bearerToken: process.env.NEXT_PUBLIC_N8N_BEARER_TOKEN,
-  apiKey: process.env.NEXT_PUBLIC_N8N_API_KEY,
 };
 
 function cleanValue(value: string | undefined): string | undefined {
@@ -66,17 +60,14 @@ export function normalizeN8nConfig(config: N8nConfig): N8nConfig {
   for (const key of CONFIG_KEYS) {
     const value = cleanValue(config[key]);
     if (!value) continue;
-    normalized[key] =
-      key.toLowerCase().includes("url") || key === "webhookBaseUrl"
-        ? trimTrailingSlash(value)
-        : value;
+    normalized[key] = trimTrailingSlash(value);
   }
 
   return normalized;
 }
 
 export function mergeN8nConfig(base: N8nConfig, overrides: N8nConfig): N8nConfig {
-  const merged: N8nConfig = {...base};
+  const merged: N8nConfig = { ...base };
 
   for (const key of CONFIG_KEYS) {
     const overrideValue = cleanValue(overrides[key]);
