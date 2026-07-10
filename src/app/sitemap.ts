@@ -1,10 +1,11 @@
-import type {MetadataRoute} from 'next';
+import type { MetadataRoute } from "next";
 
-export const dynamic = 'force-static';
+export const dynamic = "force-static";
 
-const repository = process.env.GITHUB_REPOSITORY ?? 'BernydotJar/TimeEstimator';
-const [repositoryOwner = 'BernydotJar', repositoryName = 'TimeEstimator'] =
-  repository.split('/');
+const repository =
+  process.env.GITHUB_REPOSITORY ?? "BernydotJar/TimeEstimator";
+const [repositoryOwner = "BernydotJar", repositoryName = "TimeEstimator"] =
+  repository.split("/");
 const ownerSlug = repositoryOwner.toLowerCase();
 const siteUrl = `https://${ownerSlug}.github.io/${repositoryName}`;
 
@@ -13,14 +14,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: siteUrl,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: "weekly",
       priority: 1,
-    },
-    {
-      url: `${siteUrl}/project/demo`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.7,
     },
   ];
 }
