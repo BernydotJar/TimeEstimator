@@ -48,12 +48,13 @@ npm run dev
 ## Build
 
 ```bash
+npm run typecheck
 npm run build
 ```
 
 ## n8n integration
 
-TimeEstimator can call n8n webhooks for AI features directly from the browser (GitHub Pages-compatible).
+TimeEstimator can call n8n webhooks for AI features directly from the browser in GitHub Pages mode.
 
 ### Supported operations
 
@@ -62,62 +63,95 @@ TimeEstimator can call n8n webhooks for AI features directly from the browser (G
 - `summarizeActivities`
 - `parseSteps`
 
-### Request payload shape
+### Request contract
 
-Each call sends JSON with both `operation` and the input fields, for example:
+Each request uses a versioned envelope:
 
 ```json
 {
+  "version": "1.0",
   "operation": "analyzeEstimate",
+  "requestId": "2cb11469-5ddc-4d80-a20b-3f1717987468",
   "input": {
     "activityDescription": "Login to SAP and validate invoices"
   },
-  "activityDescription": "Login to SAP and validate invoices",
-  "_source": "time-estimator",
-  "_timestamp": "2026-02-21T00:00:00.000Z"
+  "meta": {
+    "source": "time-estimator",
+    "timestamp": "2026-07-10T04:00:00.000Z"
+  }
 }
 ```
 
-### Response shape
+Do not rely on duplicated top-level input fields. Route workflows by `operation` and read business data from `input`.
 
-Return either a direct object or wrapped object (`data`, `result`, or `output`).
+### Response contract
 
-Examples:
-
-```json
-{ "suggestedEffort": 3.5, "reasoning": "..." }
-```
+The preferred success response is:
 
 ```json
-{ "data": { "summary": "..." } }
+{
+  "ok": true,
+  "data": {
+    "suggestedEffort": 3.5,
+    "reasoning": "..."
+  },
+  "meta": {
+    "provider": "n8n"
+  }
+}
 ```
+
+The preferred failure response is:
+
+```json
+{
+  "ok": false,
+  "error": {
+    "code": "INVALID_INPUT",
+    "message": "activityDescription is required",
+    "retryable": false
+  }
+}
+```
+
+For backward compatibility, the client can also unwrap `data`, `result`, or `output` wrappers.
 
 ### Configuration options
 
 You can configure endpoints in two ways:
 
-1. **In-app** (recommended for quick testing)
-- Open a project.
-- Click **AI Integrations** in the top bar.
-- Save base URL and/or per-operation URLs.
+1. **In-app** for local testing
+   - Open a project.
+   - Click **AI Integrations** in the top bar.
+   - Save a base URL and/or per-operation URLs.
 
 2. **Build-time environment variables**
-- `NEXT_PUBLIC_N8N_WEBHOOK_BASE_URL`
-- `NEXT_PUBLIC_N8N_ANALYZE_ESTIMATE_URL`
-- `NEXT_PUBLIC_N8N_ESTIMATE_DEFAULTS_URL`
-- `NEXT_PUBLIC_N8N_SUMMARIZE_ACTIVITIES_URL`
-- `NEXT_PUBLIC_N8N_PARSE_STEPS_URL`
-- `NEXT_PUBLIC_N8N_BEARER_TOKEN` (optional)
-- `NEXT_PUBLIC_N8N_API_KEY` (optional)
+   - `NEXT_PUBLIC_N8N_WEBHOOK_BASE_URL`
+   - `NEXT_PUBLIC_N8N_ANALYZE_ESTIMATE_URL`
+   - `NEXT_PUBLIC_N8N_ESTIMATE_DEFAULTS_URL`
+   - `NEXT_PUBLIC_N8N_SUMMARIZE_ACTIVITIES_URL`
+   - `NEXT_PUBLIC_N8N_PARSE_STEPS_URL`
 
-Security note: this is a static frontend, so any `NEXT_PUBLIC_*` value is exposed to users.
+### Security model
+
+GitHub Pages is a static frontend. Every `NEXT_PUBLIC_*` value and every value stored by the browser is visible to end users.
+
+Therefore:
+
+- Do not configure bearer tokens, API keys, provider credentials, or privileged n8n secrets in the browser.
+- Treat directly configured webhook URLs as public endpoints.
+- Apply strict request/response schema validation in n8n.
+- Add rate limits, payload-size limits, execution limits, CORS restrictions, and abuse monitoring.
+- For protected workflows, place a server-side API gateway or edge function in front of n8n and store credentials there.
 
 ## Deploy to GitHub Pages
 
 This repository includes a workflow at `.github/workflows/nextjs.yml` to:
 
-- build static export,
-- upload Pages artifact,
+- install locked dependencies,
+- run TypeScript validation,
+- build the static export,
+- upload the Pages artifact,
 - deploy on pushes to `main`.
 
 Prerequisites:
@@ -125,7 +159,7 @@ Prerequisites:
 - Public repository.
 - GitHub Pages enabled in repository settings.
 - Source set to **GitHub Actions**.
-- Optional repository variables for `NEXT_PUBLIC_N8N_*` values.
+- Optional repository variables for public `NEXT_PUBLIC_N8N_*_URL` values.
 
 ## Project structure
 
@@ -134,9 +168,9 @@ Prerequisites:
 - `src/app/components/*`: estimation, reports, and AI integration dialogs.
 - `src/hooks/*`: local storage and project state management.
 - `src/ai/flows/*`: Genkit server flows.
-- `src/ai/stubs/*`: static mode AI adapters with n8n + fallback heuristics.
-- `src/lib/n8n-config.ts`: n8n endpoint resolution and config merge.
-- `src/lib/n8n-client.ts`: n8n webhook client.
+- `src/ai/stubs/*`: static mode n8n adapters with explicit heuristic fallbacks.
+- `src/lib/n8n-config.ts`: public n8n endpoint resolution and config merge.
+- `src/lib/n8n-client.ts`: single n8n webhook transport.
 
 ## SEO and discoverability
 
@@ -146,9 +180,11 @@ The app includes:
 - JSON-LD for `Person` and `SoftwareApplication`,
 - `robots.ts`, `sitemap.ts`, and `manifest.ts`.
 
+Only the public dashboard is included in the sitemap. Browser-local project workspaces are not indexed.
+
 ## Maintainer
 
-**Eduardo Sacahuí**
+**Eduardo Sacahuí**  
 Platform Architect
 
 ---
