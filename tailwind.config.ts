@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import animate from "tailwindcss-animate";
 
 export default {
     darkMode: ["class"],
@@ -12,6 +13,9 @@ export default {
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
+        'accessible-cyan': 'var(--accessible-cyan)',
+        'accessible-magenta': 'var(--accessible-magenta)',
+        'muted-accent': '#666666',
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
@@ -61,6 +65,17 @@ export default {
   				ring: 'hsl(var(--sidebar-ring))'
   			}
   		},
+      fontFamily: {
+        sans: ['system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+      },
+      fontSize: {
+        xs: ['12px', { lineHeight: '16px' }],
+        sm: ['13px', { lineHeight: '18px' }],
+        base: ['14px', { lineHeight: '20px' }],
+        lg: ['16px', { lineHeight: '24px' }],
+        xl: ['20px', { lineHeight: '28px' }],
+        '2xl': ['24px', { lineHeight: '32px' }],
+      },
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
@@ -90,5 +105,5 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [animate],
 } satisfies Config;

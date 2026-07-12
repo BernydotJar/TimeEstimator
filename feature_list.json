@@ -29,7 +29,7 @@
       "id": "003-cinematic-n8n-integration",
       "title": "Cinematic n8n integration",
       "mode": "SHIP",
-      "status": "in_progress",
+      "status": "review",
       "summary": "Integrate the production-ready n8n runtime, browser persistence, static Pages deployment, security controls, and verification suite into the cinematic command center while preserving its experience and estimation formulas. Human-approved on 2026-07-11."
     },
     {

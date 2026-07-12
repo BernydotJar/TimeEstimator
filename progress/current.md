@@ -4,19 +4,19 @@
 
 `003-cinematic-n8n-integration`
 
-Status: `in_progress`
+Status: `review`
 
 Mode: `SHIP`
 
 ## Current state
 
-Integration work is active on branch:
+Integration implementation is complete on branch:
 
 `feature/cinematic-n8n-integration`
 
-Feature 002 is blocked pending consolidation with the verified n8n/Pages
-runtime from PR #3. The user approved feature 003 and its merge policy on
-2026-07-11.
+Feature 002 remains blocked because feature 003 now consolidates its cinematic
+experience with the verified n8n/Pages runtime from PR #3. Feature 003 is ready
+for human visual review and is not marked `done`.
 
 ## Approved integration scope
 
@@ -37,21 +37,20 @@ The effort formulas are preserved:
 - overheads = total effort multiplied by configured percentages;
 - grand total = total effort + contingency + delivery support overheads.
 
-## Verification plan
+## Verification evidence
 
-- `npm ci`
-- `npm run lint`
-- `npm run typecheck`
-- `npm test`
-- `npm run build`
-- `npm audit --omit=dev`
-- `npm audit`
-- desktop/mobile smoke test
-- project persistence and n8n fallback verification
+- `npm ci`: passed
+- `npm run lint`: passed
+- `npm run typecheck`: passed
+- `npm test`: 8 suites / 17 tests passed
+- static GitHub Pages build: passed
+- `npm audit --omit=dev`: 0 vulnerabilities
+- `npm audit`: 0 vulnerabilities
+- project persistence and n8n fallback verification: covered by tests
+- desktop/mobile smoke test: pending because no in-app browser instance was available
 
-## Current integration risks
+## Remaining review gate
 
-- Both branches modify central UI, package, layout, and deployment files.
-- PR #3's dashboard must not replace the cinematic page composition.
-- PR #2's legacy Genkit/build configuration must not replace the verified static runtime.
-- Actual n8n endpoints are external and must not introduce browser-visible secrets.
+- Human desktop/mobile visual smoke test.
+- Manual PNG/print export observation in a browser.
+- Real deployed n8n workflow validation when a public endpoint is available.

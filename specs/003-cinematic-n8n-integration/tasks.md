@@ -32,11 +32,11 @@ validation, and publication plan.
 
 - [x] Create consolidated branch from PR #2.
 - [x] Register and approve feature 003.
-- [ ] Merge PR #3 without automatic commit.
-- [ ] Resolve conflicts using the approved authority policy.
-- [ ] Adapt n8n assistance and persistence into cinematic surfaces.
-- [ ] Preserve reports, formulas, theme, and accessibility.
-- [ ] Run lint, typecheck, tests, static build, and audits.
+- [x] Merge PR #3 without automatic commit.
+- [x] Resolve conflicts using the approved authority policy.
+- [x] Adapt n8n assistance and persistence into cinematic surfaces.
+- [x] Preserve reports, formulas, theme, and accessibility.
+- [x] Run lint, typecheck, tests, static build, and audits.
 - [ ] Complete desktop/mobile and fallback smoke checks.
-- [ ] Write `progress/review_003-cinematic-n8n-integration.md`.
+- [x] Write `progress/review_003-cinematic-n8n-integration.md`.
 - [ ] Push branch and open consolidated PR #4.

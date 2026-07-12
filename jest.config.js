@@ -1,16 +1,16 @@
-/** @type {import('ts-jest').JestConfigWithTsJest} */
-module.exports = {
-  
+const nextJest = require("next/jest");
+
+const createJestConfig = nextJest({ dir: "./" });
+
+/** @type {import('jest').Config} */
+const config = {
+  clearMocks: true,
   moduleDirectories: ["node_modules", "<rootDir>"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
-  rootDir: ".",  
-  testEnvironment: 'jsdom',
-  transform: {
-      '^.+\\.(ts|tsx|js|jsx)?$': 'babel-jest',
-    },
-  transformIgnorePatterns: [
-      "node_modules/(?!lucide-react)",],
-    
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+  testEnvironment: "jsdom",
 };
+
+module.exports = createJestConfig(config);
