@@ -2,28 +2,30 @@
 
 ## Active feature
 
-`002-cinematic-frontend-command-center`
+`003-cinematic-n8n-integration`
 
-Status: `review`
+Status: `in_progress`
 
 Mode: `SHIP`
 
 ## Current state
 
-Implementation has been added on branch:
+Integration work is active on branch:
 
-`feature/harness-cinematic-frontend`
+`feature/cinematic-n8n-integration`
 
-The feature is ready for human/code review. It is not marked `done`.
+Feature 002 is blocked pending consolidation with the verified n8n/Pages
+runtime from PR #3. The user approved feature 003 and its merge policy on
+2026-07-11.
 
-## Implemented scope
+## Approved integration scope
 
-- Replaced the single large `src/app/page.tsx` UI with a composed cinematic command-center layout.
-- Added reusable frontend components under `src/app/components/`.
-- Added executive metric cards, guided intake, activity ledger, risk/assumption panel, overhead panel, and report/export panel.
-- Updated `src/app/globals.css` with the cinematic visual system.
-- Updated product metadata in `src/app/layout.tsx`.
-- Cleaned the legacy `EstimateReport.tsx` duplicate React import and export handling.
+- Preserve the cinematic Command Center and harness from PR #2.
+- Integrate the n8n runtime, deterministic fallbacks, persistence, tests,
+  security controls, and static Pages workflow from PR #3.
+- Resolve shared UI files manually rather than accepting either branch wholesale.
+- Preserve current estimation formulas and activity data semantics.
+- Produce one consolidated PR that supersedes PR #2 and PR #3 after review.
 
 ## Preserved behavior
 
@@ -35,20 +37,21 @@ The effort formulas are preserved:
 - overheads = total effort multiplied by configured percentages;
 - grand total = total effort + contingency + delivery support overheads.
 
-## Verification status
+## Verification plan
 
-Local verification was attempted but could not run because the execution environment could not resolve `github.com` for cloning the branch.
+- `npm ci`
+- `npm run lint`
+- `npm run typecheck`
+- `npm test`
+- `npm run build`
+- `npm audit --omit=dev`
+- `npm audit`
+- desktop/mobile smoke test
+- project persistence and n8n fallback verification
 
-Manual/code review is still required for:
+## Current integration risks
 
-- TypeScript correctness;
-- Next.js build correctness;
-- responsive visual review;
-- export flow validation;
-- accessibility pass.
-
-## Known risks outside this feature
-
-- `next.config.ts` still ignores TypeScript and ESLint build errors.
-- GitHub Pages workflow expects static output at `./out`, but static export is not configured in `next.config.ts`.
-- GitHub Pages workflow references AI stubs under `src/ai/stubs/*`, but those files were not found on main.
+- Both branches modify central UI, package, layout, and deployment files.
+- PR #3's dashboard must not replace the cinematic page composition.
+- PR #2's legacy Genkit/build configuration must not replace the verified static runtime.
+- Actual n8n endpoints are external and must not introduce browser-visible secrets.
