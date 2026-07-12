@@ -4,39 +4,51 @@ import { DEFAULT_OVERHEAD, type Project } from "@/app/types";
 import ProjectPageClient from "@/app/project/ProjectPageClient";
 
 const mockPush = jest.fn();
+const mockReplace = jest.fn();
+let searchParams = new URLSearchParams("id=project-1");
 
 jest.mock("next/navigation", () => ({
-  useRouter: () => ({ push: mockPush }),
-  useSearchParams: () => new URLSearchParams("id=project-1"),
+  useRouter: () => ({ push: mockPush, replace: mockReplace }),
+  useSearchParams: () => searchParams,
 }));
+
+function createPersistedProject(): Project {
+  return {
+    id: "project-1",
+    name: "Invoice Automation",
+    description: "SAP invoice intake",
+    createdAt: "2026-07-11T00:00:00.000Z",
+    updatedAt: "2026-07-11T00:00:00.000Z",
+    activities: [],
+    overheadPercentages: { ...DEFAULT_OVERHEAD },
+  };
+}
 
 describe("ProjectPageClient", () => {
   beforeEach(() => {
     mockPush.mockClear();
-    const project: Project = {
-      id: "project-1",
-      name: "Invoice Automation",
-      description: "SAP invoice intake",
-      createdAt: "2026-07-11T00:00:00.000Z",
-      updatedAt: "2026-07-11T00:00:00.000Z",
-      activities: [],
-      overheadPercentages: { ...DEFAULT_OVERHEAD },
-    };
-    window.localStorage.setItem("te_projects", JSON.stringify([project]));
+    mockReplace.mockClear();
+    searchParams = new URLSearchParams("id=project-1");
+    window.localStorage.setItem(
+      "te_projects",
+      JSON.stringify([createPersistedProject()]),
+    );
   });
 
   afterEach(() => {
     window.localStorage.clear();
+    jest.restoreAllMocks();
   });
 
-  it("loads a persisted project and recalculates after activity entry", async () => {
+  it("loads a persisted project after hydration and recalculates after activity entry", async () => {
     render(<ProjectPageClient />);
 
     expect(
-      screen.getByRole("heading", { name: "Invoice Automation" }),
+      await screen.findByRole("heading", { name: "Invoice Automation" }),
     ).toBeInTheDocument();
     expect(screen.getByText("SAP invoice intake")).toBeInTheDocument();
     expect(screen.getAllByText("0.0h").length).toBeGreaterThan(0);
+    expect(mockReplace).not.toHaveBeenCalled();
 
     fireEvent.change(screen.getByLabelText("Application Name"), {
       target: { value: "SAP ERP" },
@@ -64,5 +76,28 @@ describe("ProjectPageClient", () => {
         effort: 4,
       }),
     ]);
+  });
+
+  it("redirects an unknown project only after local storage hydration", async () => {
+    searchParams = new URLSearchParams("id=missing-project");
+
+    render(<ProjectPageClient />);
+
+    expect(screen.getByText("Loading…")).toBeInTheDocument();
+    await waitFor(() => expect(mockReplace).toHaveBeenCalledWith("/"));
+  });
+
+  it("fails safely and redirects when local storage contains corrupt JSON", async () => {
+    jest.spyOn(console, "error").mockImplementation(() => undefined);
+    window.localStorage.setItem("te_projects", "{not-valid-json");
+
+    render(<ProjectPageClient />);
+
+    expect(screen.getByText("Loading…")).toBeInTheDocument();
+    await waitFor(() => expect(mockReplace).toHaveBeenCalledWith("/"));
+    expect(console.error).toHaveBeenCalledWith(
+      "useLocalStorage read error:",
+      expect.any(SyntaxError),
+    );
   });
 });
