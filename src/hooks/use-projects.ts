@@ -6,7 +6,10 @@ import { useLocalStorage } from "./use-local-storage";
 import { Activity, DEFAULT_OVERHEAD, OverheadKey, Project } from "@/app/types";
 
 export function useProjects() {
-  const [projects, setProjects] = useLocalStorage<Project[]>("te_projects", []);
+  const [projects, setProjects, hydrated] = useLocalStorage<Project[]>(
+    "te_projects",
+    [],
+  );
 
   const createProject = useCallback(
     (name: string, description?: string): Project => {
@@ -128,6 +131,7 @@ export function useProjects() {
 
   return {
     projects,
+    hydrated,
     createProject,
     updateProject,
     deleteProject,
