@@ -10,6 +10,8 @@ Feature 003 consolidates the cinematic Command Center from PR #2 with the
 static n8n runtime, browser persistence, security controls, test infrastructure,
 and GitHub Pages deployment from PR #3.
 
+Consolidated review PR: `#4` (`feature/cinematic-n8n-integration` → `main`).
+
 The root route is now a cinematic project command deck. Each project opens a
 cinematic `/project?id=...` workspace with executive metrics, guided activity
 entry, process-step import, n8n configuration, deterministic fallbacks,

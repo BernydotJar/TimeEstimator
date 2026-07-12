@@ -39,4 +39,4 @@ validation, and publication plan.
 - [x] Run lint, typecheck, tests, static build, and audits.
 - [ ] Complete desktop/mobile and fallback smoke checks.
 - [x] Write `progress/review_003-cinematic-n8n-integration.md`.
-- [ ] Push branch and open consolidated PR #4.
+- [x] Push branch and open consolidated PR #4.

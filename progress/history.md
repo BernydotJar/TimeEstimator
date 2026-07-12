@@ -24,3 +24,4 @@ Feature 002 is not marked done. It requires review and verification evidence bef
 - Integrated browser-local projects, n8n fallbacks, AI configuration, step import, overhead defaults, reports, static Pages export, linting, tests, and audit gates.
 - Added a consolidated project-workspace interaction test; 8 suites and 17 tests pass.
 - Moved feature 003 to `review`; browser visual QA remains pending because no in-app browser instance was available.
+- Published consolidated Draft PR #4 from `feature/cinematic-n8n-integration` to `main`.

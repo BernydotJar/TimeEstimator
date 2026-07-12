@@ -14,6 +14,8 @@ Integration implementation is complete on branch:
 
 `feature/cinematic-n8n-integration`
 
+Consolidated review: PR #4
+
 Feature 002 remains blocked because feature 003 now consolidates its cinematic
 experience with the verified n8n/Pages runtime from PR #3. Feature 003 is ready
 for human visual review and is not marked `done`.
