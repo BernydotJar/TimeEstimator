@@ -45,5 +45,5 @@ validation, and publication plan.
 - [ ] Complete keyboard-focus and dialog-scroll checks.
 - [ ] Generate and inspect PNG output.
 - [ ] Inspect browser print preview/PDF output.
-- [ ] Confirm final branch-head CI after review-document updates.
+- [x] Confirm final branch-head CI after review-document updates.
 - [ ] Mark PR #4 Ready for review after all manual checks pass.

@@ -61,8 +61,8 @@ browser-local project data.
 
 ## Automated verification
 
-GitHub Actions run `29182170461` completed successfully on hydration-fix head
-`2cc15f0`:
+GitHub Actions run `29258666907` completed successfully on final branch head
+`218765f`:
 
 ```text
 dependency installation       PASS
@@ -74,9 +74,9 @@ GitHub Pages static build     PASS
 deploy                        SKIPPED — pull-request branch
 ```
 
-The branch later added and loaded `src/app/print.css` to isolate report content
-for browser print/PDF. A final CI run on the latest documentation head is still
-required before requesting review.
+The validated head includes and loads `src/app/print.css` to isolate report
+content for browser print/PDF. The final automated gate is complete; browser QA
+remains required before requesting review.
 
 ## Code-level QA preflight
 

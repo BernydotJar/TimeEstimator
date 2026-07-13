@@ -56,7 +56,8 @@ storage fallback, activity entry, recalculation, and persistence.
 
 ## Verification evidence
 
-Latest completed hydration gate, GitHub Actions run `29182170461`:
+Final branch-head gate, GitHub Actions run `29258666907` on head
+`218765f`:
 
 - dependency installation: passed;
 - `npm run typecheck`: passed;
@@ -67,8 +68,8 @@ Latest completed hydration gate, GitHub Actions run `29182170461`:
 - deployment: intentionally skipped for the pull-request branch.
 
 A print-only stylesheet was also added and loaded so `Print / PDF` isolates the
-report content. The final branch-head CI must complete after this documentation
-update.
+report content. The final branch-head CI completed successfully after the print
+and review-document updates.
 
 ## Verification debt
 
