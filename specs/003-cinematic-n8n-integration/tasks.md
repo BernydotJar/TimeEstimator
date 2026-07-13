@@ -2,7 +2,7 @@
 
 ## Status
 
-in_progress
+review
 
 ## Human approval
 
@@ -36,7 +36,14 @@ validation, and publication plan.
 - [x] Resolve conflicts using the approved authority policy.
 - [x] Adapt n8n assistance and persistence into cinematic surfaces.
 - [x] Preserve reports, formulas, theme, and accessibility.
-- [x] Run lint, typecheck, tests, static build, and audits.
-- [ ] Complete desktop/mobile and fallback smoke checks.
+- [x] Repair and test the local-storage hydration lifecycle.
+- [x] Add print/PDF content-isolation styles.
+- [x] Run lint, typecheck, tests, static build, and production audit on the hydration fix.
 - [x] Write `progress/review_003-cinematic-n8n-integration.md`.
 - [x] Push branch and open consolidated PR #4.
+- [ ] Complete desktop/tablet/mobile visual smoke checks.
+- [ ] Complete keyboard-focus and dialog-scroll checks.
+- [ ] Generate and inspect PNG output.
+- [ ] Inspect browser print preview/PDF output.
+- [ ] Confirm final branch-head CI after review-document updates.
+- [ ] Mark PR #4 Ready for review after all manual checks pass.
