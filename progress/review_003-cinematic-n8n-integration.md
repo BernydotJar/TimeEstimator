@@ -61,8 +61,8 @@ browser-local project data.
 
 ## Automated verification
 
-GitHub Actions run `29258666907` completed successfully on final branch head
-`218765f`:
+GitHub Actions push run `29261870346` and pull-request run `29261879764`
+completed successfully on branch head `98328fa`:
 
 ```text
 dependency installation       PASS
@@ -117,8 +117,10 @@ Required before changing PR #4 from Draft to Ready for review:
 
 ## Verification debt
 
-No interactive browser is available in the current execution environment, so
-none of the unchecked visual and artifact checks can honestly be marked PASS.
+The local checkout is available and the development server responds at
+`http://localhost:9002`, but in-app browser discovery returned no available
+browser. Therefore none of the unchecked visual and artifact checks can
+honestly be marked PASS.
 A real public n8n endpoint was not configured; deterministic fallback coverage
 is sufficient for Feature 003, while real-endpoint validation remains optional
 integration debt requiring an approved public endpoint.

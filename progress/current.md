@@ -56,8 +56,12 @@ storage fallback, activity entry, recalculation, and persistence.
 
 ## Verification evidence
 
-Final branch-head gate, GitHub Actions run `29258666907` on head
-`218765f`:
+Final branch-head gates on head `98328fa`:
+
+- push workflow `29261870346`: passed;
+- pull-request workflow `29261879764`: passed;
+
+Both workflows verified:
 
 - dependency installation: passed;
 - `npm run typecheck`: passed;
@@ -73,8 +77,10 @@ and review-document updates.
 
 ## Verification debt
 
-The current execution environment has no interactive browser and cannot perform
-an honest visual/export observation. The following human checks remain:
+The local checkout is mounted and the application responds at
+`http://localhost:9002`. The in-app browser discovery returned no available
+browser, so this execution environment still cannot perform an honest
+visual/export observation. The following human checks remain:
 
 - dashboard at desktop, tablet, and phone widths;
 - project workspace at desktop, tablet, and phone widths;
