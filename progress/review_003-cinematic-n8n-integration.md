@@ -4,33 +4,44 @@
 
 `review`
 
+## Pull request
+
+PR #4: `feature/cinematic-n8n-integration` → `main`
+
+The PR remains Draft. No merge, deployment, superseded-PR closure, or branch
+deletion is included in this review cycle.
+
 ## Summary
 
 Feature 003 consolidates the cinematic Command Center from PR #2 with the
 static n8n runtime, browser persistence, security controls, test infrastructure,
-and GitHub Pages deployment from PR #3.
+and GitHub Pages build workflow from PR #3.
 
-Consolidated review PR: `#4` (`feature/cinematic-n8n-integration` → `main`).
-
-The root route is now a cinematic project command deck. Each project opens a
+The root route is a cinematic project command deck. Each project opens a
 cinematic `/project?id=...` workspace with executive metrics, guided activity
 entry, process-step import, n8n configuration, deterministic fallbacks,
 assumption/risk surfacing, overhead defaults, activity ledger, and reports.
 
-## Conflict resolution evidence
+## Hydration incident and correction
 
-The merge produced five conflicts:
+The attempted hydration fix at commit `97dc283` truncated
+`src/app/project/ProjectPageClient.tsx` to an incomplete import and caused:
 
-- `src/app/page.tsx`: manually rebuilt as a persistent cinematic dashboard.
-- `src/app/globals.css`: preserved the PR #2 cinematic visual system.
-- `src/app/layout.tsx`: retained PR #3 metadata/base-path behavior with
-  cinematic product positioning.
-- `src/app/components/EstimateReport.tsx`: preserved cinematic export and
-  metadata behavior.
-- `src/app/components/OverheadConfigDialog.tsx`: retained PR #3 functional
-  presets/n8n defaults and restyled it for the cinematic system.
+```text
+TS1128: Declaration or statement expected
+```
 
-No global ours/theirs resolution was used.
+The corrected implementation restores the workspace and uses the explicit
+`hydrated` state from `useLocalStorage`:
+
+1. server render and first client render show the same loading surface;
+2. no `window` or `localStorage` read occurs during render;
+3. the persisted project is resolved only after hydration;
+4. unknown or missing IDs redirect only after hydration;
+5. corrupt stored JSON falls back safely and then redirects.
+
+Added test coverage verifies persisted project loading, activity recalculation,
+persistence, delayed invalid-ID redirect, and corrupt-storage fallback.
 
 ## Functional invariants
 
@@ -50,47 +61,71 @@ browser-local project data.
 
 ## Automated verification
 
+GitHub Actions run `29182170461` completed successfully on hydration-fix head
+`2cc15f0`:
+
 ```text
-npm ci                     PASS
-npm run lint               PASS
-npm run typecheck          PASS
-npm test                   PASS — 8 suites / 17 tests
-npm audit --omit=dev       PASS — 0 vulnerabilities
-npm audit                  PASS — 0 vulnerabilities
-GitHub Pages static build  PASS — / and /project exported
-git diff --check           PASS
+dependency installation       PASS
+npm run typecheck             PASS
+npm run lint                  PASS
+npm test                      PASS
+npm audit --omit=dev          PASS
+GitHub Pages static build     PASS
+deploy                        SKIPPED — pull-request branch
 ```
 
-Coverage includes:
+The branch later added and loaded `src/app/print.css` to isolate report content
+for browser print/PDF. A final CI run on the latest documentation head is still
+required before requesting review.
 
-- project creation and persistence;
-- persisted project workspace loading;
-- manual activity entry and metric recalculation;
-- process-step import with local fallback;
-- all four local AI fallbacks;
-- n8n configuration validation;
-- versioned n8n request envelope;
-- real HTTP exchange against an n8n-compatible contract server.
+## Code-level QA preflight
 
-## Visual and manual review
+Observed in code:
 
-The in-app browser was not available (`iab` discovery returned no browser
-instances), so no honest desktop/mobile screenshot review could be completed in
-this implementation session.
+- responsive dashboard and project grids use phone-first breakpoints;
+- project action controls remain visible on phone widths;
+- Radix dialogs provide focus trapping, Escape close, and focus restoration;
+- report dialog has a viewport-height limit and vertical scrolling;
+- focus rings are defined for dialog close and form controls;
+- `prefers-reduced-motion` disables meaningful animation and smooth scrolling;
+- PNG export uses a white capture background and a deterministic filename;
+- print/PDF now loads a dedicated print stylesheet that hides application chrome
+  and exposes only the report body.
 
-Required human checks before `done`:
+This is a preflight inspection, not a substitute for visual observation.
 
-- root dashboard at desktop and phone widths;
-- project workspace at desktop and phone widths;
-- create/open/refresh persistence;
-- theme toggle;
-- AI fallback copy and step import;
-- overhead presets/defaults;
-- report dialog, PNG export, and print/PDF;
-- keyboard focus and dialog scrolling.
+## Manual QA checklist
+
+Required before changing PR #4 from Draft to Ready for review:
+
+- [ ] Dashboard at desktop width.
+- [ ] Dashboard at tablet width.
+- [ ] Dashboard at phone width.
+- [ ] Project workspace at desktop width.
+- [ ] Project workspace at tablet width.
+- [ ] Project workspace at phone width.
+- [ ] Create project, open it, refresh, and confirm persistence.
+- [ ] Open a valid `/project?id=...` URL directly.
+- [ ] Confirm an unknown ID redirects only after the loading state.
+- [ ] Theme toggle and contrast in both themes.
+- [ ] Create, rename, delete, AI integration, overhead, and report dialogs.
+- [ ] Keyboard Tab/Shift+Tab, visible focus, Escape close, and focus restoration.
+- [ ] Long dialog content scrolls without trapping inaccessible controls.
+- [ ] Deterministic AI fallback copy and process-step import.
+- [ ] Save PNG and inspect the resulting file.
+- [ ] Open print preview and inspect PDF pagination/content isolation.
+
+## Verification debt
+
+No interactive browser is available in the current execution environment, so
+none of the unchecked visual and artifact checks can honestly be marked PASS.
+A real public n8n endpoint was not configured; deterministic fallback coverage
+is sufficient for Feature 003, while real-endpoint validation remains optional
+integration debt requiring an approved public endpoint.
 
 ## Decision
 
-Ready for consolidated PR review. Keep feature 003 in `review` until the visual
-and manual export checks pass. PR #2 and PR #3 must remain open until the
-consolidated PR is approved, then they may be closed as superseded.
+`REVIEW`
+
+Keep Feature 003 in `review` and PR #4 in Draft until the manual QA checklist
+passes. PR #2 and PR #3 remain open for traceability until PR #4 is approved.
