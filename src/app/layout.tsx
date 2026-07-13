@@ -1,6 +1,7 @@
 import type {Metadata} from 'next';
 import {Geist, Geist_Mono} from 'next/font/google';
 import './globals.css';
+import './print.css';
 
 const isGithubActions = process.env.GITHUB_ACTIONS === 'true';
 const repository = process.env.GITHUB_REPOSITORY ?? 'BernydotJar/TimeEstimator';
