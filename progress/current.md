@@ -56,13 +56,9 @@ storage fallback, activity entry, recalculation, and persistence.
 
 ## Verification evidence
 
-Final branch-head gates on head `98328fa`:
+Current PR #4 head is `b0d791e`.
 
-- push workflow `29261870346`: passed;
-- pull-request workflow `29261879764`: passed;
-
-Both workflows verified:
-
+- pull-request workflow `29280890782`: passed;
 - dependency installation: passed;
 - `npm run typecheck`: passed;
 - `npm run lint`: passed;
@@ -71,30 +67,47 @@ Both workflows verified:
 - static GitHub Pages build: passed;
 - deployment: intentionally skipped for the pull-request branch.
 
-A print-only stylesheet was also added and loaded so `Print / PDF` isolates the
-report content. The final branch-head CI completed successfully after the print
-and review-document updates.
+## Manual browser findings
 
-## Verification debt
+The direct project URL `/project?id=<id>` works correctly after hydration.
 
-The local checkout is mounted and the application responds at
-`http://localhost:9002`. The in-app browser discovery returned no available
-browser, so this execution environment still cannot perform an honest
-visual/export observation. The following human checks remain:
+Two reproducible export defects remain and block Feature 003 closure:
 
-- dashboard at desktop, tablet, and phone widths;
-- project workspace at desktop, tablet, and phone widths;
-- create/open/refresh persistence in a real browser;
-- theme toggle and contrast;
-- dialogs, keyboard focus, Escape behavior, and scrolling;
-- PNG file generation and visual inspection;
-- print preview/PDF pagination and content isolation.
+- **RPT-001 — Print/PDF:** the current Print / PDF flow does not produce a
+  usable, correctly paginated report.
+- **RPT-002 — Save PNG:** the current export captures the full report as one
+  excessively tall image rather than a bounded report surface.
 
-A public n8n endpoint is not required to validate deterministic fallback behavior.
-Validation against a real public n8n workflow remains optional integration debt
-until an approved endpoint is available.
+These findings supersede the earlier code-level expectation that the print
+stylesheet alone was sufficient. Code inspection is not a substitute for
+artifact inspection.
 
-## Remaining review gate
+## Remaining Feature 003 review gate
 
-PR #4 must remain Draft until the browser QA checklist above passes. Do not merge,
-close PR #2/#3, delete branches, or mark Feature 003 `done` before that gate.
+PR #4 must remain Draft. Feature 003 must remain `review` until the required
+browser checks and both export defects are resolved and re-verified. Do not
+merge, close PR #2/#3, delete branches, or mark Feature 003 `done` before that
+gate.
+
+## Queued specification
+
+Feature `008-project-assessment-estimation-documentation` is now `spec_ready` on
+branch:
+
+`spec/008-project-assessment-estimation-documentation`
+
+Working title: **Project Discovery & Estimation Studio**.
+
+The specification defines:
+
+- a structured consulting assessment;
+- a persistent process graph with stable steps and edges;
+- review-before-apply activity proposals;
+- explainable optimistic, expected, and conservative estimates;
+- traceability from evidence to calculations and generated documentation;
+- current-state and future-state flow documentation;
+- a bounded executive-summary PNG;
+- a dedicated multipage Print/PDF surface.
+
+Feature 008 is documentation only and requires explicit human approval before
+implementation. Feature 003 remains the only active lifecycle item.
