@@ -2,7 +2,7 @@
 
 ## Active feature
 
-`002-cinematic-frontend-command-center`
+`003-cinematic-n8n-integration`
 
 Status: `review`
 
@@ -10,20 +10,24 @@ Mode: `SHIP`
 
 ## Current state
 
-Implementation has been added on branch:
+Integration implementation is complete on branch:
 
-`feature/harness-cinematic-frontend`
+`feature/cinematic-n8n-integration`
 
-The feature is ready for human/code review. It is not marked `done`.
+Consolidated review: PR #4
 
-## Implemented scope
+Feature 002 remains blocked because feature 003 now consolidates its cinematic
+experience with the verified n8n/Pages runtime from PR #3. Feature 003 remains
+in review and is not marked `done`.
 
-- Replaced the single large `src/app/page.tsx` UI with a composed cinematic command-center layout.
-- Added reusable frontend components under `src/app/components/`.
-- Added executive metric cards, guided intake, activity ledger, risk/assumption panel, overhead panel, and report/export panel.
-- Updated `src/app/globals.css` with the cinematic visual system.
-- Updated product metadata in `src/app/layout.tsx`.
-- Cleaned the legacy `EstimateReport.tsx` duplicate React import and export handling.
+## Approved integration scope
+
+- Preserve the cinematic Command Center and harness from PR #2.
+- Integrate the n8n runtime, deterministic fallbacks, persistence, tests,
+  security controls, and static Pages workflow from PR #3.
+- Resolve shared UI files manually rather than accepting either branch wholesale.
+- Preserve current estimation formulas and activity data semantics.
+- Validate the local-storage hydration lifecycle before closing the feature.
 
 ## Preserved behavior
 
@@ -35,20 +39,62 @@ The effort formulas are preserved:
 - overheads = total effort multiplied by configured percentages;
 - grand total = total effort + contingency + delivery support overheads.
 
-## Verification status
+## Hydration correction
 
-Local verification was attempted but could not run because the execution environment could not resolve `github.com` for cloning the branch.
+The first hydration correction commit (`97dc283`) accidentally truncated
+`src/app/project/ProjectPageClient.tsx` and caused TypeScript error `TS1128`.
+The page was restored and the final behavior now:
 
-Manual/code review is still required for:
+- renders the same loading tree before browser storage hydration;
+- reads projects only after `hydrated` is true;
+- opens a persisted `/project?id=...` workspace after hydration;
+- redirects a missing or unknown project only after hydration;
+- handles corrupt `localStorage` by falling back safely.
 
-- TypeScript correctness;
-- Next.js build correctness;
-- responsive visual review;
-- export flow validation;
-- accessibility pass.
+Automated tests cover persisted loading, deferred invalid-ID redirect, corrupt
+storage fallback, activity entry, recalculation, and persistence.
 
-## Known risks outside this feature
+## Verification evidence
 
-- `next.config.ts` still ignores TypeScript and ESLint build errors.
-- GitHub Pages workflow expects static output at `./out`, but static export is not configured in `next.config.ts`.
-- GitHub Pages workflow references AI stubs under `src/ai/stubs/*`, but those files were not found on main.
+Final branch-head gates on head `98328fa`:
+
+- push workflow `29261870346`: passed;
+- pull-request workflow `29261879764`: passed;
+
+Both workflows verified:
+
+- dependency installation: passed;
+- `npm run typecheck`: passed;
+- `npm run lint`: passed;
+- `npm test`: passed;
+- `npm audit --omit=dev`: passed;
+- static GitHub Pages build: passed;
+- deployment: intentionally skipped for the pull-request branch.
+
+A print-only stylesheet was also added and loaded so `Print / PDF` isolates the
+report content. The final branch-head CI completed successfully after the print
+and review-document updates.
+
+## Verification debt
+
+The local checkout is mounted and the application responds at
+`http://localhost:9002`. The in-app browser discovery returned no available
+browser, so this execution environment still cannot perform an honest
+visual/export observation. The following human checks remain:
+
+- dashboard at desktop, tablet, and phone widths;
+- project workspace at desktop, tablet, and phone widths;
+- create/open/refresh persistence in a real browser;
+- theme toggle and contrast;
+- dialogs, keyboard focus, Escape behavior, and scrolling;
+- PNG file generation and visual inspection;
+- print preview/PDF pagination and content isolation.
+
+A public n8n endpoint is not required to validate deterministic fallback behavior.
+Validation against a real public n8n workflow remains optional integration debt
+until an approved endpoint is available.
+
+## Remaining review gate
+
+PR #4 must remain Draft until the browser QA checklist above passes. Do not merge,
+close PR #2/#3, delete branches, or mark Feature 003 `done` before that gate.

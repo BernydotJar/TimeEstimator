@@ -80,7 +80,6 @@
     color: #e2e8f0;
   }
 }
-
 @layer components {
   .cinematic-shell {
     min-height: 100vh;

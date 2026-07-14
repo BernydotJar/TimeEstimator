@@ -116,7 +116,7 @@ These were not changed because they are outside the approved file boundaries:
 - GitHub Pages workflow expects `./out`, but static export is not configured.
 - GitHub Pages workflow references `src/ai/stubs/*`, but those stubs were not found on main.
 
-Recommended next feature: `005-github-pages-deploy-hardening` or a narrow build-gate fix before production closure.
+Recommended next feature: `006-github-pages-deploy-hardening` or a narrow build-gate fix before production closure.
 
 ## Decision
 

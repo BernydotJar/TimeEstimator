@@ -2,6 +2,8 @@ name: Deploy Next.js site to GitHub Pages
 
 on:
   push:
+    branches: ["main", "feat/**", "feature/**", "fix/**"]
+  pull_request:
     branches: ["main"]
   workflow_dispatch:
 
@@ -20,29 +22,33 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
           cache-dependency-path: package-lock.json
 
       - name: Setup Pages
+        if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main'
         uses: actions/configure-pages@v5
 
       - name: Install dependencies
         run: npm ci --prefer-offline
 
-      - name: Replace AI flows with static stubs
-        # Next.js detects 'use server' before webpack aliases run, so we physically
-        # replace the flow files with stub implementations for the static export.
-        run: |
-          cp src/ai/stubs/estimate-analysis-flow.ts src/ai/flows/estimate-analysis-flow.ts
-          cp src/ai/stubs/estimate-defaults-flow.ts src/ai/flows/estimate-defaults-flow.ts
-          cp src/ai/stubs/estimate-summary-flow.ts src/ai/flows/estimate-summary-flow.ts
-          cp src/ai/stubs/parse-steps-flow.ts src/ai/flows/parse-steps-flow.ts
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
 
       - name: Build static export
         run: npm run build
@@ -54,15 +60,14 @@ jobs:
           NEXT_PUBLIC_N8N_SUMMARIZE_ACTIVITIES_URL: ${{ vars.NEXT_PUBLIC_N8N_SUMMARIZE_ACTIVITIES_URL }}
           NEXT_PUBLIC_N8N_PARSE_STEPS_URL: ${{ vars.NEXT_PUBLIC_N8N_PARSE_STEPS_URL }}
 
-      - name: Disable Jekyll
-        run: touch ./out/.nojekyll
-
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./out
 
   deploy:
+    if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

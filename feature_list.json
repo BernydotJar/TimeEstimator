@@ -22,32 +22,39 @@
       "id": "002-cinematic-frontend-command-center",
       "title": "Cinematic frontend command center",
       "mode": "SHIP",
-      "status": "review",
+      "status": "blocked",
       "summary": "Rebuild the main UX into a cinematic RPA estimation command center with executive totals, guided activity capture, risk/assumption panels, export-ready summaries, accessibility, and responsive behavior."
     },
     {
-      "id": "003-estimation-engine-hardening",
+      "id": "003-cinematic-n8n-integration",
+      "title": "Cinematic n8n integration",
+      "mode": "SHIP",
+      "status": "review",
+      "summary": "Integrate the production-ready n8n runtime, browser persistence, static Pages deployment, security controls, and verification suite into the cinematic command center while preserving its experience and estimation formulas. Human-approved on 2026-07-11."
+    },
+    {
+      "id": "004-estimation-engine-hardening",
       "title": "Estimation engine hardening",
       "mode": "SHIP",
       "status": "pending",
       "summary": "Separate calculation logic from page UI, formalize formulas, add deterministic tests, handle invalid inputs, and make the effort matrix auditable."
     },
     {
-      "id": "004-report-export-pack",
+      "id": "005-report-export-pack",
       "title": "Report and export pack",
       "mode": "SHIP",
       "status": "pending",
       "summary": "Create stakeholder-ready exports including PNG, JSON metadata, CSV/Excel-ready activity data, and a clean executive summary surface."
     },
     {
-      "id": "005-github-pages-deploy-hardening",
+      "id": "006-github-pages-deploy-hardening",
       "title": "GitHub Pages deploy hardening",
       "mode": "SHIP",
       "status": "pending",
       "summary": "Fix static export configuration, AI-flow stubbing strategy, build gates, and workflow verification for reliable Pages deployment."
     },
     {
-      "id": "006-ai-assisted-estimation",
+      "id": "007-ai-assisted-estimation",
       "title": "AI-assisted estimation workflow",
       "mode": "MVP",
       "status": "pending",

@@ -1,0 +1,66 @@
+@media print {
+  @page {
+    margin: 12mm;
+    size: auto;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  [role="dialog"] {
+    animation: none !important;
+    background: #ffffff !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    display: block !important;
+    inset: 0 !important;
+    max-height: none !important;
+    max-width: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    position: absolute !important;
+    transform: none !important;
+    transition: none !important;
+    visibility: visible !important;
+    width: 100% !important;
+  }
+
+  [role="dialog"] > * {
+    display: none !important;
+  }
+
+  [role="dialog"] > .space-y-6.rounded-lg {
+    background: #ffffff !important;
+    border-radius: 0 !important;
+    color: #0f172a !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    visibility: visible !important;
+  }
+
+  [role="dialog"] > .space-y-6.rounded-lg,
+  [role="dialog"] > .space-y-6.rounded-lg * {
+    visibility: visible !important;
+  }
+
+  [role="dialog"] > .space-y-6.rounded-lg .overflow-auto {
+    overflow: visible !important;
+  }
+
+  [role="dialog"] > .space-y-6.rounded-lg table {
+    width: 100% !important;
+  }
+
+  [role="dialog"] > .space-y-6.rounded-lg svg,
+  [role="dialog"] > .space-y-6.rounded-lg table,
+  [role="dialog"] > .space-y-6.rounded-lg > div {
+    break-inside: avoid;
+  }
+}
