@@ -25,3 +25,14 @@ Feature 002 is not marked done. It requires review and verification evidence bef
 - Added a consolidated project-workspace interaction test; 8 suites and 17 tests pass.
 - Moved feature 003 to `review`; browser visual QA remains pending because no in-app browser instance was available.
 - Published consolidated Draft PR #4 from `feature/cinematic-n8n-integration` to `main`.
+
+## 2026-07-14
+
+- Confirmed through real browser use that direct `/project?id=<id>` navigation works after hydration.
+- Recorded two reproducible Feature 003 export defects: Print/PDF is not usable and Save PNG produces one excessively tall image.
+- Kept Feature 003 in `review` and PR #4 in Draft.
+- Determined that IDs 004 through 007 were already reserved and allocated Feature 008.
+- Created `spec/008-project-assessment-estimation-documentation` from integration head `b0d791e`.
+- Authored the complete SHIP specification set for Project Discovery & Estimation Studio.
+- Defined a structured assessment, process graph, traceable activity proposals, explainable scenarios, generated documentation, Mermaid derivation, bounded PNG summary, and dedicated multipage Print/PDF architecture.
+- Registered Feature 008 as `spec_ready`; no product code, formulas, dependencies, deployment, or Feature 003 lifecycle state were changed.
