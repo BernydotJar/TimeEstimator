@@ -59,6 +59,13 @@
       "mode": "MVP",
       "status": "pending",
       "summary": "Define safe AI/n8n/Genkit assistance for parsing process steps, suggesting estimates, summarizing assumptions, and preserving deterministic user control."
+    },
+    {
+      "id": "008-project-assessment-estimation-documentation",
+      "title": "Project Discovery & Estimation Studio",
+      "mode": "SHIP",
+      "status": "spec_ready",
+      "summary": "Define a guided project assessment, structured process model, explainable multi-scenario effort estimation, traceable documentation generation, bounded executive-summary PNG, and dedicated multipage Print/PDF experience. Implementation requires explicit human approval."
     }
   ]
 }
