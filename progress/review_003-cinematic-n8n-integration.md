@@ -61,8 +61,8 @@ browser-local project data.
 
 ## Automated verification
 
-GitHub Actions push run `29261870346` and pull-request run `29261879764`
-completed successfully on branch head `98328fa`:
+GitHub Actions pull-request run `29280890782` completed successfully on branch
+head `b0d791e`:
 
 ```text
 dependency installation       PASS
@@ -74,10 +74,6 @@ GitHub Pages static build     PASS
 deploy                        SKIPPED — pull-request branch
 ```
 
-The validated head includes and loads `src/app/print.css` to isolate report
-content for browser print/PDF. The final automated gate is complete; browser QA
-remains required before requesting review.
-
 ## Code-level QA preflight
 
 Observed in code:
@@ -88,13 +84,42 @@ Observed in code:
 - report dialog has a viewport-height limit and vertical scrolling;
 - focus rings are defined for dialog close and form controls;
 - `prefers-reduced-motion` disables meaningful animation and smooth scrolling;
-- PNG export uses a white capture background and a deterministic filename;
-- print/PDF now loads a dedicated print stylesheet that hides application chrome
-  and exposes only the report body.
+- PNG export uses `html2canvas` against the full report container;
+- Print/PDF invokes `window.print()` while the report is hosted inside a dialog.
 
-This is a preflight inspection, not a substitute for visual observation.
+This inspection explains likely failure modes but is not a substitute for visual
+observation.
 
-## Manual QA checklist
+## Manual browser evidence
+
+### Passed
+
+- [x] Open a valid `/project?id=<id>` URL directly after browser-storage hydration.
+
+### Reproducible defects
+
+#### RPT-001 — Print/PDF unusable
+
+Observed behavior: Print / PDF does not produce a usable, correctly paginated
+stakeholder report.
+
+Required behavior: use an isolated printable surface, exclude application and
+dialog chrome, support A4/Letter, apply semantic page breaks, and preserve
+readable tables and charts across multiple pages.
+
+#### RPT-002 — Save PNG excessively tall
+
+Observed behavior: Save PNG captures the complete report as one long vertical
+image. The result is not a bounded executive report and becomes difficult to
+read or share.
+
+Required behavior: export a purpose-built, bounded executive-summary surface.
+The full report belongs in multipage PDF, not one infinitely tall PNG.
+
+These observed defects supersede the earlier expectation that print-only CSS and
+capture-background settings were sufficient.
+
+## Remaining manual QA checklist
 
 Required before changing PR #4 from Draft to Ready for review:
 
@@ -105,29 +130,28 @@ Required before changing PR #4 from Draft to Ready for review:
 - [ ] Project workspace at tablet width.
 - [ ] Project workspace at phone width.
 - [ ] Create project, open it, refresh, and confirm persistence.
-- [ ] Open a valid `/project?id=...` URL directly.
+- [x] Open a valid `/project?id=...` URL directly.
 - [ ] Confirm an unknown ID redirects only after the loading state.
 - [ ] Theme toggle and contrast in both themes.
 - [ ] Create, rename, delete, AI integration, overhead, and report dialogs.
 - [ ] Keyboard Tab/Shift+Tab, visible focus, Escape close, and focus restoration.
 - [ ] Long dialog content scrolls without trapping inaccessible controls.
 - [ ] Deterministic AI fallback copy and process-step import.
-- [ ] Save PNG and inspect the resulting file.
-- [ ] Open print preview and inspect PDF pagination/content isolation.
+- [ ] Replace and verify Save PNG behavior against RPT-002.
+- [ ] Replace and verify Print/PDF behavior against RPT-001.
 
-## Verification debt
+## Relationship to Feature 008
 
-The local checkout is available and the development server responds at
-`http://localhost:9002`, but in-app browser discovery returned no available
-browser. Therefore none of the unchecked visual and artifact checks can
-honestly be marked PASS.
-A real public n8n endpoint was not configured; deterministic fallback coverage
-is sufficient for Feature 003, while real-endpoint validation remains optional
-integration debt requiring an approved public endpoint.
+Feature `008-project-assessment-estimation-documentation` specifies the broader
+Project Discovery & Estimation Studio and includes the target export architecture.
+Feature 003 remains blocked from completion by the current defects. Creating
+Feature 008 specs does not mark Feature 003 done and does not authorize code
+changes.
 
 ## Decision
 
 `REVIEW`
 
-Keep Feature 003 in `review` and PR #4 in Draft until the manual QA checklist
-passes. PR #2 and PR #3 remain open for traceability until PR #4 is approved.
+Keep Feature 003 in `review` and PR #4 in Draft until the remaining browser QA
+and both export defects pass. PR #2 and PR #3 remain open for traceability until
+PR #4 is approved.
