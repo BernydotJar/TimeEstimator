@@ -64,8 +64,8 @@
       "id": "008-project-assessment-estimation-documentation",
       "title": "Project Discovery & Estimation Studio",
       "mode": "SHIP",
-      "status": "in_progress",
-      "summary": "Implement the approved Project Discovery & Estimation Studio specification with additive browser-local persistence, structured assessment and process modeling, reviewable proposals, explainable scenarios, traceable documentation, bounded PNG, and dedicated Print/PDF. Human-approved on 2026-07-14."
+      "status": "blocked",
+      "summary": "Human-approved on 2026-07-14. Implementation started on feature/008-project-discovery-estimation-studio, then stopped before app-code changes because this execution runtime has no repository checkout and cannot run required compile, test, build, browser, PNG, or Print/PDF verification."
     }
   ]
 }
