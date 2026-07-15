@@ -38,6 +38,25 @@
 - Added domain, persistence, and component tests.
 - Preserved activities, overheads, formulas, reports, and `/project?id=<id>` integration.
 - Opened Draft PR #9: `feat: add structured project assessment workflow`.
-- GitHub Actions run `29389971404` is the automated verification gate for installation, typecheck, lint, tests, production audit, and static build.
-- Real browser QA at 320px, 390px, 768px, and desktop remains required before visual, responsive, or accessibility PASS can be claimed.
-- Feature 008 remains `in_progress`; Phase 2 stops at human review and does not mark the full feature done.
+- GitHub Actions run `29389971404` was the automated verification gate for installation, typecheck, lint, tests, production audit, and static build.
+- Real browser QA at 320px, 390px, 768px, and desktop remained required before visual, responsive, or accessibility PASS could be claimed.
+- Feature 008 remained `in_progress`.
+
+## 2026-07-15 — Feature 008 Phase 3
+
+- Added deterministic process ingestion, candidate review, structured actors/systems/steps/edges, graph validation, provenance, local persistence, Project Studio integration, and dedicated tests.
+- Local validation passed typecheck, lint, 17 suites / 57 tests, production audit with 0 vulnerabilities, static build, and `git diff --check`.
+- PR #10 merged into `main` at `44ba4b12fda9fef8913d13115f9d6750cc57e40b`.
+- Phase 3 transitioned to `PASS`; Feature 008 remained `in_progress`.
+
+## 2026-07-15 — Feature 008 Phase 4A
+
+- Created issue #11 and branch `feature/008-estimation-proposals` from the Phase 3 merge.
+- Opened Draft PR #12: `feat: add traceable activity proposal workflow`.
+- Added a versioned deterministic rule catalog and reproducible proposal generation from structured process and assessment inputs.
+- Added stable proposal IDs, input snapshot hash, source references, rationale, warnings, unknown preservation, and safe grouping boundaries.
+- Added browser-local proposal lifecycle persistence, edit/include/exclude/select review operations, preview without mutation, explicit-confirmation selected-only apply, mappings, receipts, audit entries, and duplicate-apply protection.
+- Integrated the proposal review workspace into Project Discovery & Estimation Studio.
+- Added domain, persistence, and component tests.
+- Preserved current formulas, `DEFAULT_OVERHEAD`, dependencies, workflows, and external-data boundaries.
+- GitHub Actions and complete local validation remain gates before Phase 4A can transition to review.
