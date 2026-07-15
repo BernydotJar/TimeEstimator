@@ -3,6 +3,10 @@ import type {
   EvidenceReference,
   SourceKind,
 } from "./types";
+import type {
+  ParsedCandidateReviewState,
+  RawProcessInput,
+} from "./process-ingestion";
 
 export type ProcessStepType =
   | "start"
@@ -19,11 +23,22 @@ export type ProcessStepType =
   | "exception"
   | "end";
 
+export type ProcessEdgeType =
+  | "sequence"
+  | "conditional"
+  | "exception"
+  | "retry"
+  | "approval"
+  | "rejection"
+  | "escalation";
+
 export interface ProcessActor {
   id: string;
   name: string;
   kind: "person" | "role" | "team" | "external_party" | "automation";
+  role?: string;
   description?: string;
+  notes?: string;
 }
 
 export interface ProcessSystem {
@@ -33,15 +48,20 @@ export interface ProcessSystem {
     | "desktop"
     | "web"
     | "sap"
+    | "erp"
+    | "crm"
     | "terminal"
     | "database"
     | "api"
     | "file_store"
+    | "file_system"
     | "email"
+    | "document_repository"
+    | "unknown"
     | "other";
   environment?: string;
   authentication?: string;
-  accessStatus?: "confirmed" | "unknown" | "restricted";
+  accessStatus?: "confirmed" | "partial" | "unknown" | "restricted" | "unavailable";
   notes?: string;
 }
 
@@ -77,6 +97,14 @@ export interface ExceptionDefinition {
   recoverable: boolean;
 }
 
+export interface ProcessStepProvenance {
+  source: SourceKind;
+  rawInputId?: string;
+  candidateId?: string;
+  parserVersion?: string;
+  rawLine?: number;
+}
+
 export interface ProcessStep {
   id: string;
   processId: string;
@@ -89,7 +117,9 @@ export interface ProcessStep {
   inputs: DataObjectRef[];
   outputs: DataObjectRef[];
   decision?: DecisionDefinition;
+  decisionCondition?: string;
   exception?: ExceptionDefinition;
+  exceptionBehavior?: string;
   frequency?: Quantity;
   volume?: Quantity;
   durationMinutes?: number;
@@ -105,6 +135,7 @@ export interface ProcessStep {
   evidence: EvidenceReference[];
   notes?: string;
   source: SourceKind;
+  provenance?: ProcessStepProvenance;
   confirmedByUser: boolean;
 }
 
@@ -113,17 +144,39 @@ export interface ProcessEdge {
   processId: string;
   sourceStepId: string;
   targetStepId: string;
-  type: "sequence" | "conditional" | "exception" | "retry" | "escalation";
+  type: ProcessEdgeType;
   label?: string;
   condition?: string;
   order?: number;
 }
 
+export type ProcessValidationCode =
+  | "PROCESS_EMPTY"
+  | "STEP_NAME_MISSING"
+  | "EDGE_SOURCE_MISSING"
+  | "EDGE_TARGET_MISSING"
+  | "EDGE_DUPLICATE"
+  | "EDGE_SELF_LOOP"
+  | "START_MISSING"
+  | "START_MULTIPLE"
+  | "END_MISSING"
+  | "ORPHAN_STEP"
+  | "UNREACHABLE_STEP"
+  | "DECISION_WITHOUT_BRANCH"
+  | "CONDITIONAL_EDGE_WITHOUT_CONDITION"
+  | "EXCEPTION_WITHOUT_RECOVERY"
+  | "ACTOR_REFERENCE_MISSING"
+  | "SYSTEM_REFERENCE_MISSING";
+
 export interface ValidationFinding {
   id: string;
-  code: string;
+  code: ProcessValidationCode | string;
+  severity?: "error" | "warning";
   message: string;
   entityId?: string;
+  stepIds?: string[];
+  edgeIds?: string[];
+  suggestedRemediation?: string;
 }
 
 export interface ProcessValidationResult {
@@ -131,6 +184,7 @@ export interface ProcessValidationResult {
   errors: ValidationFinding[];
   warnings: ValidationFinding[];
   validatedAt?: string;
+  processUpdatedAt?: string;
 }
 
 export interface ProcessDefinition {
@@ -144,11 +198,14 @@ export interface ProcessDefinition {
   state: "current" | "future";
   status: "draft" | "normalized" | "validated" | "reviewed" | "superseded";
   rawInput?: string;
+  rawInputs?: RawProcessInput[];
+  candidateReview?: ParsedCandidateReviewState;
   actors: ProcessActor[];
   systems: ProcessSystem[];
   steps: ProcessStep[];
   edges: ProcessEdge[];
   validation: ProcessValidationResult;
+  source?: SourceKind;
   createdAt: string;
   updatedAt: string;
 }
