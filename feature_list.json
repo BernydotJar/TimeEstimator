@@ -1,71 +1,15 @@
 {
   "repository": "TimeEstimator",
   "tagline": "Cinematic RPA effort estimation command center.",
-  "allowed_statuses": [
-    "pending",
-    "spec_ready",
-    "approved",
-    "in_progress",
-    "review",
-    "done",
-    "blocked"
-  ],
+  "allowed_statuses": ["pending", "spec_ready", "approved", "in_progress", "review", "done", "blocked"],
   "features": [
-    {
-      "id": "001-connect-harness-sdlc",
-      "title": "Connect harness-sdlc operating model",
-      "mode": "MVP",
-      "status": "done",
-      "summary": "Add repo instructions, feature registry, specs, progress files, and command prompts so TimeEstimator can be improved through controlled agentic SDLC workflows. No app code changes are included."
-    },
-    {
-      "id": "002-cinematic-frontend-command-center",
-      "title": "Cinematic frontend command center",
-      "mode": "SHIP",
-      "status": "blocked",
-      "summary": "Rebuild the main UX into a cinematic RPA estimation command center with executive totals, guided activity capture, risk/assumption panels, export-ready summaries, accessibility, and responsive behavior."
-    },
-    {
-      "id": "003-cinematic-n8n-integration",
-      "title": "Cinematic n8n integration",
-      "mode": "SHIP",
-      "status": "blocked",
-      "summary": "The implementation was merged through PR #4. Closure remains blocked by RPT-001 Print/PDF pagination, RPT-002 unbounded PNG export, and remaining browser QA. The merged code remains in main and is not reverted."
-    },
-    {
-      "id": "004-estimation-engine-hardening",
-      "title": "Estimation engine hardening",
-      "mode": "SHIP",
-      "status": "pending",
-      "summary": "Separate calculation logic from page UI, formalize formulas, add deterministic tests, handle invalid inputs, and make the effort matrix auditable."
-    },
-    {
-      "id": "005-report-export-pack",
-      "title": "Report and export pack",
-      "mode": "SHIP",
-      "status": "pending",
-      "summary": "Create stakeholder-ready exports including PNG, JSON metadata, CSV/Excel-ready activity data, and a clean executive summary surface."
-    },
-    {
-      "id": "006-github-pages-deploy-hardening",
-      "title": "GitHub Pages deploy hardening",
-      "mode": "SHIP",
-      "status": "pending",
-      "summary": "Fix static export configuration, AI-flow stubbing strategy, build gates, and workflow verification for reliable Pages deployment."
-    },
-    {
-      "id": "007-ai-assisted-estimation",
-      "title": "AI-assisted estimation workflow",
-      "mode": "MVP",
-      "status": "pending",
-      "summary": "Define safe AI/n8n/Genkit assistance for parsing process steps, suggesting estimates, summarizing assumptions, and preserving deterministic user control."
-    },
-    {
-      "id": "008-project-assessment-estimation-documentation",
-      "title": "Project Discovery & Estimation Studio",
-      "mode": "SHIP",
-      "status": "blocked",
-      "summary": "Human-approved on 2026-07-14. Implementation started on feature/008-project-discovery-estimation-studio, then stopped before app-code changes because this execution runtime has no repository checkout and cannot run required compile, test, build, browser, PNG, or Print/PDF verification."
-    }
+    {"id":"001-connect-harness-sdlc","title":"Connect harness-sdlc operating model","mode":"MVP","status":"done","summary":"Add repo instructions, feature registry, specs, progress files, and command prompts so TimeEstimator can be improved through controlled agentic SDLC workflows. No app code changes are included."},
+    {"id":"002-cinematic-frontend-command-center","title":"Cinematic frontend command center","mode":"SHIP","status":"blocked","summary":"Rebuild the main UX into a cinematic RPA estimation command center with executive totals, guided activity capture, risk/assumption panels, export-ready summaries, accessibility, and responsive behavior."},
+    {"id":"003-cinematic-n8n-integration","title":"Cinematic n8n integration","mode":"SHIP","status":"blocked","summary":"The implementation was merged through PR #4. Closure remains blocked by RPT-001 Print/PDF pagination, RPT-002 unbounded PNG export, and remaining browser QA. The merged code remains in main and is not reverted."},
+    {"id":"004-estimation-engine-hardening","title":"Estimation engine hardening","mode":"SHIP","status":"pending","summary":"Separate calculation logic from page UI, formalize formulas, add deterministic tests, handle invalid inputs, and make the effort matrix auditable."},
+    {"id":"005-report-export-pack","title":"Report and export pack","mode":"SHIP","status":"pending","summary":"Create stakeholder-ready exports including PNG, JSON metadata, CSV/Excel-ready activity data, and a clean executive summary surface."},
+    {"id":"006-github-pages-deploy-hardening","title":"GitHub Pages deploy hardening","mode":"SHIP","status":"pending","summary":"Fix static export configuration, AI-flow stubbing strategy, build gates, and workflow verification for reliable Pages deployment."},
+    {"id":"007-ai-assisted-estimation","title":"AI-assisted estimation workflow","mode":"MVP","status":"pending","summary":"Define safe AI/n8n/Genkit assistance for parsing process steps, suggesting estimates, summarizing assumptions, and preserving deterministic user control."},
+    {"id":"008-project-assessment-estimation-documentation","title":"Project Discovery & Estimation Studio","mode":"SHIP","status":"in_progress","summary":"Human-approved on 2026-07-14. Phase 1 domain model and lazy idempotent migration are implemented on feature/008-project-discovery-estimation-studio; automated GitHub Actions verification is pending before Phase 2."}
   ]
 }
