@@ -4,49 +4,40 @@
 
 - Connected TimeEstimator to harness-sdlc operating model on branch `feature/harness-cinematic-frontend`.
 - Added `AGENTS.md`, `RTK.md`, `CLAUDE.md`, `feature_list.json`, progress files, and specs.
-- Captured initial repo findings before app-code implementation.
-- Prepared `002-cinematic-frontend-command-center` as the next SHIP-mode feature for approval.
-- User approved `002-cinematic-frontend-command-center`.
-- Implemented the cinematic command-center frontend refactor.
-- Added reusable UI sections for header, metrics, guided intake, ledger, risk/assumptions, overheads, report/export, and cinematic background.
-- Preserved existing estimation formulas and moved feature 002 to `review` for human/code validation.
-
-Feature 002 is not marked done. It requires review and verification evidence before closure.
+- Implemented the cinematic command-center frontend while preserving estimation formulas.
+- Feature 002 remained subject to review and verification.
 
 ## 2026-07-11
 
-- User approved a consolidated SHIP feature combining PR #2 and PR #3.
-- Reserved `003-cinematic-n8n-integration` and renumbered pending registry items to avoid a duplicate ID.
-- Moved feature 002 to `blocked` because its production validation now depends on the consolidated integration.
-- Started feature 003 on `feature/cinematic-n8n-integration` with the cinematic UI as the experience baseline and PR #3 as the runtime/security/deployment baseline.
-- Merged PR #3 into the consolidated branch with five conflicts resolved per-file.
-- Preserved the cinematic visual system and rebuilt the root project dashboard as a cinematic command deck.
-- Integrated browser-local projects, n8n fallbacks, AI configuration, step import, overhead defaults, reports, static Pages export, linting, tests, and audit gates.
-- Added a consolidated project-workspace interaction test; 8 suites and 17 tests pass.
-- Moved feature 003 to `review`; browser visual QA remained pending because no in-app browser instance was available.
-- Published consolidated Draft PR #4 from `feature/cinematic-n8n-integration` to `main`.
+- Consolidated cinematic UI, n8n boundaries, browser-local projects, deterministic fallbacks, reports, static export, linting, tests, and audit gates under Feature 003.
+- Published and later merged PR #4.
+- Feature 003 remains `blocked` by RPT-001 Print/PDF, RPT-002 unbounded PNG, and remaining browser QA; merged code remains intact.
 
 ## 2026-07-14 — Feature 008 specification
 
-- Confirmed through real browser use that direct `/project?id=<id>` navigation works after hydration.
-- Recorded two reproducible Feature 003 export defects: Print/PDF is not usable and Save PNG produces one excessively tall image.
-- Kept Feature 003 in `review` while the defects remained unresolved.
-- Determined that IDs 004 through 007 were already reserved and allocated Feature 008.
-- Authored the complete SHIP specification set for Project Discovery & Estimation Studio.
-- Defined a structured assessment, process graph, traceable activity proposals, explainable scenarios, generated documentation, Mermaid derivation, bounded PNG summary, and dedicated multipage Print/PDF architecture.
-- Registered Feature 008 as `spec_ready`.
-- Merged PR #4, PR #5, and recovery PR #6; Feature 008 specifications reached `main`.
+- Confirmed direct `/project?id=<id>` hydration behavior.
+- Authored the SHIP specification for Project Discovery & Estimation Studio.
+- Defined structured assessment, process graph, traceability, scenarios, documentation, Mermaid projection, bounded PNG, and a dedicated Print/PDF surface.
+- Registered Feature 008 and received explicit approval for the recommended MVP decisions.
 
-## 2026-07-14 — Feature 008 implementation loop
+## 2026-07-14 — Feature 008 Phase 1
 
-- User explicitly approved Feature 008 and its recommended MVP decisions.
-- Created `feature/008-project-discovery-estimation-studio` from `main` head `85ef9e520e2d38f15e19a9bb115312f628404a20`.
-- Reconciled lifecycle state by moving Feature 003 from `review` to `blocked`; its merged implementation remains intact and its unresolved export/browser gates remain recorded.
-- Transitioned Feature 008 through `spec_ready -> approved -> in_progress`.
-- Completed repository, lifecycle, specification, persistence, estimation, report, parser, test, workflow, and direct-route preflight through the GitHub connector.
-- Confirmed that no repository checkout is mounted in the execution runtime.
-- Confirmed that outbound DNS cannot resolve `github.com`, preventing clone/fetch.
-- Confirmed that GitHub CLI is unavailable.
-- Determined that the connector can preserve remote lifecycle/documentation state but cannot provide the local compile, test, static-build, browser, PNG, or PDF verification required by SHIP mode.
-- Stopped before app-code implementation rather than creating unverified product changes.
-- Feature 008 transitions to `blocked` until a verifiable checkout/build/browser environment is available.
+- Transitioned Feature 008 to `in_progress` and reconciled Feature 003 to `blocked`.
+- Added the optional versioned discovery domain, process/estimation/documentation types, and lazy idempotent migration.
+- Preserved `te_projects`, project IDs, activities, overhead percentages, direct-route behavior, and all existing formulas.
+- Published PR #8 and validated dependency installation, typecheck, lint, tests, production audit, and static build through GitHub Actions.
+- PR #8 merged into `main` at `c343ac324989d140f711ef7ea424aefe81fbb419`.
+
+## 2026-07-14 — Feature 008 Phase 2
+
+- Created `feature/008-assessment-ui` from the validated Phase 1 merge commit.
+- Added a fixed catalog version with seven ordered sections and 28 stable questions.
+- Added pure assessment services for explicit answer states, notes, evidence, completeness, section status, high-impact unknowns, and deterministic review readiness.
+- Added progressive assessment persistence within each existing `Project.discovery` record and retained lazy legacy compatibility.
+- Added a Project Assessment entry, desktop section index, phone Previous/Next navigation, all MVP field types, notes, evidence references, progress metrics, and an honest review gate.
+- Added domain, persistence, and component tests.
+- Preserved activities, overheads, formulas, reports, and `/project?id=<id>` integration.
+- Opened Draft PR #9: `feat: add structured project assessment workflow`.
+- GitHub Actions run `29389971404` is the automated verification gate for installation, typecheck, lint, tests, production audit, and static build.
+- Real browser QA at 320px, 390px, 768px, and desktop remains required before visual, responsive, or accessibility PASS can be claimed.
+- Feature 008 remains `in_progress`; Phase 2 stops at human review and does not mark the full feature done.
