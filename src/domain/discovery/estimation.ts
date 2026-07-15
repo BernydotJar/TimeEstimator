@@ -51,6 +51,38 @@ export interface GeneratedActivityProposal {
   source: SourceKind;
   sourceRefs: TraceabilityReference[];
   appliedActivityId?: string;
+  deliveryPhase?: string;
+  category?: string;
+  ruleIds?: string[];
+  observedInputs?: string[];
+  unknowns?: string[];
+  exclusions?: string[];
+  warnings?: string[];
+  included?: boolean;
+  selected?: boolean;
+  reviewed?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface ProposalActivityMapping {
+  id: string;
+  proposalId: string;
+  activityId: string;
+  appliedAt: string;
+  sourceRefs: TraceabilityReference[];
+}
+
+export interface ProposalApplyReceipt {
+  id: string;
+  projectId: string;
+  draftId: string;
+  proposalSetVersion: number;
+  inputSnapshotHash: string;
+  proposalIds: string[];
+  activityIds: string[];
+  confirmed: boolean;
+  appliedAt: string;
 }
 
 export interface ManualAdjustment {
@@ -94,6 +126,11 @@ export interface EstimationDraft {
   scenarios: EstimateScenario[];
   adjustments: ManualAdjustment[];
   confidence: ConfidenceSnapshot;
+  ruleCatalogVersion?: string;
+  mappings?: ProposalActivityMapping[];
+  applyReceipts?: ProposalApplyReceipt[];
+  warnings?: string[];
+  source?: SourceKind;
   createdAt: string;
   updatedAt: string;
 }
