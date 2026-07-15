@@ -18,6 +18,7 @@ import { OverheadConfigDialog } from "@/app/components/OverheadConfigDialog";
 import { ReportDialog } from "@/app/components/ReportDialog";
 import { AssessmentEntry } from "@/app/components/assessment/AssessmentEntry";
 import { ProcessEntry } from "@/app/components/process/ProcessEntry";
+import { ProposalEntry } from "@/app/components/proposals/ProposalEntry";
 import CinematicBackground from "@/app/components/CinematicBackground";
 import RiskAssumptionPanel from "@/app/components/RiskAssumptionPanel";
 
@@ -88,6 +89,7 @@ export default function ProjectPageClient() {
 
         <AssessmentEntry projectId={id} />
         <ProcessEntry projectId={id} />
+        <ProposalEntry projectId={id} />
         <EstimateOverview metrics={metrics} overheadPercentages={project.overheadPercentages} />
         <div className="grid gap-6 xl:grid-cols-[minmax(0,1.45fr)_minmax(320px,0.65fr)]"><ActivityForm onAdd={handleAddActivity} /><RiskAssumptionPanel activities={project.activities} /></div>
         <ActivityTable activities={project.activities} onDelete={handleRemoveActivity} onClone={handleCloneActivity} />
