@@ -8,13 +8,13 @@ Status: `in_progress`
 
 Mode: `SHIP`
 
-Implementation branch: `feature/008-estimation-proposals`
+Implementation branch: `feature/008-documentation-flow`
 
-Base: `main` after PR #10 merge commit `44ba4b12fda9fef8913d13115f9d6750cc57e40b`
+Base: `main` after Phase 4A merge commit `cf18f21f7c531091a7d014132ef34b0f1fd3ab2d`
 
-Tracking issue: `#11 Feature 008 Phase 4A — Traceable activity proposals`
+Tracking issue: `#13 Feature 008 Phases 5–6 — Documentation and flow projections`
 
-Draft PR: `#12 feat: add traceable activity proposal workflow`
+Draft PR: `#14 feat: add structured documentation and flow projections`
 
 ## Lifecycle
 
@@ -22,45 +22,47 @@ Draft PR: `#12 feat: add traceable activity proposal workflow`
 - Feature 008: `in_progress`.
 - Phase 1: `PASS`.
 - Phase 2: `PASS`.
-- Phase 3: `PASS`; PR #10 is merged and closed.
-- Phase 4A: `REVIEW`; implementation is published in Draft PR #12 and automated gates pass.
+- Phase 3: `PASS`.
+- Phase 4A: `PASS`; PR #12 merged into `main` at `cf18f21f7c531091a7d014132ef34b0f1fd3ab2d`.
+- Phase 4B: not implemented in this branch.
+- Phases 5–6: `REVIEW` in Draft PR #14; automated gates pass.
 
-## Phase 4A objective
+## Completed scope for review
 
-Completed for review:
-
-- `008-0401` deterministic traceable activity proposals;
-- `008-0402` review-before-apply workspace.
-
-The cycle preserves current formulas and overhead semantics. Phase 4B scenario calibration and confidence policy remain outside this branch.
+- `008-0501` process overview and inventories.
+- `008-0502` assumptions/risks, delivery plan, and estimation summary.
+- `008-0503` manual-safe regeneration with reconciliation history.
+- `008-0601` deterministic Mermaid projection from the structured graph.
+- `008-0602` accessible textual flow alternative.
+- `008-0603` BPMN-compatible export boundary without a full exporter.
 
 ## Implemented increments
 
-- Created issue #11, branch `feature/008-estimation-proposals`, and Draft PR #12.
-- Added execution prompt `prompts/goal-008-phase-4a-estimation-proposals.md`.
-- Extended the existing `EstimationDraft` boundary with optional rule catalog, mappings, receipts, warnings, provenance, review fields, and unknown/exclusion metadata.
-- Added a versioned local deterministic proposal rule catalog covering all current process step types.
-- Added stable proposal IDs and input snapshot hashing.
-- Added safe grouping that does not cross decision, exception, approval, integration, or AI boundaries.
-- Added proposal generation with zero effort by default so missing effort is not invented.
-- Added preview using existing project overhead percentages without mutating current activities.
-- Added explicit-confirmation apply, selected-only mutation, stable proposal-to-activity mappings, apply receipt, and duplicate-apply guard.
-- Added browser-local proposal persistence and audit entries.
-- Added Project Studio proposal entry and review workspace.
-- Added domain, persistence, and component tests for deterministic generation, traceability, review controls, preview, apply, receipts, duplicate protection, and legacy compatibility.
+- Extended the documentation domain additively with generator metadata, warnings, unknowns, assumptions, manual override metadata, and reconciliation history.
+- Added deterministic generation for eight structured artifact drafts, input snapshot hashing, generator versioning, and Markdown projection.
+- Added explicit regeneration decisions that preserve locked/manual sections by default, expose conflicts, and require explicit replacement to discard manual content.
+- Added deterministic Mermaid `flowchart TD` projection with safe node IDs, escaped labels, branch labels, source references, and missing-endpoint warnings.
+- Reused the existing textual flow serializer as the accessible fallback.
+- Added a BPMN-compatible contract boundary for events, tasks, gateways, sequence flows, lanes, extensions, source references, and warnings; no exporter or dependency was added.
+- Added browser-local artifact persistence and audit entries within the existing discovery envelope.
+- Added a Documentation Studio entry and review workspace with artifact navigation, structured preview, source inspection, manual notes, regeneration controls, Markdown copy, Mermaid source copy, textual flow copy, warnings, unknowns, and reconciliation history.
+- Integrated the workspace into `/project?id=<id>` without changing formulas or report calculations.
+- Added domain, persistence, and component tests.
+- Added execution prompt `prompts/goal-008-phases-5-6-documentation-flow.md`.
 
 ## Protected invariants
 
-- `DEFAULT_OVERHEAD` is unchanged.
-- Existing estimation equations are unchanged.
-- Proposal generation never mutates activities.
-- Unknown actor, system, and effort values remain explicit.
-- Existing assessment, process, report, direct-route, static-export, and local-storage behavior remains protected by regression validation.
-- No dependency, backend, auth, database, workflow, or external transmission change was introduced.
+- Structured assessment, process, proposal, activity, and estimation models remain source of truth.
+- Mermaid, Markdown, textual flow, and BPMN boundary are derived projections only.
+- Missing values remain unknown and scenario ranges are not asserted when unavailable.
+- Generated claims are not promoted to observed evidence.
+- Manual sections are not removed without an explicit replacement decision.
+- Existing formulas, `DEFAULT_OVERHEAD`, activities, reports, routes, dependencies, workflows, static export, and `te_projects` compatibility remain unchanged.
+- No backend, database, authentication, external transmission, BPMN library, or full BPMN exporter was added.
 
 ## Automated verification
 
-GitHub Actions run `29394527214` completed successfully against implementation HEAD `2096ac9d8177a2a9256bc8de694a55a16c3c7819` before this documentation reconciliation:
+GitHub Actions run `29396226248` passed against implementation and tracking HEAD `cb639ec5cb8ddc487b9dd94a4f1bda50b44b34ab`:
 
 - checkout and Node setup — PASS;
 - dependency installation — PASS;
@@ -70,18 +72,15 @@ GitHub Actions run `29394527214` completed successfully against implementation H
 - production dependency audit — PASS;
 - static build — PASS.
 
-Remote diff and file-integrity inspection found no dependency, workflow, formula, secret, PII, or personal-path changes in scope.
-
-## Runtime clarification
-
-This execution runtime does not mount the user's macOS checkout at `/Users/eduardosacahui/Github-Repos/TimeEstimator`. A direct `git ls-remote` attempt from this specific container also returned a DNS resolution error for `github.com`. This is an environment-specific limitation, not a general limitation of ChatGPT, Codex, GitHub access, or other execution environments. Repository implementation and verification continued through the connected GitHub app and GitHub Actions.
+A final Actions recheck is required for this review-status documentation commit.
 
 ## Remaining review debt
 
-- Direct browser QA at 320px, 390px, 768px, and desktop.
-- Keyboard navigation, focus visibility, confirmation behavior, screen-reader labeling, and responsive overflow confirmation in a real browser.
-- Final GitHub Actions recheck after this documentation reconciliation commit.
+- `git diff --check` in a synchronized checkout.
+- Real-browser QA at 320px, 390px, 768px, and desktop.
+- Keyboard navigation, focus visibility, copy controls, screen-reader structure, and responsive overflow confirmation.
+- Visual confirmation that long Mermaid/text/table content remains usable on mobile.
 
 ## Next gate
 
-Confirm the final reconciliation HEAD remains green, complete or explicitly accept browser QA debt, review Draft PR #12, and stop before merge. Phase 4B must not begin until Phase 4A is merged into `main`.
+Confirm the final documentation-only HEAD remains green, complete or explicitly accept browser QA debt, review Draft PR #14, and stop before merge.

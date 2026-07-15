@@ -4,6 +4,8 @@ import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
 import { Activity, DEFAULT_OVERHEAD, OverheadKey, Project } from "@/app/types";
 import type {
+  DocumentationArtifact,
+  DocumentationReconciliation,
   GeneratedActivityProposal,
   ParsedCandidateReviewState,
   ProcessDefinition,
@@ -39,6 +41,11 @@ import {
   previewProjectProposalImpact,
   updateProjectProposal,
 } from "@/persistence/proposal-operations";
+import {
+  generateProjectDocumentation,
+  regenerateProjectDocumentationArtifact,
+  replaceProjectDocumentationArtifact,
+} from "@/persistence/documentation-operations";
 
 export function useProjects() {
   const [projects, setProjects, hydrated] = useLocalStorage<Project[]>("te_projects", []);
@@ -140,6 +147,10 @@ export function useProjects() {
     return result.warnings;
   }, [projects, setProjects]);
 
+  const generateDocumentation = useCallback((projectId: string) => mutate(projectId, (project) => generateProjectDocumentation(project, now())), [mutate]);
+  const saveDocumentationArtifact = useCallback((projectId: string, artifact: DocumentationArtifact) => mutate(projectId, (project) => replaceProjectDocumentationArtifact(project, artifact, now())), [mutate]);
+  const regenerateDocumentation = useCallback((projectId: string, artifactId: string, decision: DocumentationReconciliation["decision"] = "preserve_manual") => mutate(projectId, (project) => regenerateProjectDocumentationArtifact(project, artifactId, decision, now())), [mutate]);
+
   return {
     projects,
     hydrated,
@@ -175,5 +186,8 @@ export function useProjects() {
     updateProposal,
     getProposalPreview,
     applyProposals,
+    generateDocumentation,
+    saveDocumentationArtifact,
+    regenerateDocumentation,
   };
 }

@@ -8,9 +8,11 @@ export * from "./process-parser";
 export * from "./process-service";
 export * from "./process-validation";
 export * from "./process-text-flow";
+export * from "./flow-projection";
 export * from "./estimation";
 export * from "./proposal-service";
 export * from "./documentation";
+export * from "./documentation-service";
 
 import type { ProjectAssessment } from "./assessment";
 import type { DocumentationArtifact } from "./documentation";
