@@ -22,6 +22,14 @@ export interface DocumentationBlock {
     | "callout"
     | "page_break_hint";
   content: unknown;
+  origin?: "generated" | "manual";
+  sourceRefs?: TraceabilityReference[];
+  generatedAt?: string;
+  updatedAt?: string;
+  warnings?: string[];
+  unknowns?: string[];
+  assumptions?: string[];
+  manualOverride?: boolean;
 }
 
 export interface DocumentationSection {
@@ -32,6 +40,25 @@ export interface DocumentationSection {
   blocks: DocumentationBlock[];
   sourceRefs: TraceabilityReference[];
   lockedFromRegeneration: boolean;
+  generatedAt?: string;
+  updatedAt?: string;
+  generatorVersion?: string;
+  sourceSnapshotHash?: string;
+  warnings?: string[];
+  unknowns?: string[];
+  assumptions?: string[];
+}
+
+export interface DocumentationReconciliation {
+  id: string;
+  artifactId: string;
+  previousVersion: number;
+  nextVersion: number;
+  decision: "preserve_manual" | "accept_generated" | "explicit_replace" | "compare";
+  preservedSectionIds: string[];
+  replacedSectionIds: string[];
+  conflicts: string[];
+  decidedAt: string;
 }
 
 export interface DocumentationArtifact {
@@ -45,6 +72,11 @@ export interface DocumentationArtifact {
   sourceSnapshotHash: string;
   sections: DocumentationSection[];
   generatedBy: SourceKind;
+  generatorVersion?: string;
+  warnings?: string[];
+  unknowns?: string[];
+  assumptions?: string[];
+  reconciliationHistory?: DocumentationReconciliation[];
   createdAt: string;
   updatedAt: string;
 }
