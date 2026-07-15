@@ -4,106 +4,59 @@
 
 `008-project-assessment-estimation-documentation`
 
-Status: `blocked`
+Status: `in_progress`
 
 Mode: `SHIP`
 
-Implementation branch:
+Implementation branch: `feature/008-assessment-ui`
 
-`feature/008-project-discovery-estimation-studio`
+Base: `main` at `c343ac324989d140f711ef7ea424aefe81fbb419`
 
-Base branch and starting head:
+Draft PR: `#9 feat: add structured project assessment workflow`
 
-`main` at `85ef9e520e2d38f15e19a9bb115312f628404a20`
+## Lifecycle
 
-## Human approval
+- Feature 003: `blocked`; merged implementation remains in `main`, with RPT-001, RPT-002, and browser QA unresolved.
+- Feature 008: `in_progress`; explicitly approved on 2026-07-14.
 
-The user explicitly approved Feature 008 on 2026-07-14 and authorized the transition:
+## Phase evidence
 
-`spec_ready -> approved -> in_progress`
+### Phase 1 — PASS
 
-The implementation loop started and completed its repository, lifecycle, specification, architecture, persistence, parser, report, test, and workflow preflight.
+PR #8 merged into `main`. GitHub Actions passed dependency installation, typecheck, lint, tests, production audit, and static build. The optional discovery schema and lazy idempotent project migration are present.
 
-## Lifecycle reconciliation
+### Phase 2 — implementation complete, automated gate pending
 
-Feature 003 moved from `review` to `blocked` because its implementation was already merged through PR #4 while RPT-001, RPT-002, and remaining browser QA are unresolved.
+Implemented:
 
-`blocked` does not revert or remove the merged Feature 003 implementation.
-
-Feature 008 then transitioned through `spec_ready -> approved -> in_progress` before encountering the verification blocker described below. It is now `blocked`, leaving no feature active across `approved`, `in_progress`, or `review`.
-
-## Approved MVP decisions
-
-- Hybrid assessment UX.
-- Fixed versioned question catalog with notes and evidence.
-- Deterministic baseline before optional AI suggestions.
-- Structured process graph as source of truth.
-- Mermaid as a derived MVP renderer.
-- Current and future state as separately versioned graphs with trace links.
-- Review-before-apply activity proposals.
-- Additive optional Feature 008 fields with lazy legacy migration.
-- Bounded executive-summary PNG.
-- Dedicated browser-local Print/PDF route.
-- Preservation of manual documentation overrides.
-- No change to existing estimation formulas.
-
-## Preflight evidence
-
-Verified through the GitHub connector:
-
-- repository: `BernydotJar/TimeEstimator`;
-- default branch: `main`;
-- starting main head: `85ef9e520e2d38f15e19a9bb115312f628404a20`;
-- no open pull requests at loop start;
-- all required Feature 008 specification documents exist on `main`;
-- existing project persistence uses `te_projects`;
-- direct `/project?id=<id>` hydration behavior has regression coverage;
-- current formulas remain inline and unchanged;
-- the current report implementation contains the known architectural causes of RPT-001 and RPT-002;
-- the existing workflow is configured to run install, typecheck, lint, tests, production audit, and static build for `feature/**` branches.
-
-## Blocking condition
-
-The current execution runtime has no mounted repository checkout.
-
-Observed evidence:
-
-- filesystem search found no `TimeEstimator` checkout;
-- `git` is installed;
-- `git ls-remote` failed because the runtime cannot resolve `github.com`;
-- GitHub CLI is not installed;
-- no local application server or browser target can be produced from the connector alone.
-
-The GitHub connector supports controlled remote branch and documentation writes, but it does not provide a complete local compile, test, static-build, browser, PNG, or PDF verification environment.
-
-`CLAUDE.md` requires execution to stop when verification cannot run. SHIP mode also prohibits reporting unobserved browser or artifact behavior as PASS. Therefore the loop stopped before app-code implementation rather than publishing uncompiled or visually unverified product changes.
-
-## Work completed in this loop
-
-- Created the required implementation branch from `main`.
-- Recorded explicit human approval.
-- Reconciled Feature 003 and Feature 008 lifecycle state.
-- Read the complete required specification package.
-- Inspected the current project, persistence, estimation, parser, n8n, report, print, tests, package, and workflow boundaries.
-- Preserved the existing formulas and avoided app-code, dependency, workflow, deployment, and destructive changes.
-- Recorded the exact environmental blocker and recovery condition.
-
-## Recovery condition
-
-Resume Feature 008 only in a runtime that can:
-
-1. access a synchronized repository checkout;
-2. create and edit files locally;
-3. install existing dependencies with `npm ci`;
-4. run typecheck, lint, tests, audit, and static build;
-5. launch the application;
-6. perform real browser QA;
-7. generate and inspect PNG and Print/PDF artifacts.
+- fixed catalog version 1 with seven ordered sections and 28 stable questions;
+- pure services for answer states, notes, evidence, completeness, section status, high-impact unknowns, and review readiness;
+- explicit `unanswered`, `answered`, `unknown`, and `not_applicable` semantics;
+- progressive persistence inside the existing `te_projects` project record;
+- lazy compatibility for legacy projects;
+- desktop section navigation and phone Previous/Next flow;
+- all MVP answer input types;
+- notes and evidence references without external fetch or file upload;
+- honest empty state and create/resume flow;
+- domain, persistence, and component tests.
 
 ## Protected invariants
 
-- Preserve `te_projects` readability and existing project IDs.
-- Preserve current activity and overhead formulas.
-- Do not add dependencies without approval.
-- Do not send project data externally without explicit endpoint configuration and user action.
-- Do not mark PNG, Print/PDF, responsive behavior, accessibility, migration, or browser QA as PASS without direct evidence.
+- Existing activity and overhead formulas are unchanged.
+- Existing activities, reports, and `/project?id=<id>` route remain present.
+- No dependencies, workflow files, backend, database, authentication, file upload, or AI auto-fill were added.
+- Unknown values are not replaced with generated facts.
+
+## Verification
+
+GitHub Actions is the automated execution environment for this branch. Required steps are install, typecheck, lint, tests, production audit, and static build.
+
+Browser verification at 320px, 390px, 768px, and desktop is still required. Accessibility and responsive behavior are not reported as PASS without direct browser evidence.
+
+## Next gate
+
+1. Inspect PR #9 GitHub Actions.
+2. Correct all automated failures.
+3. Keep Feature 008 `in_progress`.
+4. Stop at `REVIEW` when automated checks pass, with browser QA recorded as verification debt.
+5. After merge, proceed to Phase 3 — Structured Process Ingestion.
