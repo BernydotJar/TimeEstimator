@@ -54,7 +54,8 @@ describe("flow projections", () => {
     expect(first.source).toContain("End &quot;done&quot;");
     expect(first.source).toContain("|\"Yes\"|");
     expect(first.warnings[0]).toMatch(/missing target/i);
-    expect(first.textualFallback).toContain("approval -> End");
+    expect(first.textualFallback).toContain("Yes -> End");
+    expect(first.textualFallback).toContain("No -> [Missing target: missing]");
   });
 
   it("creates a BPMN-compatible boundary without mutating the graph", () => {
