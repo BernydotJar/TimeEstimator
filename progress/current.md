@@ -8,79 +8,79 @@ Status: `in_progress`
 
 Mode: `SHIP`
 
-Implementation branch: `feature/008-documentation-flow`
+Implementation branch: `feature/008-report-export-architecture`
 
-Base: `main` after Phase 4A merge commit `cf18f21f7c531091a7d014132ef34b0f1fd3ab2d`
+Base: `main` after Phases 5–6 merge commit `537b4aef9e00facedd45923ea6e7da1eae9d2cdb`
 
-Tracking issue: `#13 Feature 008 Phases 5–6 — Documentation and flow projections`
+Tracking issue: `#15 Feature 008 Phases 7–8 — Report architecture and bounded exports`
 
-Draft PR: `#14 feat: add structured documentation and flow projections`
+Draft PR: `#16 feat: add bounded report and print export architecture`
 
 ## Lifecycle
 
-- Feature 003: `blocked`; merged implementation remains in `main`, with RPT-001, RPT-002, and browser QA unresolved.
+- Feature 003: `blocked`; historical RPT-001/RPT-002 closure still requires real artifact inspection.
 - Feature 008: `in_progress`.
-- Phase 1: `PASS`.
-- Phase 2: `PASS`.
-- Phase 3: `PASS`.
-- Phase 4A: `PASS`; PR #12 merged into `main` at `cf18f21f7c531091a7d014132ef34b0f1fd3ab2d`.
+- Phases 1–3: `PASS`.
+- Phase 4A: `PASS`.
 - Phase 4B: not implemented in this branch.
-- Phases 5–6: `REVIEW` in Draft PR #14; automated gates pass.
+- Phases 5–6: `PASS`; PR #14 merged into `main` at `537b4aef9e00facedd45923ea6e7da1eae9d2cdb`.
+- Phases 7–8: `REVIEW` in Draft PR #16; automated gates pass.
 
 ## Completed scope for review
 
-- `008-0501` process overview and inventories.
-- `008-0502` assumptions/risks, delivery plan, and estimation summary.
-- `008-0503` manual-safe regeneration with reconciliation history.
-- `008-0601` deterministic Mermaid projection from the structured graph.
-- `008-0602` accessible textual flow alternative.
-- `008-0603` BPMN-compatible export boundary without a full exporter.
+- `008-0701` one normalized report model drives all report outputs.
+- `008-0702` dedicated static-compatible print route/root.
+- `008-0703` page-break, table, and print policies.
+- `008-0801` fixed executive-summary template.
+- `008-0802` PNG captures only the summary root.
+- `008-0803` loading, progress, failure, and deterministic filename handling.
 
 ## Implemented increments
 
-- Extended the documentation domain additively with generator metadata, warnings, unknowns, assumptions, manual override metadata, and reconciliation history.
-- Added deterministic generation for eight structured artifact drafts, input snapshot hashing, generator versioning, and Markdown projection.
-- Added explicit regeneration decisions that preserve locked/manual sections by default, expose conflicts, and require explicit replacement to discard manual content.
-- Added deterministic Mermaid `flowchart TD` projection with safe node IDs, escaped labels, branch labels, source references, and missing-endpoint warnings.
-- Reused the existing textual flow serializer as the accessible fallback.
-- Added a BPMN-compatible contract boundary for events, tasks, gateways, sequence flows, lanes, extensions, source references, and warnings; no exporter or dependency was added.
-- Added browser-local artifact persistence and audit entries within the existing discovery envelope.
-- Added a Documentation Studio entry and review workspace with artifact navigation, structured preview, source inspection, manual notes, regeneration controls, Markdown copy, Mermaid source copy, textual flow copy, warnings, unknowns, and reconciliation history.
-- Integrated the workspace into `/project?id=<id>` without changing formulas or report calculations.
-- Added domain, persistence, and component tests.
-- Added execution prompt `prompts/goal-008-phases-5-6-documentation-flow.md`.
+- Added a deterministic `ReportViewModel` that centralizes existing base, overhead, grand-total, core, supervised, distribution, activity, risk, assumption, integration, artifact, and traceability values.
+- Preserved unavailable scenarios and unapproved confidence as explicit pending states; no range or score is invented.
+- Added a bounded `ExecutiveSummaryCard` with a 960×1200 logical box, top-N content, and `+N more` indicators.
+- Added PNG export using only the executive-summary node, `html2canvas` at 1.5 scale, `canvas.toBlob()`, and a deterministic sanitized filename capped at 96 characters.
+- Added accessible PNG stages: preparing, capturing, saving, success, and actionable failure.
+- Added an isolated `/report?id=<project-id>` route that waits for browser-storage hydration and rejects missing projects or empty activity sets before printing.
+- Added explicit Print / Save PDF action; no print is triggered before readiness.
+- Added a controlled light print surface, toolbar hidden under print media, A4/Letter-compatible margins, page-break boundaries, repeated table headers, reduced print columns, and long-text wrapping.
+- Refactored `ReportDialog` so preview, PNG, and Print/PDF consume the same report model instead of capturing the modal report body.
+- Added domain and component tests for formulas, filenames, bounded content, semantic print output, hydration, invalid route states, and explicit print behavior.
+- Added execution prompt `prompts/goal-008-phases-7-8-report-export.md`.
 
 ## Protected invariants
 
-- Structured assessment, process, proposal, activity, and estimation models remain source of truth.
-- Mermaid, Markdown, textual flow, and BPMN boundary are derived projections only.
-- Missing values remain unknown and scenario ranges are not asserted when unavailable.
-- Generated claims are not promoted to observed evidence.
-- Manual sections are not removed without an explicit replacement decision.
-- Existing formulas, `DEFAULT_OVERHEAD`, activities, reports, routes, dependencies, workflows, static export, and `te_projects` compatibility remain unchanged.
-- No backend, database, authentication, external transmission, BPMN library, or full BPMN exporter was added.
+- Current formulas and `DEFAULT_OVERHEAD` are unchanged.
+- Components consume normalized values and do not independently recalculate business totals.
+- No scenario multipliers, confidence weights, or hidden values were introduced.
+- PNG excludes the full activity table, process list, shell, dialog controls, overlay, and navigation.
+- Print/PDF renders outside the dialog portal and app shell.
+- No dependency, workflow, backend, database, authentication, or external data-transfer change was introduced.
+- Browser-local `te_projects` remains the report data source.
 
 ## Automated verification
 
-GitHub Actions run `29396226248` passed against implementation and tracking HEAD `cb639ec5cb8ddc487b9dd94a4f1bda50b44b34ab`:
+GitHub Actions run `29397785995` passed against implementation and tracking HEAD `83d226b49be0a2393ecd220c31dda5ee64c8afb0`:
 
-- checkout and Node setup — PASS;
 - dependency installation — PASS;
 - typecheck — PASS;
 - lint — PASS;
 - tests — PASS;
 - production dependency audit — PASS;
-- static build — PASS.
+- static export build — PASS.
 
-A final Actions recheck is required for this review-status documentation commit.
+A final Actions recheck is required for this review-status documentation-only commit.
 
 ## Remaining review debt
 
 - `git diff --check` in a synchronized checkout.
-- Real-browser QA at 320px, 390px, 768px, and desktop.
-- Keyboard navigation, focus visibility, copy controls, screen-reader structure, and responsive overflow confirmation.
-- Visual confirmation that long Mermaid/text/table content remains usable on mobile.
+- Real-browser generation and inspection of representative 1440×1800-or-smaller PNG files.
+- Chromium Print Preview and opened saved PDF inspection for A4 and Letter.
+- Long-table pagination with 50 and 250 activities.
+- Firefox or Safari second-engine print check where available.
+- Mobile/keyboard/focus/live-region verification.
 
 ## Next gate
 
-Confirm the final documentation-only HEAD remains green, complete or explicitly accept browser QA debt, review Draft PR #14, and stop before merge.
+Confirm the final documentation-only HEAD remains green, complete or explicitly accept artifact/browser debt, review Draft PR #16, and stop before merge.

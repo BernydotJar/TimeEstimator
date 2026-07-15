@@ -83,7 +83,7 @@ export default function ProjectPageClient() {
           <div className="flex flex-shrink-0 flex-wrap items-center gap-2">
             <AiIntegrationDialog />
             <OverheadConfigDialog overheadPercentages={project.overheadPercentages} onSave={handleOverheadChange} projectName={project.name} />
-            <ReportDialog projectName={project.name} activities={project.activities} overheadPercentages={project.overheadPercentages} metrics={metrics} />
+            <ReportDialog project={project} />
             <Button variant="outline" size="icon" onClick={toggleTheme} aria-label="Toggle theme" className="cinematic-button-secondary">{theme === "light" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}</Button>
           </div>
         </header>
