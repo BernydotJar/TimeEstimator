@@ -1,5 +1,7 @@
 export * from "./types";
 export * from "./assessment";
+export * from "./assessment-catalog";
+export * from "./assessment-service";
 export * from "./process";
 export * from "./estimation";
 export * from "./documentation";
