@@ -29,8 +29,8 @@
       "id": "003-cinematic-n8n-integration",
       "title": "Cinematic n8n integration",
       "mode": "SHIP",
-      "status": "review",
-      "summary": "Integrate the production-ready n8n runtime, browser persistence, static Pages deployment, security controls, and verification suite into the cinematic command center while preserving its experience and estimation formulas. Human-approved on 2026-07-11."
+      "status": "blocked",
+      "summary": "The implementation was merged through PR #4. Closure remains blocked by RPT-001 Print/PDF pagination, RPT-002 unbounded PNG export, and remaining browser QA. The merged code remains in main and is not reverted."
     },
     {
       "id": "004-estimation-engine-hardening",
@@ -64,8 +64,8 @@
       "id": "008-project-assessment-estimation-documentation",
       "title": "Project Discovery & Estimation Studio",
       "mode": "SHIP",
-      "status": "spec_ready",
-      "summary": "Define a guided project assessment, structured process model, explainable multi-scenario effort estimation, traceable documentation generation, bounded executive-summary PNG, and dedicated multipage Print/PDF experience. Implementation requires explicit human approval."
+      "status": "blocked",
+      "summary": "Human-approved on 2026-07-14. Implementation started on feature/008-project-discovery-estimation-studio, then stopped before app-code changes because this execution runtime has no repository checkout and cannot run required compile, test, build, browser, PNG, or Print/PDF verification."
     }
   ]
 }

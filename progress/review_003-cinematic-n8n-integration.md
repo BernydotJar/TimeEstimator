@@ -2,50 +2,49 @@
 
 ## Status
 
-`review`
+`blocked`
 
-## Pull request
+## Delivery state
 
-PR #4: `feature/cinematic-n8n-integration` → `main`
+Feature 003 implementation was merged into `main` through PR #4. The former integration branch was later deleted. Moving the feature to `blocked` does not revert or remove any merged implementation.
 
-The PR remains Draft. No merge, deployment, superseded-PR closure, or branch
-deletion is included in this review cycle.
+## Why closure is blocked
 
-## Summary
+Two reproducible export defects remain:
 
-Feature 003 consolidates the cinematic Command Center from PR #2 with the
-static n8n runtime, browser persistence, security controls, test infrastructure,
-and GitHub Pages build workflow from PR #3.
+### RPT-001 — Print/PDF unusable
 
-The root route is a cinematic project command deck. Each project opens a
-cinematic `/project?id=...` workspace with executive metrics, guided activity
-entry, process-step import, n8n configuration, deterministic fallbacks,
-assumption/risk surfacing, overhead defaults, activity ledger, and reports.
+The report is printed from a Radix dialog with viewport-bound height, overflow, modal layout context, and responsive charts. The current behavior does not produce a usable, correctly paginated stakeholder report.
 
-## Hydration incident and correction
+Required resolution:
 
-The attempted hydration fix at commit `97dc283` truncated
-`src/app/project/ProjectPageClient.tsx` to an incomplete import and caused:
+- isolated printable surface;
+- no application or dialog chrome;
+- browser-local hydration;
+- A4 and Letter support;
+- semantic page breaks;
+- readable multipage tables and charts;
+- direct artifact inspection.
 
-```text
-TS1128: Declaration or statement expected
-```
+### RPT-002 — Save PNG excessively tall
 
-The corrected implementation restores the workspace and uses the explicit
-`hydrated` state from `useLocalStorage`:
+The current `html2canvas` target is the complete report container at scale 2. It creates one excessively tall image rather than a bounded executive summary.
 
-1. server render and first client render show the same loading surface;
-2. no `window` or `localStorage` read occurs during render;
-3. the persisted project is resolved only after hydration;
-4. unknown or missing IDs redirect only after hydration;
-5. corrupt stored JSON falls back safely and then redirects.
+Required resolution:
 
-Added test coverage verifies persisted project loading, activity recalculation,
-persistence, delayed invalid-ID redirect, and corrupt-storage fallback.
+- purpose-built executive-summary component;
+- bounded dimensions;
+- theme-independent export surface;
+- no detailed tables, shell, controls, or hidden overflow;
+- direct generated-file inspection.
 
-## Functional invariants
+## Verified behavior retained
 
-The formulas remain unchanged:
+- The Feature 003 runtime and cinematic workspace are merged in `main`.
+- Direct `/project?id=<id>` loading works after browser-local hydration.
+- Invalid IDs redirect only after hydration.
+- Corrupt local storage fails safely.
+- Existing formulas remain:
 
 ```text
 base = sum(activity effort)
@@ -55,103 +54,22 @@ each overhead = base × configured percentage
 grand total = base + all overhead components
 ```
 
-Genkit and Firebase remain absent from the static runtime. Missing or
-unreachable n8n endpoints use deterministic local behavior and do not erase
-browser-local project data.
-
-## Automated verification
-
-GitHub Actions pull-request run `29280890782` completed successfully on branch
-head `b0d791e`:
-
-```text
-dependency installation       PASS
-npm run typecheck             PASS
-npm run lint                  PASS
-npm test                      PASS
-npm audit --omit=dev          PASS
-GitHub Pages static build     PASS
-deploy                        SKIPPED — pull-request branch
-```
-
-## Code-level QA preflight
-
-Observed in code:
-
-- responsive dashboard and project grids use phone-first breakpoints;
-- project action controls remain visible on phone widths;
-- Radix dialogs provide focus trapping, Escape close, and focus restoration;
-- report dialog has a viewport-height limit and vertical scrolling;
-- focus rings are defined for dialog close and form controls;
-- `prefers-reduced-motion` disables meaningful animation and smooth scrolling;
-- PNG export uses `html2canvas` against the full report container;
-- Print/PDF invokes `window.print()` while the report is hosted inside a dialog.
-
-This inspection explains likely failure modes but is not a substitute for visual
-observation.
-
-## Manual browser evidence
-
-### Passed
-
-- [x] Open a valid `/project?id=<id>` URL directly after browser-storage hydration.
-
-### Reproducible defects
-
-#### RPT-001 — Print/PDF unusable
-
-Observed behavior: Print / PDF does not produce a usable, correctly paginated
-stakeholder report.
-
-Required behavior: use an isolated printable surface, exclude application and
-dialog chrome, support A4/Letter, apply semantic page breaks, and preserve
-readable tables and charts across multiple pages.
-
-#### RPT-002 — Save PNG excessively tall
-
-Observed behavior: Save PNG captures the complete report as one long vertical
-image. The result is not a bounded executive report and becomes difficult to
-read or share.
-
-Required behavior: export a purpose-built, bounded executive-summary surface.
-The full report belongs in multipage PDF, not one infinitely tall PNG.
-
-These observed defects supersede the earlier expectation that print-only CSS and
-capture-background settings were sufficient.
-
-## Remaining manual QA checklist
-
-Required before changing PR #4 from Draft to Ready for review:
-
-- [ ] Dashboard at desktop width.
-- [ ] Dashboard at tablet width.
-- [ ] Dashboard at phone width.
-- [ ] Project workspace at desktop width.
-- [ ] Project workspace at tablet width.
-- [ ] Project workspace at phone width.
-- [ ] Create project, open it, refresh, and confirm persistence.
-- [x] Open a valid `/project?id=...` URL directly.
-- [ ] Confirm an unknown ID redirects only after the loading state.
-- [ ] Theme toggle and contrast in both themes.
-- [ ] Create, rename, delete, AI integration, overhead, and report dialogs.
-- [ ] Keyboard Tab/Shift+Tab, visible focus, Escape close, and focus restoration.
-- [ ] Long dialog content scrolls without trapping inaccessible controls.
-- [ ] Deterministic AI fallback copy and process-step import.
-- [ ] Replace and verify Save PNG behavior against RPT-002.
-- [ ] Replace and verify Print/PDF behavior against RPT-001.
+- n8n remains optional and deterministic local fallbacks remain available.
 
 ## Relationship to Feature 008
 
-Feature `008-project-assessment-estimation-documentation` specifies the broader
-Project Discovery & Estimation Studio and includes the target export architecture.
-Feature 003 remains blocked from completion by the current defects. Creating
-Feature 008 specs does not mark Feature 003 done and does not authorize code
-changes.
+Feature 008 is explicitly approved to implement the broader Project Discovery & Estimation Studio and includes the corrective report architecture for RPT-001 and RPT-002.
+
+Feature 003 is moved from `review` to `blocked` so it is no longer an active lifecycle item while Feature 008 proceeds. Feature 003 may move to `done` only after the export defects and remaining browser checks are resolved and reviewed with evidence.
+
+## Remaining verification debt
+
+- desktop, tablet, and phone browser matrix;
+- keyboard focus, Escape, focus restoration, and dialog scrolling;
+- deterministic fallback/import observation;
+- bounded PNG generation and file inspection;
+- multipage Print/PDF preview and saved-file inspection.
 
 ## Decision
 
-`REVIEW`
-
-Keep Feature 003 in `review` and PR #4 in Draft until the remaining browser QA
-and both export defects pass. PR #2 and PR #3 remain open for traceability until
-PR #4 is approved.
+`BLOCKED`
