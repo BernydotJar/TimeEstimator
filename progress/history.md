@@ -31,16 +31,13 @@
 ## 2026-07-14 — Feature 008 Phase 2
 
 - Created `feature/008-assessment-ui` from the validated Phase 1 merge commit.
-- Added a fixed catalog version with seven ordered sections and 28 stable questions.
-- Added pure assessment services for explicit answer states, notes, evidence, completeness, section status, high-impact unknowns, and deterministic review readiness.
-- Added progressive assessment persistence within each existing `Project.discovery` record and retained lazy legacy compatibility.
-- Added a Project Assessment entry, desktop section index, phone Previous/Next navigation, all MVP field types, notes, evidence references, progress metrics, and an honest review gate.
+- Added a fixed catalog version with seven sections and 28 stable questions.
+- Added pure assessment services for answer states, evidence, completeness, high-impact unknowns, and review readiness.
+- Added progressive browser-local persistence and retained lazy legacy compatibility.
+- Added desktop and phone assessment navigation, all MVP field types, notes, evidence references, progress metrics, and an honest review gate.
 - Added domain, persistence, and component tests.
 - Preserved activities, overheads, formulas, reports, and `/project?id=<id>` integration.
-- Opened Draft PR #9: `feat: add structured project assessment workflow`.
-- GitHub Actions run `29389971404` was the automated verification gate for installation, typecheck, lint, tests, production audit, and static build.
-- Real browser QA at 320px, 390px, 768px, and desktop remained required before visual, responsive, or accessibility PASS could be claimed.
-- Feature 008 remained `in_progress`.
+- PR #9 merged into `main`.
 
 ## 2026-07-15 — Feature 008 Phase 3
 
@@ -52,13 +49,24 @@
 ## 2026-07-15 — Feature 008 Phase 4A
 
 - Created issue #11 and branch `feature/008-estimation-proposals` from the Phase 3 merge.
-- Opened Draft PR #12: `feat: add traceable activity proposal workflow`.
-- Added a versioned deterministic rule catalog and reproducible proposal generation from structured process and assessment inputs.
-- Added stable proposal IDs, input snapshot hash, source references, rationale, warnings, unknown preservation, and safe grouping boundaries.
-- Added browser-local proposal lifecycle persistence, edit/include/exclude/select review operations, preview without mutation, explicit-confirmation selected-only apply, mappings, receipts, audit entries, and duplicate-apply protection.
-- Integrated the proposal review workspace into Project Discovery & Estimation Studio.
+- Opened PR #12: `feat: add traceable activity proposal workflow`.
+- Added deterministic proposal generation, stable IDs and snapshot hashing, safe grouping, review-before-apply, preview without mutation, mappings, receipts, audit entries, and duplicate protection.
+- Added domain, persistence, and component tests while preserving formulas and overhead defaults.
+- GitHub Actions run `29394527214` passed installation, typecheck, lint, tests, production audit, and static build.
+- PR #12 merged into `main` at `cf18f21f7c531091a7d014132ef34b0f1fd3ab2d`.
+- Phase 4A transitioned to `PASS`; browser accessibility and responsive QA remain recorded debt.
+
+## 2026-07-15 — Feature 008 Phases 5–6
+
+- Created issue #13 and branch `feature/008-documentation-flow` from the Phase 4A merge.
+- Opened Draft PR #14: `feat: add structured documentation and flow projections`.
+- Extended documentation artifacts additively with generator metadata, warnings, unknowns, assumptions, manual override state, and reconciliation history.
+- Added deterministic generation for eight structured artifact drafts and Markdown projection.
+- Added regeneration that preserves locked/manual sections by default, records conflicts, and requires explicit replacement to discard them.
+- Added deterministic Mermaid `flowchart TD`, safe node identifiers, escaped labels, edge conditions, missing-endpoint warnings, and source references.
+- Reused the existing textual process serializer as an accessible fallback.
+- Added a BPMN-compatible boundary for events, tasks, gateways, flows, lanes, extensions, source references, and warnings without adding a library or full exporter.
+- Added browser-local persistence, audit entries, Project Studio integration, artifact navigation, structured previews, manual notes, copy controls, and source inspection.
 - Added domain, persistence, and component tests.
-- Preserved current formulas, `DEFAULT_OVERHEAD`, dependencies, workflows, and external-data boundaries.
-- GitHub Actions run `29394527214` passed dependency installation, typecheck, lint, tests, production audit, and static build on implementation HEAD `2096ac9d8177a2a9256bc8de694a55a16c3c7819`.
-- Phase 4A transitioned to `REVIEW`; browser accessibility and responsive QA remain explicit review debt.
-- Phase 4B remains blocked by the human merge gate for PR #12 and must not begin from an unmerged branch.
+- Preserved formulas, overhead defaults, existing activities, reports, routes, dependencies, workflows, static export, and `te_projects` compatibility.
+- Automated verification and real-browser QA remain the gates before transition to `REVIEW`.
