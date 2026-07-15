@@ -62,7 +62,7 @@ describe("report surfaces", () => {
     expect(screen.getByRole("heading", { name: "Large automation program" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Activity breakdown" })).toBeInTheDocument();
     expect(screen.getByText(/no range is asserted/i)).toBeInTheDocument();
-    expect(screen.getByRole("table", { name: "" })).toBeInTheDocument();
+    expect(screen.getAllByRole("table").length).toBeGreaterThanOrEqual(3);
     expect(screen.getByText("Build workflow")).toBeInTheDocument();
   });
 });
