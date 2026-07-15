@@ -80,7 +80,7 @@ describe("report view model", () => {
 
   it("builds bounded safe deterministic filenames", () => {
     expect(buildReportFilename("Finance / AP: Modernization", NOW, "v1", "png"))
-      .toBe("finance_ap_modernization_executive-estimate_20260715_vv1.png");
+      .toBe("finance_ap_modernization_executive-estimate_20260715_v1.png");
     expect(buildReportFilename("***", NOW, "1", "pdf")).toBe("project_estimate-report_20260715_v1.pdf");
     expect(buildReportFilename("x".repeat(200), NOW, "1", "png").length).toBeLessThanOrEqual(96);
   });
