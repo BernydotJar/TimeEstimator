@@ -4,72 +4,84 @@
 
 `008-project-assessment-estimation-documentation`
 
-Status: `review`
+Status: `in_progress`
 
 Mode: `SHIP`
 
-Implementation branch: `feature/008-structured-process-ingestion`
+Implementation branch: `feature/008-estimation-proposals`
 
-Base: `main` at `f7752848d675c93be2ffee8c4a27aacc1abefef7`
+Base: `main` after PR #10 merge commit `44ba4b12fda9fef8913d13115f9d6750cc57e40b`
 
-Draft PR: `#10 feat: add structured current-state process ingestion`
+Tracking issue: `#11 Feature 008 Phase 4A — Traceable activity proposals`
+
+Draft PR: `#12 feat: add traceable activity proposal workflow`
 
 ## Lifecycle
 
 - Feature 003: `blocked`; merged implementation remains in `main`, with RPT-001, RPT-002, and browser QA unresolved.
-- Feature 008: `review`; Phase 3 implementation and automated local verification are complete.
+- Feature 008: `in_progress`.
+- Phase 1: `PASS`.
+- Phase 2: `PASS`.
+- Phase 3: `PASS`; PR #10 is merged and closed.
+- Phase 4A: `REVIEW`; implementation is published in Draft PR #12 and automated gates pass.
 
-## Phase evidence
+## Phase 4A objective
 
-### Phase 1 — PASS
+Completed for review:
 
-PR #8 merged into `main`. GitHub Actions passed dependency installation, typecheck, lint, tests, production audit, and static build. The optional discovery schema and lazy idempotent project migration are present.
+- `008-0401` deterministic traceable activity proposals;
+- `008-0402` review-before-apply workspace.
 
-### Phase 2 — PASS
+The cycle preserves current formulas and overhead semantics. Phase 4B scenario calibration and confidence policy remain outside this branch.
 
-PR #9 merged into `main` at `f7752848d675c93be2ffee8c4a27aacc1abefef7`. GitHub Actions run `29390032992` passed install, typecheck, lint, tests, production audit, and static build. The structured assessment workflow, persistence, tests, and compatibility protections are present.
+## Implemented increments
 
-### Phase 3 — REVIEW
-
-Implemented in Draft PR #10:
-
-- additive current-state process model for actors, systems, steps, directed edges, provenance, validation findings, lifecycle status, and version metadata;
-- deterministic ingestion for numbered lists, bullets, checklists, plain text, and manual input;
-- stable candidate identifiers, parser versioning, raw-input preservation, and explicit provenance;
-- explicit candidate review before normalized state replacement;
-- immutable operations for steps, edges, actors, systems, ordering, linear connection, and destructive-reference guards;
-- structural validation for missing references, duplicate and self-loop edges, explicit starts and ends, orphan or unreachable steps, decision branches, and exception recovery;
-- local persistence inside the existing project discovery envelope with legacy project compatibility;
-- project workspace UI for raw capture, deterministic parsing, candidate review, normalization, linear connection, validation findings, and text-flow rendering;
-- five Phase 3-specific suites covering parser, service operations, validation, persistence, and workspace behavior.
-
-## Automated verification
-
-Executed on macOS against final implementation HEAD before status reconciliation:
-
-- `npm run typecheck` — PASS;
-- `npm run lint` — PASS;
-- `npm test` — PASS, 17 suites and 57 tests;
-- `npm audit --omit=dev --audit-level=high` — PASS, 0 vulnerabilities;
-- `npm run build` — PASS, Next.js static export generated 9 pages;
-- `git diff --check` — PASS, no reported whitespace errors.
-
-The Node experimental localStorage warning emitted during Jest is non-blocking and did not fail any suite.
+- Created issue #11, branch `feature/008-estimation-proposals`, and Draft PR #12.
+- Added execution prompt `prompts/goal-008-phase-4a-estimation-proposals.md`.
+- Extended the existing `EstimationDraft` boundary with optional rule catalog, mappings, receipts, warnings, provenance, review fields, and unknown/exclusion metadata.
+- Added a versioned local deterministic proposal rule catalog covering all current process step types.
+- Added stable proposal IDs and input snapshot hashing.
+- Added safe grouping that does not cross decision, exception, approval, integration, or AI boundaries.
+- Added proposal generation with zero effort by default so missing effort is not invented.
+- Added preview using existing project overhead percentages without mutating current activities.
+- Added explicit-confirmation apply, selected-only mutation, stable proposal-to-activity mappings, apply receipt, and duplicate-apply guard.
+- Added browser-local proposal persistence and audit entries.
+- Added Project Studio proposal entry and review workspace.
+- Added domain, persistence, and component tests for deterministic generation, traceability, review controls, preview, apply, receipts, duplicate protection, and legacy compatibility.
 
 ## Protected invariants
 
-- Existing activity and overhead formulas are unchanged.
-- Existing activities, assessments, reports, and `/project?id=<id>` route remain present.
-- No dependencies, workflow files, backend, database, authentication, file upload, AI auto-fill, or n8n invocation were added.
-- Parsing is local and deterministic; unknown values are not generated or silently promoted to facts.
-- Raw evidence remains separate from normalized process state.
+- `DEFAULT_OVERHEAD` is unchanged.
+- Existing estimation equations are unchanged.
+- Proposal generation never mutates activities.
+- Unknown actor, system, and effort values remain explicit.
+- Existing assessment, process, report, direct-route, static-export, and local-storage behavior remains protected by regression validation.
+- No dependency, backend, auth, database, workflow, or external transmission change was introduced.
+
+## Automated verification
+
+GitHub Actions run `29394527214` completed successfully against implementation HEAD `2096ac9d8177a2a9256bc8de694a55a16c3c7819` before this documentation reconciliation:
+
+- checkout and Node setup — PASS;
+- dependency installation — PASS;
+- typecheck — PASS;
+- lint — PASS;
+- tests — PASS;
+- production dependency audit — PASS;
+- static build — PASS.
+
+Remote diff and file-integrity inspection found no dependency, workflow, formula, secret, PII, or personal-path changes in scope.
+
+## Runtime clarification
+
+This execution runtime does not mount the user's macOS checkout at `/Users/eduardosacahui/Github-Repos/TimeEstimator`. A direct `git ls-remote` attempt from this specific container also returned a DNS resolution error for `github.com`. This is an environment-specific limitation, not a general limitation of ChatGPT, Codex, GitHub access, or other execution environments. Repository implementation and verification continued through the connected GitHub app and GitHub Actions.
 
 ## Remaining review debt
 
 - Direct browser QA at 320px, 390px, 768px, and desktop.
-- Keyboard navigation, focus visibility, screen-reader labeling, and responsive overflow confirmation in a real browser.
-- GitHub Actions result for the final documentation reconciliation HEAD.
+- Keyboard navigation, focus visibility, confirmation behavior, screen-reader labeling, and responsive overflow confirmation in a real browser.
+- Final GitHub Actions recheck after this documentation reconciliation commit.
 
 ## Next gate
 
-Review Draft PR #10 and GitHub Actions. Do not merge until automated checks are green and browser verification debt is either completed or explicitly accepted by the reviewer.
+Confirm the final reconciliation HEAD remains green, complete or explicitly accept browser QA debt, review Draft PR #12, and stop before merge. Phase 4B must not begin until Phase 4A is merged into `main`.
