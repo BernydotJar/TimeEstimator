@@ -31,7 +31,7 @@
 ## 2026-07-14 — Feature 008 Phase 2
 
 - Created `feature/008-assessment-ui` from the validated Phase 1 merge commit.
-- Added a fixed catalog version with seven sections and 28 stable questions.
+- Added a fixed catalog version with seven ordered sections and 28 stable questions.
 - Added pure assessment services for answer states, evidence, completeness, high-impact unknowns, and review readiness.
 - Added progressive browser-local persistence and retained lazy legacy compatibility.
 - Added desktop and phone assessment navigation, all MVP field types, notes, evidence references, progress metrics, and an honest review gate.
@@ -83,5 +83,6 @@
 - Added an isolated static-compatible `/report?id=<project-id>` route with hydration, missing-project, empty-report, readiness, and explicit print states.
 - Added controlled light print styling, hidden print toolbar, page-break boundaries, repeating table headers, reduced columns, and text wrapping.
 - Added tests for report totals, no hidden scenarios, filenames, bounded content, semantic print output, and route behavior.
-- Initial CI passed installation, typecheck, and lint, then exposed an obsolete filename expectation; the contract and test were corrected.
-- Full automated verification and real PNG/PDF artifact inspection remain gates before transition to `REVIEW`.
+- Initial CI passed installation, typecheck, and lint, then exposed obsolete test expectations; the filename and multi-table assertions were corrected.
+- GitHub Actions run `29397785995` passed dependency installation, typecheck, lint, tests, production audit, and static build.
+- Phases 7–8 transitioned to `REVIEW`; real bounded PNG and saved PDF inspection, `git diff --check`, and browser/accessibility checks remain recorded debt.
