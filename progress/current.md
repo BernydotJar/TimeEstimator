@@ -24,9 +24,9 @@ Draft PR: `#16 feat: add bounded report and print export architecture`
 - Phase 4A: `PASS`.
 - Phase 4B: not implemented in this branch.
 - Phases 5–6: `PASS`; PR #14 merged into `main` at `537b4aef9e00facedd45923ea6e7da1eae9d2cdb`.
-- Phases 7–8: `in_progress` in Draft PR #16.
+- Phases 7–8: `REVIEW` in Draft PR #16; automated gates pass.
 
-## Phases 7–8 scope
+## Completed scope for review
 
 - `008-0701` one normalized report model drives all report outputs.
 - `008-0702` dedicated static-compatible print route/root.
@@ -59,15 +59,21 @@ Draft PR: `#16 feat: add bounded report and print export architecture`
 - No dependency, workflow, backend, database, authentication, or external data-transfer change was introduced.
 - Browser-local `te_projects` remains the report data source.
 
-## Verification status
+## Automated verification
 
-- Initial PR run passed dependency installation, typecheck, and lint but failed one obsolete filename expectation.
-- The filename contract and test were corrected from `vv1` to `v1`.
-- A new GitHub Actions run is required against the current tracking HEAD.
+GitHub Actions run `29397785995` passed against implementation and tracking HEAD `83d226b49be0a2393ecd220c31dda5ee64c8afb0`:
+
+- dependency installation — PASS;
+- typecheck — PASS;
+- lint — PASS;
+- tests — PASS;
+- production dependency audit — PASS;
+- static export build — PASS.
+
+A final Actions recheck is required for this review-status documentation-only commit.
 
 ## Remaining review debt
 
-- Complete GitHub Actions gate: install, typecheck, lint, tests, production audit, static build.
 - `git diff --check` in a synchronized checkout.
 - Real-browser generation and inspection of representative 1440×1800-or-smaller PNG files.
 - Chromium Print Preview and opened saved PDF inspection for A4 and Letter.
@@ -77,4 +83,4 @@ Draft PR: `#16 feat: add bounded report and print export architecture`
 
 ## Next gate
 
-Resolve every automated failure, record final evidence in issue #15 and Draft PR #16, move Phases 7–8 to `REVIEW` only when automated gates pass, and stop before merge.
+Confirm the final documentation-only HEAD remains green, complete or explicitly accept artifact/browser debt, review Draft PR #16, and stop before merge.
