@@ -25,24 +25,22 @@ Draft PR: `#14 feat: add structured documentation and flow projections`
 - Phase 3: `PASS`.
 - Phase 4A: `PASS`; PR #12 merged into `main` at `cf18f21f7c531091a7d014132ef34b0f1fd3ab2d`.
 - Phase 4B: not implemented in this branch.
-- Phases 5–6: `in_progress` in Draft PR #14.
+- Phases 5–6: `REVIEW` in Draft PR #14; automated gates pass.
 
-## Phases 5–6 scope
+## Completed scope for review
 
-- `008-0501` generate process overview and inventories.
-- `008-0502` generate risks, delivery plan, and estimation summary.
-- `008-0503` preserve manual overrides during regeneration.
-- `008-0601` generate deterministic Mermaid from the structured graph.
-- `008-0602` provide an accessible textual flow alternative.
-- `008-0603` define a BPMN-compatible export boundary without implementing a full exporter.
+- `008-0501` process overview and inventories.
+- `008-0502` assumptions/risks, delivery plan, and estimation summary.
+- `008-0503` manual-safe regeneration with reconciliation history.
+- `008-0601` deterministic Mermaid projection from the structured graph.
+- `008-0602` accessible textual flow alternative.
+- `008-0603` BPMN-compatible export boundary without a full exporter.
 
 ## Implemented increments
 
 - Extended the documentation domain additively with generator metadata, warnings, unknowns, assumptions, manual override metadata, and reconciliation history.
-- Added deterministic generation for eight structured artifact drafts.
-- Added input snapshot hashing and generator versioning.
-- Added Markdown projection from structured blocks.
-- Added explicit regeneration decisions that preserve locked/manual sections by default and record conflicts.
+- Added deterministic generation for eight structured artifact drafts, input snapshot hashing, generator versioning, and Markdown projection.
+- Added explicit regeneration decisions that preserve locked/manual sections by default, expose conflicts, and require explicit replacement to discard manual content.
 - Added deterministic Mermaid `flowchart TD` projection with safe node IDs, escaped labels, branch labels, source references, and missing-endpoint warnings.
 - Reused the existing textual flow serializer as the accessible fallback.
 - Added a BPMN-compatible contract boundary for events, tasks, gateways, sequence flows, lanes, extensions, source references, and warnings; no exporter or dependency was added.
@@ -62,19 +60,27 @@ Draft PR: `#14 feat: add structured documentation and flow projections`
 - Existing formulas, `DEFAULT_OVERHEAD`, activities, reports, routes, dependencies, workflows, static export, and `te_projects` compatibility remain unchanged.
 - No backend, database, authentication, external transmission, BPMN library, or full BPMN exporter was added.
 
-## Verification status
+## Automated verification
 
-Pending GitHub Actions against the final branch HEAD:
+GitHub Actions run `29396226248` passed against implementation and tracking HEAD `cb639ec5cb8ddc487b9dd94a4f1bda50b44b34ab`:
 
-- dependency installation;
-- typecheck;
-- lint;
-- tests;
-- production dependency audit;
-- static build.
+- checkout and Node setup — PASS;
+- dependency installation — PASS;
+- typecheck — PASS;
+- lint — PASS;
+- tests — PASS;
+- production dependency audit — PASS;
+- static build — PASS.
 
-`git diff --check`, real-browser responsive checks, keyboard navigation, focus visibility, copy controls, dialogs, screen-reader structure, and responsive overflow remain required or must be documented as explicit debt.
+A final Actions recheck is required for this review-status documentation commit.
+
+## Remaining review debt
+
+- `git diff --check` in a synchronized checkout.
+- Real-browser QA at 320px, 390px, 768px, and desktop.
+- Keyboard navigation, focus visibility, copy controls, screen-reader structure, and responsive overflow confirmation.
+- Visual confirmation that long Mermaid/text/table content remains usable on mobile.
 
 ## Next gate
 
-Resolve every automated failure, update issue #13 and Draft PR #14 with final evidence, mark Phases 5–6 as `REVIEW` only when automated gates pass, and stop before merge.
+Confirm the final documentation-only HEAD remains green, complete or explicitly accept browser QA debt, review Draft PR #14, and stop before merge.
