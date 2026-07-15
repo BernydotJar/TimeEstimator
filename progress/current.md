@@ -23,11 +23,11 @@ Draft PR: `#12 feat: add traceable activity proposal workflow`
 - Phase 1: `PASS`.
 - Phase 2: `PASS`.
 - Phase 3: `PASS`; PR #10 is merged and closed.
-- Phase 4A: `in_progress`; implementation is published in Draft PR #12.
+- Phase 4A: `REVIEW`; implementation is published in Draft PR #12 and automated gates pass.
 
 ## Phase 4A objective
 
-Complete:
+Completed for review:
 
 - `008-0401` deterministic traceable activity proposals;
 - `008-0402` review-before-apply workspace.
@@ -55,26 +55,33 @@ The cycle preserves current formulas and overhead semantics. Phase 4B scenario c
 - Existing estimation equations are unchanged.
 - Proposal generation never mutates activities.
 - Unknown actor, system, and effort values remain explicit.
-- Existing assessment, process, report, direct-route, static-export, and local-storage behavior remains in scope for regression validation.
-- No dependency, backend, auth, database, workflow, or external transmission change is authorized.
+- Existing assessment, process, report, direct-route, static-export, and local-storage behavior remains protected by regression validation.
+- No dependency, backend, auth, database, workflow, or external transmission change was introduced.
 
-## Verification status
+## Automated verification
 
-- Remote diff and file-integrity inspection: completed.
-- GitHub Actions: running against the published branch; final HEAD must be rechecked after documentation/test commits.
-- Local complete gate: pending because this runtime cannot mount the macOS checkout or clone through outbound DNS.
-- Browser QA: pending or must be recorded as explicit debt.
+GitHub Actions run `29394527214` completed successfully against implementation HEAD `2096ac9d8177a2a9256bc8de694a55a16c3c7819` before this documentation reconciliation:
 
-Required local commands:
+- checkout and Node setup — PASS;
+- dependency installation — PASS;
+- typecheck — PASS;
+- lint — PASS;
+- tests — PASS;
+- production dependency audit — PASS;
+- static build — PASS.
 
-- `npm ci`;
-- `npm run typecheck`;
-- `npm run lint`;
-- `npm test`;
-- `npm audit --omit=dev --audit-level=high`;
-- `npm run build`;
-- `git diff --check`.
+Remote diff and file-integrity inspection found no dependency, workflow, formula, secret, PII, or personal-path changes in scope.
+
+## Runtime clarification
+
+This execution runtime does not mount the user's macOS checkout at `/Users/eduardosacahui/Github-Repos/TimeEstimator`. A direct `git ls-remote` attempt from this specific container also returned a DNS resolution error for `github.com`. This is an environment-specific limitation, not a general limitation of ChatGPT, Codex, GitHub access, or other execution environments. Repository implementation and verification continued through the connected GitHub app and GitHub Actions.
+
+## Remaining review debt
+
+- Direct browser QA at 320px, 390px, 768px, and desktop.
+- Keyboard navigation, focus visibility, confirmation behavior, screen-reader labeling, and responsive overflow confirmation in a real browser.
+- Final GitHub Actions recheck after this documentation reconciliation commit.
 
 ## Next gate
 
-Resolve all CI and local validation findings, update issue #11 and Draft PR #12 with evidence, complete or explicitly accept browser debt, and stop before merge.
+Confirm the final reconciliation HEAD remains green, complete or explicitly accept browser QA debt, review Draft PR #12, and stop before merge. Phase 4B must not begin until Phase 4A is merged into `main`.
