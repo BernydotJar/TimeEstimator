@@ -94,6 +94,30 @@ describe("proposal persistence", () => {
     expect(second.project.activities).toHaveLength(1);
   });
 
+  it("blocks invalid selected proposals without mutating activities or receipts", () => {
+    let project = generateProjectProposalSet(baseProject(), "draft-1", NOW);
+    const draft = project.discovery!.estimationDrafts[0];
+    const proposal = draft.proposals[0];
+    project = updateProjectProposal(project, draft.id, proposal.id, {
+      included: true,
+      selected: true,
+      reviewed: true,
+      calculatedEffortHours: -2,
+      activity: { ...proposal.activity, activityName: "", effort: -2 },
+    }, LATER);
+
+    const result = applyProjectProposals(project, draft.id, true, LATER);
+    expect(result.warnings).toEqual(
+      expect.arrayContaining([
+        expect.stringMatching(/activity name/i),
+        expect.stringMatching(/finite value/i),
+      ]),
+    );
+    expect(result.project.activities).toHaveLength(0);
+    expect(result.project.discovery?.estimationDrafts[0].applyReceipts ?? []).toHaveLength(0);
+    expect(result.project.discovery?.auditEntries.at(-1)?.action).toBe("proposals_generated");
+  });
+
   it("keeps legacy projects readable", () => {
     const legacy: Project = {
       id: "legacy",
