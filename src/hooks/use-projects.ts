@@ -3,9 +3,35 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
 import { Activity, DEFAULT_OVERHEAD, OverheadKey, Project } from "@/app/types";
-import type { ProjectAssessment } from "@/domain/discovery";
+import type {
+  ParsedCandidateReviewState,
+  ProcessDefinition,
+  ProcessEdge,
+  ProcessStep,
+  ProjectAssessment,
+  RawProcessInput,
+} from "@/domain/discovery";
+import {
+  addProcessEdge as addEdgeToProcess,
+  addProcessStep as addStepToProcess,
+  connectLinearSteps as connectProcessLinearly,
+  removeProcessEdge as removeEdgeFromProcess,
+  removeProcessStep as removeStepFromProcess,
+  updateProcessEdge as updateEdgeInProcess,
+  updateProcessStep as updateStepInProcess,
+} from "@/domain/discovery";
 import { createEmptyDiscoveryState, migrateProjectDiscovery } from "@/persistence/project-migrations";
 import { createProjectAssessment, readyProjectAssessment, replaceProjectAssessment, setProjectAssessmentActive } from "@/persistence/assessment-operations";
+import {
+  createProjectCurrentStateProcess,
+  normalizeProjectProcess,
+  parseProjectRawProcessInput,
+  replaceProjectProcess,
+  saveProjectRawProcessInput,
+  setProjectActiveProcess,
+  updateProjectCandidateReview,
+  validateProjectProcess,
+} from "@/persistence/process-operations";
 
 export function useProjects() {
   const [projects, setProjects, hydrated] = useLocalStorage<Project[]>("te_projects", []);
@@ -46,5 +72,79 @@ export function useProjects() {
   const setActiveAssessment = useCallback((projectId: string, assessmentId: string) => mutate(projectId, (project) => setProjectAssessmentActive(project, assessmentId, now())), [mutate]);
   const markAssessmentReadyForReview = useCallback((projectId: string, assessmentId: string) => mutate(projectId, (project) => readyProjectAssessment(project, assessmentId, now())), [mutate]);
 
-  return { projects, hydrated, createProject, updateProject, initializeDiscovery, deleteProject, getProject, addActivity, removeActivity, cloneActivity, updateOverhead, createAssessment, saveAssessment, setActiveAssessment, markAssessmentReadyForReview };
+  const createCurrentStateProcess = useCallback((projectId: string): string => {
+    const processId = crypto.randomUUID();
+    const timestamp = now();
+    mutate(projectId, (project) => createProjectCurrentStateProcess(project, processId, timestamp).project);
+    return processId;
+  }, [mutate]);
+  const setActiveProcess = useCallback((projectId: string, processId: string) => mutate(projectId, (project) => setProjectActiveProcess(project, processId, now())), [mutate]);
+  const saveProcessDefinition = useCallback((projectId: string, process: ProcessDefinition) => mutate(projectId, (project) => replaceProjectProcess(project, process, now())), [mutate]);
+  const saveRawProcessInput = useCallback((projectId: string, processId: string, input: RawProcessInput) => mutate(projectId, (project) => saveProjectRawProcessInput(project, processId, input, now())), [mutate]);
+  const parseRawProcessInput = useCallback((projectId: string, processId: string, rawInputId: string) => mutate(projectId, (project) => parseProjectRawProcessInput(project, processId, rawInputId, now())), [mutate]);
+  const saveCandidateReview = useCallback((projectId: string, processId: string, review: ParsedCandidateReviewState) => mutate(projectId, (project) => updateProjectCandidateReview(project, processId, review, now())), [mutate]);
+  const normalizeProcess = useCallback((projectId: string, processId: string) => mutate(projectId, (project) => normalizeProjectProcess(project, processId, now())), [mutate]);
+  const validateProcess = useCallback((projectId: string, processId: string) => mutate(projectId, (project) => validateProjectProcess(project, processId, now())), [mutate]);
+
+  const addProcessStep = useCallback((projectId: string, processId: string, step: ProcessStep) => mutate(projectId, (project) => {
+    const process = migrateProjectDiscovery(project).discovery?.processes.find((item) => item.id === processId);
+    return process ? replaceProjectProcess(project, addStepToProcess(process, step, now()), now()) : project;
+  }), [mutate]);
+  const updateProcessStep = useCallback((projectId: string, processId: string, stepId: string, updates: Partial<Omit<ProcessStep, "id" | "processId">>) => mutate(projectId, (project) => {
+    const process = migrateProjectDiscovery(project).discovery?.processes.find((item) => item.id === processId);
+    return process ? replaceProjectProcess(project, updateStepInProcess(process, stepId, updates, now()), now()) : project;
+  }), [mutate]);
+  const removeProcessStep = useCallback((projectId: string, processId: string, stepId: string, cascade = false) => mutate(projectId, (project) => {
+    const process = migrateProjectDiscovery(project).discovery?.processes.find((item) => item.id === processId);
+    return process ? replaceProjectProcess(project, removeStepFromProcess(process, stepId, now(), cascade).process, now()) : project;
+  }), [mutate]);
+  const addProcessEdge = useCallback((projectId: string, processId: string, edge: ProcessEdge) => mutate(projectId, (project) => {
+    const process = migrateProjectDiscovery(project).discovery?.processes.find((item) => item.id === processId);
+    return process ? replaceProjectProcess(project, addEdgeToProcess(process, edge, now()).process, now()) : project;
+  }), [mutate]);
+  const updateProcessEdge = useCallback((projectId: string, processId: string, edgeId: string, updates: Partial<Omit<ProcessEdge, "id" | "processId">>) => mutate(projectId, (project) => {
+    const process = migrateProjectDiscovery(project).discovery?.processes.find((item) => item.id === processId);
+    return process ? replaceProjectProcess(project, updateEdgeInProcess(process, edgeId, updates, now()).process, now()) : project;
+  }), [mutate]);
+  const removeProcessEdge = useCallback((projectId: string, processId: string, edgeId: string) => mutate(projectId, (project) => {
+    const process = migrateProjectDiscovery(project).discovery?.processes.find((item) => item.id === processId);
+    return process ? replaceProjectProcess(project, removeEdgeFromProcess(process, edgeId, now()), now()) : project;
+  }), [mutate]);
+  const connectLinearSteps = useCallback((projectId: string, processId: string) => mutate(projectId, (project) => {
+    const process = migrateProjectDiscovery(project).discovery?.processes.find((item) => item.id === processId);
+    return process ? replaceProjectProcess(project, connectProcessLinearly(process, now()).process, now()) : project;
+  }), [mutate]);
+
+  return {
+    projects,
+    hydrated,
+    createProject,
+    updateProject,
+    initializeDiscovery,
+    deleteProject,
+    getProject,
+    addActivity,
+    removeActivity,
+    cloneActivity,
+    updateOverhead,
+    createAssessment,
+    saveAssessment,
+    setActiveAssessment,
+    markAssessmentReadyForReview,
+    createCurrentStateProcess,
+    setActiveProcess,
+    saveProcessDefinition,
+    saveRawProcessInput,
+    parseRawProcessInput,
+    saveCandidateReview,
+    normalizeProcess,
+    validateProcess,
+    addProcessStep,
+    updateProcessStep,
+    removeProcessStep,
+    addProcessEdge,
+    updateProcessEdge,
+    removeProcessEdge,
+    connectLinearSteps,
+  };
 }
