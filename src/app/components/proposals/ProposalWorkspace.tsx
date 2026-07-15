@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import type { EstimationDraft } from "@/domain/discovery";
+import { validateProposalDraft, type EstimationDraft } from "@/domain/discovery";
 import { useProjects } from "@/hooks/use-projects";
 
 export function ProposalWorkspace({
@@ -21,6 +21,8 @@ export function ProposalWorkspace({
     () => getProposalPreview(projectId, draft.id),
     [getProposalPreview, projectId, draft.id, draft.proposals],
   );
+  const validation = useMemo(() => validateProposalDraft(draft), [draft]);
+  const lastReceipt = draft.applyReceipts?.at(-1);
 
   return (
     <section className="cinematic-panel space-y-5" aria-labelledby="proposal-workspace-title">
@@ -107,7 +109,7 @@ export function ProposalWorkspace({
                     step="0.25"
                     value={proposal.calculatedEffortHours}
                     onChange={(event) => {
-                      const effort = Math.max(0, Number(event.target.value) || 0);
+                      const effort = Number(event.target.value);
                       updateProposal(projectId, draft.id, proposal.id, {
                         calculatedEffortHours: effort,
                         baseEffortHours: effort,
@@ -136,6 +138,27 @@ export function ProposalWorkspace({
         </p>
       </div>
 
+      {(validation.errors.length || validation.warnings.length) ? (
+        <div className="rounded-xl border border-amber-700/60 bg-amber-950/20 p-4" aria-live="polite">
+          <h3 className="font-semibold text-amber-100">Review findings</h3>
+          {[...validation.errors, ...validation.warnings].map((finding) => (
+            <p key={finding.id} className="mt-1 text-sm text-amber-200">
+              {finding.severity === "error" ? "Error" : "Warning"}: {finding.message}
+            </p>
+          ))}
+        </div>
+      ) : null}
+
+      {lastReceipt ? (
+        <div className="rounded-xl border border-emerald-800 bg-emerald-950/20 p-4">
+          <h3 className="font-semibold text-emerald-100">Last apply receipt</h3>
+          <p className="mt-1 text-sm text-emerald-200">
+            {lastReceipt.proposalIds.length} proposal(s) applied as {lastReceipt.activityIds.length} activity record(s).
+          </p>
+          <p className="mt-1 text-xs text-emerald-300">Receipt {lastReceipt.id} · {lastReceipt.appliedAt}</p>
+        </div>
+      ) : null}
+
       <label className="flex items-center gap-2 text-sm text-slate-300">
         <input
           type="checkbox"
@@ -147,7 +170,7 @@ export function ProposalWorkspace({
       <div className="flex flex-wrap gap-2">
         <Button
           type="button"
-          disabled={!confirmed || !preview?.selectedCount}
+          disabled={!confirmed || !preview?.selectedCount || !validation.valid}
           onClick={() => {
             const warnings = applyProposals(projectId, draft.id, confirmed);
             setMessage(warnings.length ? warnings.join(" ") : "Selected proposals applied.");
