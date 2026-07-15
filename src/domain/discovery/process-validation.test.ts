@@ -60,6 +60,7 @@ describe("process validation engine", () => {
     const errors = result.errors.map((finding) => finding.code);
     const warnings = result.warnings.map((finding) => finding.code);
     expect(errors).toEqual(expect.arrayContaining(["EDGE_SOURCE_MISSING", "EDGE_TARGET_MISSING", "ACTOR_REFERENCE_MISSING", "SYSTEM_REFERENCE_MISSING"]));
-    expect(warnings).toEqual(expect.arrayContaining(["EDGE_SELF_LOOP", "EDGE_DUPLICATE", "CONDITIONAL_EDGE_WITHOUT_CONDITION", "DECISION_WITHOUT_BRANCH", "EXCEPTION_WITHOUT_RECOVERY"]));
+    expect(warnings).toEqual(expect.arrayContaining(["EDGE_SELF_LOOP", "EDGE_DUPLICATE", "CONDITIONAL_EDGE_WITHOUT_CONDITION", "EXCEPTION_WITHOUT_RECOVERY"]));
+    expect(warnings).not.toContain("DECISION_WITHOUT_BRANCH");
   });
 });
