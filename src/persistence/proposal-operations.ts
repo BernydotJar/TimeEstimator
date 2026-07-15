@@ -8,6 +8,7 @@ import {
   generateActivityProposalSet,
   previewProposalImpact,
   updateActivityProposal,
+  validateProposalDraft,
 } from "@/domain/discovery";
 import { migrateProjectDiscovery } from "./project-migrations";
 
@@ -118,6 +119,15 @@ export function applyProjectProposals(
   const migrated = migrateProjectDiscovery(project);
   const draft = migrated.discovery?.estimationDrafts.find((item) => item.id === draftId);
   if (!draft) return { project: migrated, warnings: ["Proposal set not found."] };
+
+  const validation = validateProposalDraft(draft);
+  if (!validation.valid) {
+    return {
+      project: migrated,
+      warnings: validation.errors.map((finding) => finding.message),
+    };
+  }
+
   const result = applySelectedProposals(migrated, draft, confirmed, now);
   if (!result.receipt) return { project: result.project, warnings: result.warnings };
   const withDraft = replaceProjectEstimationDraft(result.project, result.draft, now);
