@@ -8,11 +8,11 @@ Status: `in_progress`
 
 Mode: `SHIP`
 
-Implementation branch: `feature/008-assessment-ui`
+Implementation branch: `feature/008-structured-process-ingestion`
 
-Base: `main` at `c343ac324989d140f711ef7ea424aefe81fbb419`
+Base: `main` at `f7752848d675c93be2ffee8c4a27aacc1abefef7`
 
-Draft PR: `#9 feat: add structured project assessment workflow`
+Draft PR: not opened
 
 ## Lifecycle
 
@@ -25,38 +25,31 @@ Draft PR: `#9 feat: add structured project assessment workflow`
 
 PR #8 merged into `main`. GitHub Actions passed dependency installation, typecheck, lint, tests, production audit, and static build. The optional discovery schema and lazy idempotent project migration are present.
 
-### Phase 2 — implementation complete, automated gate pending
+### Phase 2 — PASS
 
-Implemented:
+PR #9 merged into `main` at `f7752848d675c93be2ffee8c4a27aacc1abefef7`. GitHub Actions run `29390032992` passed install, typecheck, lint, tests, production audit, and static build. The structured assessment workflow, persistence, tests, and compatibility protections are present.
 
-- fixed catalog version 1 with seven ordered sections and 28 stable questions;
-- pure services for answer states, notes, evidence, completeness, section status, high-impact unknowns, and review readiness;
-- explicit `unanswered`, `answered`, `unknown`, and `not_applicable` semantics;
-- progressive persistence inside the existing `te_projects` project record;
-- lazy compatibility for legacy projects;
-- desktop section navigation and phone Previous/Next flow;
-- all MVP answer input types;
-- notes and evidence references without external fetch or file upload;
-- honest empty state and create/resume flow;
-- domain, persistence, and component tests.
+### Phase 3 — BLOCKED before implementation
+
+The required branch was created from the validated Phase 2 merge commit and the repository/specification preflight was reconciled. No application code was published because this execution runtime cannot provide the controlled checkout and verification environment required by SHIP mode.
+
+Observed blocker evidence:
+
+- no repository checkout was mounted;
+- outbound DNS cannot resolve `github.com`, so `git clone` cannot run;
+- GitHub CLI is not installed;
+- the GitHub connector permits targeted remote file operations but does not provide a synchronized working tree for broad implementation, dependency installation, typecheck, lint, Jest, build, or `git diff --check` before publishing changes;
+- browser QA is unavailable.
+
+A registry-only reconciliation commit exists on the branch. It does not implement Phase 3.
 
 ## Protected invariants
 
 - Existing activity and overhead formulas are unchanged.
-- Existing activities, reports, and `/project?id=<id>` route remain present.
-- No dependencies, workflow files, backend, database, authentication, file upload, or AI auto-fill were added.
-- Unknown values are not replaced with generated facts.
+- Existing activities, assessments, reports, and `/project?id=<id>` route remain unchanged.
+- No dependencies, workflows, backend, database, authentication, file upload, AI auto-fill, n8n invocation, or product code were added.
+- Unknown values remain unknown.
 
-## Verification
+## Recovery condition
 
-GitHub Actions is the automated execution environment for this branch. Required steps are install, typecheck, lint, tests, production audit, and static build.
-
-Browser verification at 320px, 390px, 768px, and desktop is still required. Accessibility and responsive behavior are not reported as PASS without direct browser evidence.
-
-## Next gate
-
-1. Inspect PR #9 GitHub Actions.
-2. Correct all automated failures.
-3. Keep Feature 008 `in_progress`.
-4. Stop at `REVIEW` when automated checks pass, with browser QA recorded as verification debt.
-5. After merge, proceed to Phase 3 — Structured Process Ingestion.
+Resume Phase 3 in a runtime with a synchronized checkout that can run `npm ci`, typecheck, lint, Jest, production audit, static build, and `git diff --check`, then publish incremental commits and validate the final HEAD through GitHub Actions.
