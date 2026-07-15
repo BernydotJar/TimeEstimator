@@ -3,6 +3,11 @@ export * from "./assessment";
 export * from "./assessment-catalog";
 export * from "./assessment-service";
 export * from "./process";
+export * from "./process-ingestion";
+export * from "./process-parser";
+export * from "./process-service";
+export * from "./process-validation";
+export * from "./process-text-flow";
 export * from "./estimation";
 export * from "./documentation";
 

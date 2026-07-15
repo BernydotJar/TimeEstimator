@@ -4,20 +4,20 @@
 
 `008-project-assessment-estimation-documentation`
 
-Status: `in_progress`
+Status: `review`
 
 Mode: `SHIP`
 
-Implementation branch: `feature/008-assessment-ui`
+Implementation branch: `feature/008-structured-process-ingestion`
 
-Base: `main` at `c343ac324989d140f711ef7ea424aefe81fbb419`
+Base: `main` at `f7752848d675c93be2ffee8c4a27aacc1abefef7`
 
-Draft PR: `#9 feat: add structured project assessment workflow`
+Draft PR: `#10 feat: add structured current-state process ingestion`
 
 ## Lifecycle
 
 - Feature 003: `blocked`; merged implementation remains in `main`, with RPT-001, RPT-002, and browser QA unresolved.
-- Feature 008: `in_progress`; explicitly approved on 2026-07-14.
+- Feature 008: `review`; Phase 3 implementation and automated local verification are complete.
 
 ## Phase evidence
 
@@ -25,38 +25,51 @@ Draft PR: `#9 feat: add structured project assessment workflow`
 
 PR #8 merged into `main`. GitHub Actions passed dependency installation, typecheck, lint, tests, production audit, and static build. The optional discovery schema and lazy idempotent project migration are present.
 
-### Phase 2 — implementation complete, automated gate pending
+### Phase 2 — PASS
 
-Implemented:
+PR #9 merged into `main` at `f7752848d675c93be2ffee8c4a27aacc1abefef7`. GitHub Actions run `29390032992` passed install, typecheck, lint, tests, production audit, and static build. The structured assessment workflow, persistence, tests, and compatibility protections are present.
 
-- fixed catalog version 1 with seven ordered sections and 28 stable questions;
-- pure services for answer states, notes, evidence, completeness, section status, high-impact unknowns, and review readiness;
-- explicit `unanswered`, `answered`, `unknown`, and `not_applicable` semantics;
-- progressive persistence inside the existing `te_projects` project record;
-- lazy compatibility for legacy projects;
-- desktop section navigation and phone Previous/Next flow;
-- all MVP answer input types;
-- notes and evidence references without external fetch or file upload;
-- honest empty state and create/resume flow;
-- domain, persistence, and component tests.
+### Phase 3 — REVIEW
+
+Implemented in Draft PR #10:
+
+- additive current-state process model for actors, systems, steps, directed edges, provenance, validation findings, lifecycle status, and version metadata;
+- deterministic ingestion for numbered lists, bullets, checklists, plain text, and manual input;
+- stable candidate identifiers, parser versioning, raw-input preservation, and explicit provenance;
+- explicit candidate review before normalized state replacement;
+- immutable operations for steps, edges, actors, systems, ordering, linear connection, and destructive-reference guards;
+- structural validation for missing references, duplicate and self-loop edges, explicit starts and ends, orphan or unreachable steps, decision branches, and exception recovery;
+- local persistence inside the existing project discovery envelope with legacy project compatibility;
+- project workspace UI for raw capture, deterministic parsing, candidate review, normalization, linear connection, validation findings, and text-flow rendering;
+- five Phase 3-specific suites covering parser, service operations, validation, persistence, and workspace behavior.
+
+## Automated verification
+
+Executed on macOS against final implementation HEAD before status reconciliation:
+
+- `npm run typecheck` — PASS;
+- `npm run lint` — PASS;
+- `npm test` — PASS, 17 suites and 57 tests;
+- `npm audit --omit=dev --audit-level=high` — PASS, 0 vulnerabilities;
+- `npm run build` — PASS, Next.js static export generated 9 pages;
+- `git diff --check` — PASS, no reported whitespace errors.
+
+The Node experimental localStorage warning emitted during Jest is non-blocking and did not fail any suite.
 
 ## Protected invariants
 
 - Existing activity and overhead formulas are unchanged.
-- Existing activities, reports, and `/project?id=<id>` route remain present.
-- No dependencies, workflow files, backend, database, authentication, file upload, or AI auto-fill were added.
-- Unknown values are not replaced with generated facts.
+- Existing activities, assessments, reports, and `/project?id=<id>` route remain present.
+- No dependencies, workflow files, backend, database, authentication, file upload, AI auto-fill, or n8n invocation were added.
+- Parsing is local and deterministic; unknown values are not generated or silently promoted to facts.
+- Raw evidence remains separate from normalized process state.
 
-## Verification
+## Remaining review debt
 
-GitHub Actions is the automated execution environment for this branch. Required steps are install, typecheck, lint, tests, production audit, and static build.
-
-Browser verification at 320px, 390px, 768px, and desktop is still required. Accessibility and responsive behavior are not reported as PASS without direct browser evidence.
+- Direct browser QA at 320px, 390px, 768px, and desktop.
+- Keyboard navigation, focus visibility, screen-reader labeling, and responsive overflow confirmation in a real browser.
+- GitHub Actions result for the final documentation reconciliation HEAD.
 
 ## Next gate
 
-1. Inspect PR #9 GitHub Actions.
-2. Correct all automated failures.
-3. Keep Feature 008 `in_progress`.
-4. Stop at `REVIEW` when automated checks pass, with browser QA recorded as verification debt.
-5. After merge, proceed to Phase 3 — Structured Process Ingestion.
+Review Draft PR #10 and GitHub Actions. Do not merge until automated checks are green and browser verification debt is either completed or explicitly accepted by the reviewer.
