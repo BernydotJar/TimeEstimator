@@ -69,4 +69,19 @@
 - Added browser-local persistence, audit entries, Project Studio integration, artifact navigation, structured previews, manual notes, copy controls, and source inspection.
 - Added domain, persistence, and component tests.
 - Preserved formulas, overhead defaults, existing activities, reports, routes, dependencies, workflows, static export, and `te_projects` compatibility.
-- Automated verification and real-browser QA remain the gates before transition to `REVIEW`.
+- PR #14 merged into `main` at `537b4aef9e00facedd45923ea6e7da1eae9d2cdb`.
+- Phases 5–6 transitioned to `PASS`; browser visual and responsive debt remains recorded.
+
+## 2026-07-15 — Feature 008 Phases 7–8
+
+- Created issue #15 and branch `feature/008-report-export-architecture` from the Phases 5–6 merge.
+- Opened Draft PR #16: `feat: add bounded report and print export architecture`.
+- Added one normalized report view-model for interactive preview, bounded PNG, and Print/PDF.
+- Preserved current formulas while treating unavailable scenarios and confidence policy as explicit pending states.
+- Added a fixed executive-summary root with bounded content and a 1440×1800 maximum rendered target.
+- Replaced full-report PNG capture with summary-only `toBlob()` export and deterministic safe filenames.
+- Added an isolated static-compatible `/report?id=<project-id>` route with hydration, missing-project, empty-report, readiness, and explicit print states.
+- Added controlled light print styling, hidden print toolbar, page-break boundaries, repeating table headers, reduced columns, and text wrapping.
+- Added tests for report totals, no hidden scenarios, filenames, bounded content, semantic print output, and route behavior.
+- Initial CI passed installation, typecheck, and lint, then exposed an obsolete filename expectation; the contract and test were corrected.
+- Full automated verification and real PNG/PDF artifact inspection remain gates before transition to `REVIEW`.
