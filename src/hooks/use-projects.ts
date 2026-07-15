@@ -4,6 +4,7 @@ import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
 import { Activity, DEFAULT_OVERHEAD, OverheadKey, Project } from "@/app/types";
 import type {
+  GeneratedActivityProposal,
   ParsedCandidateReviewState,
   ProcessDefinition,
   ProcessEdge,
@@ -32,6 +33,12 @@ import {
   updateProjectCandidateReview,
   validateProjectProcess,
 } from "@/persistence/process-operations";
+import {
+  applyProjectProposals,
+  generateProjectProposalSet,
+  previewProjectProposalImpact,
+  updateProjectProposal,
+} from "@/persistence/proposal-operations";
 
 export function useProjects() {
   const [projects, setProjects, hydrated] = useLocalStorage<Project[]>("te_projects", []);
@@ -115,6 +122,24 @@ export function useProjects() {
     return process ? replaceProjectProcess(project, connectProcessLinearly(process, now()).process, now()) : project;
   }), [mutate]);
 
+  const generateProposalSet = useCallback((projectId: string): string => {
+    const draftId = crypto.randomUUID();
+    mutate(projectId, (project) => generateProjectProposalSet(project, draftId, now()));
+    return draftId;
+  }, [mutate]);
+  const updateProposal = useCallback((projectId: string, draftId: string, proposalId: string, updates: Partial<GeneratedActivityProposal>) => mutate(projectId, (project) => updateProjectProposal(project, draftId, proposalId, updates, now())), [mutate]);
+  const getProposalPreview = useCallback((projectId: string, draftId: string) => {
+    const project = projects.find((item) => item.id === projectId);
+    return project ? previewProjectProposalImpact(project, draftId) : undefined;
+  }, [projects]);
+  const applyProposals = useCallback((projectId: string, draftId: string, confirmed: boolean): string[] => {
+    const project = projects.find((item) => item.id === projectId);
+    if (!project) return ["Project not found."];
+    const result = applyProjectProposals(project, draftId, confirmed, now());
+    setProjects((prev) => prev.map((item) => item.id === projectId ? result.project : item));
+    return result.warnings;
+  }, [projects, setProjects]);
+
   return {
     projects,
     hydrated,
@@ -146,5 +171,9 @@ export function useProjects() {
     updateProcessEdge,
     removeProcessEdge,
     connectLinearSteps,
+    generateProposalSet,
+    updateProposal,
+    getProposalPreview,
+    applyProposals,
   };
 }
