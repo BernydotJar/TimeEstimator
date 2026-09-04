@@ -104,7 +104,6 @@ export function reconstructNodeLifecycles(
         break;
       case "node.invalidated": {
         lifecycle.invalidatedEventIds.push(event.event_id);
-        lifecycle.currentRepairStart ??= event.occurred_at;
         const nextRevision = revision + 1;
         currentRevision.set(event.node_id, nextRevision);
         const nextLifecycle = getLifecycle(lifecycles, event.node_id, nextRevision);
