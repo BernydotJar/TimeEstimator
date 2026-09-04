@@ -86,3 +86,18 @@
 - Initial CI passed installation, typecheck, and lint, then exposed obsolete test expectations; the filename and multi-table assertions were corrected.
 - GitHub Actions run `29397785995` passed dependency installation, typecheck, lint, tests, production audit, and static build.
 - Phases 7–8 transitioned to `REVIEW`; real bounded PNG and saved PDF inspection, `git diff --check`, and browser/accessibility checks remain recorded debt.
+
+## 2026-09-04 — Feature 009 Phase A
+
+- Reused issue #17 and branch `feature/009-ai-delivery-intelligence`; no duplicate tracker or branch was created.
+- Reviewed the canonical Graph Harness `graph-harness.project.v1` and `graph-harness.event.v1` contracts and preserved Graph Harness as the execution evidence authority.
+- Authored `specs/009-ai-delivery-intelligence/phase-a-measurement-kernel.md` before completing the implementation.
+- Added a raw-preserving Graph Harness JSONL adapter and deterministic node-lifecycle reconstruction by revision.
+- Added calendar lead time, active cycle, blocked, repair, gate, verified-unit, throughput, baseline, variance, and explicit touch/runtime observation models.
+- Kept `running -> review` separate from human touch and added provenance labels for measured/manual/imported/inferred/unknown observations.
+- Added causal-claim guardrails so weak historical comparisons can show observed leverage but cannot expose a causal AI acceleration factor.
+- Added additive browser-local `deliveryIntelligence` state and project actions for ledger import, baseline capture, and human-touch observations.
+- Added the first `Build with Proof` panel using `Plan -> Build -> Verify -> Learn`, keeping Graph Harness mechanics below the primary user experience.
+- Added deterministic tests covering raw preservation, broken chain continuity, lifecycle reconstruction, touch-time separation, variance, observed leverage, and controlled causal comparison.
+- Opened Draft PR #18 `feat: add AI delivery intelligence measurement kernel`; no merge was performed.
+- GitHub Actions verification was triggered and remains the final gate before moving 009-A to review.
