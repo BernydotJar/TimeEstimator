@@ -10,6 +10,10 @@ import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/hooks/use-toast";
 import { useProjects } from "@/hooks/use-projects";
 import { Activity, EstimateMetrics, OverheadKey } from "@/app/types";
+import type {
+  DeliveryBaseline,
+  DeliveryTimeObservation,
+} from "@/domain/delivery-intelligence/types";
 import { ActivityForm } from "@/app/components/ActivityForm";
 import { ActivityTable } from "@/app/components/ActivityTable";
 import { AiIntegrationDialog } from "@/app/components/AiIntegrationDialog";
@@ -20,6 +24,7 @@ import { AssessmentEntry } from "@/app/components/assessment/AssessmentEntry";
 import { ProcessEntry } from "@/app/components/process/ProcessEntry";
 import { ProposalEntry } from "@/app/components/proposals/ProposalEntry";
 import { DocumentationEntry } from "@/app/components/documentation/DocumentationEntry";
+import { DeliveryIntelligencePanel } from "@/app/components/delivery-intelligence/DeliveryIntelligencePanel";
 import CinematicBackground from "@/app/components/CinematicBackground";
 import RiskAssumptionPanel from "@/app/components/RiskAssumptionPanel";
 
@@ -28,7 +33,17 @@ export default function ProjectPageClient() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id") ?? "";
   const { toast } = useToast();
-  const { hydrated, getProject, addActivity, removeActivity, cloneActivity, updateOverhead } = useProjects();
+  const {
+    hydrated,
+    getProject,
+    addActivity,
+    removeActivity,
+    cloneActivity,
+    updateOverhead,
+    importHarnessLedger,
+    addDeliveryBaseline,
+    addTimeObservation,
+  } = useProjects();
   const [theme, setTheme] = useState<"light" | "dark">("dark");
   const project = hydrated ? getProject(id) : undefined;
 
@@ -50,6 +65,9 @@ export default function ProjectPageClient() {
   const handleRemoveActivity = useCallback((activityId: string) => { removeActivity(id, activityId); toast({ title: "Activity removed" }); }, [id, removeActivity, toast]);
   const handleCloneActivity = useCallback((activityId: string) => { cloneActivity(id, activityId); toast({ title: "Activity cloned" }); }, [id, cloneActivity, toast]);
   const handleOverheadChange = useCallback((overhead: Record<OverheadKey, number>) => updateOverhead(id, overhead), [id, updateOverhead]);
+  const handleImportLedger = useCallback((jsonl: string) => { importHarnessLedger(id, jsonl); }, [id, importHarnessLedger]);
+  const handleAddBaseline = useCallback((baseline: DeliveryBaseline) => { addDeliveryBaseline(id, baseline); }, [id, addDeliveryBaseline]);
+  const handleAddObservation = useCallback((observation: DeliveryTimeObservation) => { addTimeObservation(id, observation); }, [id, addTimeObservation]);
 
   const metrics = useMemo((): EstimateMetrics | null => {
     if (!project) return null;
@@ -92,6 +110,12 @@ export default function ProjectPageClient() {
         <ProcessEntry projectId={id} />
         <ProposalEntry projectId={id} />
         <DocumentationEntry projectId={id} />
+        <DeliveryIntelligencePanel
+          project={project}
+          onImportLedger={handleImportLedger}
+          onAddBaseline={handleAddBaseline}
+          onAddObservation={handleAddObservation}
+        />
         <EstimateOverview metrics={metrics} overheadPercentages={project.overheadPercentages} />
         <div className="grid gap-6 xl:grid-cols-[minmax(0,1.45fr)_minmax(320px,0.65fr)]"><ActivityForm onAdd={handleAddActivity} /><RiskAssumptionPanel activities={project.activities} /></div>
         <ActivityTable activities={project.activities} onDelete={handleRemoveActivity} onClone={handleCloneActivity} />

@@ -2,85 +2,71 @@
 
 ## Selected feature
 
-`008-project-assessment-estimation-documentation`
+`009-ai-delivery-intelligence`
 
 Status: `in_progress`
 
 Mode: `SHIP`
 
-Implementation branch: `feature/008-report-export-architecture`
+Implementation branch: `feature/009-ai-delivery-intelligence`
 
-Base: `main` after Phases 5–6 merge commit `537b4aef9e00facedd45923ea6e7da1eae9d2cdb`
+Base: `main` at `0cbf468fb900ca9a99c53d6755bfb803a2ea0052` (Feature 008 Phases 7–8 merge)
 
-Tracking issue: `#15 Feature 008 Phases 7–8 — Report architecture and bounded exports`
+Tracking issue: `#17 Feature 009 — AI Delivery Intelligence: evidence-to-spec-to-actuals`
 
-Draft PR: `#16 feat: add bounded report and print export architecture`
+Draft PR: `#18 feat: add AI delivery intelligence measurement kernel`
 
-## Lifecycle
+## Phase 009-A lifecycle
 
-- Feature 003: `blocked`; historical RPT-001/RPT-002 closure still requires real artifact inspection.
-- Feature 008: `in_progress`.
-- Phases 1–3: `PASS`.
-- Phase 4A: `PASS`.
-- Phase 4B: not implemented in this branch.
-- Phases 5–6: `PASS`; PR #14 merged into `main` at `537b4aef9e00facedd45923ea6e7da1eae9d2cdb`.
-- Phases 7–8: `REVIEW` in Draft PR #16; automated gates pass.
+- Spec: `PASS` — `specs/009-ai-delivery-intelligence/phase-a-measurement-kernel.md`.
+- Graph Harness contract review: `PASS`; `graph-harness.project.v1` and `graph-harness.event.v1` remain external execution contracts.
+- Producer implementation: complete.
+- Deterministic tests: added; CI verification pending on final tracking HEAD.
+- Critic/repair/verifier: pending final CI outcome and diff review.
+- Merge: human-gated; not authorized.
 
-## Completed scope for review
+## Implemented scope
 
-- `008-0701` one normalized report model drives all report outputs.
-- `008-0702` dedicated static-compatible print route/root.
-- `008-0703` page-break, table, and print policies.
-- `008-0801` fixed executive-summary template.
-- `008-0802` PNG captures only the summary root.
-- `008-0803` loading, progress, failure, and deterministic filename handling.
-
-## Implemented increments
-
-- Added a deterministic `ReportViewModel` that centralizes existing base, overhead, grand-total, core, supervised, distribution, activity, risk, assumption, integration, artifact, and traceability values.
-- Preserved unavailable scenarios and unapproved confidence as explicit pending states; no range or score is invented.
-- Added a bounded `ExecutiveSummaryCard` with a 960×1200 logical box, top-N content, and `+N more` indicators.
-- Added PNG export using only the executive-summary node, `html2canvas` at 1.5 scale, `canvas.toBlob()`, and a deterministic sanitized filename capped at 96 characters.
-- Added accessible PNG stages: preparing, capturing, saving, success, and actionable failure.
-- Added an isolated `/report?id=<project-id>` route that waits for browser-storage hydration and rejects missing projects or empty activity sets before printing.
-- Added explicit Print / Save PDF action; no print is triggered before readiness.
-- Added a controlled light print surface, toolbar hidden under print media, A4/Letter-compatible margins, page-break boundaries, repeated table headers, reduced print columns, and long-text wrapping.
-- Refactored `ReportDialog` so preview, PNG, and Print/PDF consume the same report model instead of capturing the modal report body.
-- Added domain and component tests for formulas, filenames, bounded content, semantic print output, hydration, invalid route states, and explicit print behavior.
-- Added execution prompt `prompts/goal-008-phases-7-8-report-export.md`.
+- Added a raw-preserving `graph-harness.event.v1` JSONL importer.
+- Validates schema/event type, contiguous sequence, single project identity, duplicate IDs, and supplied hash-chain continuity without copying Graph Harness runtime authority.
+- Added deterministic lifecycle reconstruction by node revision for approvals, ready/running/review/done, blocked intervals, repair intervals, gates, evidence, failures, and invalidations.
+- Separates calendar lead time and active cycle time from human touch.
+- `running -> review` is explicitly not treated as human touch.
+- Added explicit observation provenance: `MEASURED`, `MANUAL`, `IMPORTED`, `INFERRED`, `UNKNOWN`.
+- Added categories for human touch, agent runtime, verification, repair, wait, and blocked observations.
+- Added planned effort/calendar baselines and deterministic effort/schedule variance.
+- Added first-pass gate yield, gate failures, repair loop count, verified delivery units, and throughput.
+- Added guarded baseline comparison. Observed leverage can be reported when evidence exists; causal AI acceleration remains hidden unless a controlled, high-comparability, quality-equivalent, low-scope-variance, high-confidence comparison is present.
+- Added additive browser-local persistence under the existing `te_projects` project shape.
+- Added a `Build with Proof` panel using `Plan -> Build -> Verify -> Learn`, keeping Graph Harness complexity underneath the product experience.
+- Added manual baseline, Graph Harness ledger import, and manual human-touch capture flows.
+- Added deterministic tests for raw preservation, broken chain handling, lifecycle reconstruction, touch-time separation, variance, observed leverage, and causal guardrails.
 
 ## Protected invariants
 
-- Current formulas and `DEFAULT_OVERHEAD` are unchanged.
-- Components consume normalized values and do not independently recalculate business totals.
-- No scenario multipliers, confidence weights, or hidden values were introduced.
-- PNG excludes the full activity table, process list, shell, dialog controls, overlay, and navigation.
-- Print/PDF renders outside the dialog portal and app shell.
-- No dependency, workflow, backend, database, authentication, or external data-transfer change was introduced.
-- Browser-local `te_projects` remains the report data source.
+- Graph Harness remains the execution evidence source of truth.
+- No Graph Harness runtime is copied into TimeEstimator.
+- Existing estimation formulas and overhead percentages are unchanged.
+- No business calculations were added to React components.
+- No human touch is inferred from commits or Graph Harness state transitions.
+- Existing browser-local projects remain readable when `deliveryIntelligence` is absent.
+- No backend, auth, billing, Kubernetes, deployment, or irreversible migration is introduced.
+- No causal AI productivity claim is shown from a single weak comparison.
 
-## Automated verification
+## Verification
 
-GitHub Actions run `29397785995` passed against implementation and tracking HEAD `83d226b49be0a2393ecd220c31dda5ee64c8afb0`:
+Draft PR #18 is open. GitHub Actions has been triggered; final gate status must be checked against the final tracking HEAD before Phase 009-A can move to `REVIEW`.
 
-- dependency installation — PASS;
-- typecheck — PASS;
-- lint — PASS;
-- tests — PASS;
-- production dependency audit — PASS;
-- static export build — PASS.
+Required gates:
 
-A final Actions recheck is required for this review-status documentation-only commit.
-
-## Remaining review debt
-
-- `git diff --check` in a synchronized checkout.
-- Real-browser generation and inspection of representative 1440×1800-or-smaller PNG files.
-- Chromium Print Preview and opened saved PDF inspection for A4 and Letter.
-- Long-table pagination with 50 and 250 activities.
-- Firefox or Safari second-engine print check where available.
-- Mobile/keyboard/focus/live-region verification.
+- dependency installation;
+- typecheck;
+- lint;
+- tests;
+- production dependency audit;
+- static production build;
+- diff/patch review.
 
 ## Next gate
 
-Confirm the final documentation-only HEAD remains green, complete or explicitly accept artifact/browser debt, review Draft PR #16, and stop before merge.
+Wait only for the already-triggered repository verification result, repair any failure locally to 009-A, update this record to the verified HEAD, and stop before merge.
