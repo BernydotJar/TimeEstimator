@@ -14,6 +14,10 @@ import type {
   ProjectAssessment,
   RawProcessInput,
 } from "@/domain/discovery";
+import type {
+  DeliveryBaseline,
+  DeliveryTimeObservation,
+} from "@/domain/delivery-intelligence/types";
 import {
   addProcessEdge as addEdgeToProcess,
   addProcessStep as addStepToProcess,
@@ -46,6 +50,12 @@ import {
   regenerateProjectDocumentationArtifact,
   replaceProjectDocumentationArtifact,
 } from "@/persistence/documentation-operations";
+import {
+  addProjectDeliveryBaseline,
+  addProjectTimeObservation,
+  createEmptyDeliveryIntelligenceState,
+  importProjectHarnessLedger,
+} from "@/persistence/delivery-intelligence-operations";
 
 export function useProjects() {
   const [projects, setProjects, hydrated] = useLocalStorage<Project[]>("te_projects", []);
@@ -56,7 +66,17 @@ export function useProjects() {
 
   const createProject = useCallback((name: string, description?: string): Project => {
     const timestamp = now();
-    const project: Project = { id: crypto.randomUUID(), name, description: description ?? "", createdAt: timestamp, updatedAt: timestamp, activities: [], overheadPercentages: { ...DEFAULT_OVERHEAD }, discovery: createEmptyDiscoveryState() };
+    const project: Project = {
+      id: crypto.randomUUID(),
+      name,
+      description: description ?? "",
+      createdAt: timestamp,
+      updatedAt: timestamp,
+      activities: [],
+      overheadPercentages: { ...DEFAULT_OVERHEAD },
+      discovery: createEmptyDiscoveryState(),
+      deliveryIntelligence: createEmptyDeliveryIntelligenceState(),
+    };
     setProjects((prev) => [...prev, project]);
     return project;
   }, [setProjects]);
@@ -151,6 +171,14 @@ export function useProjects() {
   const saveDocumentationArtifact = useCallback((projectId: string, artifact: DocumentationArtifact) => mutate(projectId, (project) => replaceProjectDocumentationArtifact(project, artifact, now())), [mutate]);
   const regenerateDocumentation = useCallback((projectId: string, artifactId: string, decision: DocumentationReconciliation["decision"] = "preserve_manual") => mutate(projectId, (project) => regenerateProjectDocumentationArtifact(project, artifactId, decision, now())), [mutate]);
 
+  const importHarnessLedger = useCallback((projectId: string, jsonl: string) => {
+    const importId = crypto.randomUUID();
+    mutate(projectId, (project) => importProjectHarnessLedger(project, jsonl, now(), importId));
+    return importId;
+  }, [mutate]);
+  const addDeliveryBaseline = useCallback((projectId: string, baseline: DeliveryBaseline) => mutate(projectId, (project) => addProjectDeliveryBaseline(project, baseline, now())), [mutate]);
+  const addTimeObservation = useCallback((projectId: string, observation: DeliveryTimeObservation) => mutate(projectId, (project) => addProjectTimeObservation(project, observation, now())), [mutate]);
+
   return {
     projects,
     hydrated,
@@ -189,5 +217,8 @@ export function useProjects() {
     generateDocumentation,
     saveDocumentationArtifact,
     regenerateDocumentation,
+    importHarnessLedger,
+    addDeliveryBaseline,
+    addTimeObservation,
   };
 }
