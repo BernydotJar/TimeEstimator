@@ -1,4 +1,5 @@
 import type { ProjectDiscoveryState } from "@/domain/discovery";
+import type { ProjectDeliveryIntelligenceState } from "@/domain/delivery-intelligence/types";
 
 export type OverheadKey =
   | "contingency"
@@ -52,6 +53,7 @@ export interface Project {
   activities: Activity[];
   overheadPercentages: Record<OverheadKey, number>;
   discovery?: ProjectDiscoveryState;
+  deliveryIntelligence?: ProjectDeliveryIntelligenceState;
 }
 
 export const DEFAULT_FORM_DATA: Omit<Activity, "id"> = {
